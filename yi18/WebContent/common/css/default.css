@@ -1,0 +1,103 @@
+@CHARSET "UTF-8";
+
+#Screen {
+	width:998px;
+	margin:0px auto;
+	text-align:left;
+	padding:0 4px;
+	margin-bottom:50px;
+}
+
+#Footer {
+	margin-top:20px;
+	padding-bottom:50px;
+	height:38px;
+	line-height:38px;
+	border-top:2px solid #CCCCCC;
+	color:#737573;
+	text-align:center;
+	font-size:9pt;
+}
+
+
+
+#userbar {
+	text-align:right;
+	color: green;
+	font-size: 9pt;
+}
+#userbar a{
+	text-decoration:none;
+}
+
+#userbar a:hover {
+	color:#58595b;
+}
+
+
+.feature{  margin-top: 30px; width: 650px; height: 500px; }
+.feature h2,.problem h2{ font-size: 22px; font-weight: normal; line-height: 24px; }
+.feature ul{ margin-top: 10px; }
+.feature li{
+	float: left;
+	padding-left: 95px;
+	margin-right: 20px;
+	margin-bottom: 20px;
+	background: url(../image/mobile_icon.gif) no-repeat;
+	color: #7d7d7d;
+}
+.feature h3{ line-height: 30px; }
+.feature p{ font-size: 12px; line-height: 14px; }
+.feature li.zixun{ background-position: 0px -435px; }
+.feature li.hudong{ background-position: 0px -535px; }
+.feature li.wenzhang{ background-position: 0px -655px; }
+
+
+
+#Links {margin:20px 0 0 0;text-align:left;}
+#Links h3 {font-size:10pt;color:#000;}
+#Links p {padding:5px;line-height:20px;}
+#Links p a {font-size:9pt;margin-right:6px;color:#666;}
+#Links p a:hover {color:#A00;}
+
+
+#Message{
+	color: #40AA53;
+	font-size: 10.5pt;
+	margin:10px 20px 0 0;
+}
+
+.date {
+font-size:9pt;
+font-family:Candara,arial;
+color:#666;
+-webkit-text-size-adjust:none;}
+ 
+ 
+ .rndbutton {
+	background:#5cc26f;
+	color:#fff;
+	text-decoration:none;
+	height:25px;
+	float:right;
+	
+	border:0px solid #000;
+	font-weight:bold;
+	cursor:pointer;
+	margin:0 0 0 12px;
+    padding:0 12px 0 0;
+    height:25px;
+    line-height:25px;
+	
+	}
+.rndbutton:hover {
+		background:#7798CB;
+	
+	
+	}
+
+
+#logo img {border-width: 0px 0px 0px 0px}
+
+
+

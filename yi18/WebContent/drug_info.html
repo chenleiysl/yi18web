@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>医药吧_后台管理</title>
+    <link rel="stylesheet" type="text/css" href="common/easyui/themes/default/easyui.css">  
+    <link rel="stylesheet" type="text/css" href="common/easyui/themes/icon.css">  
+     <link rel="stylesheet" type="text/css" href="common/css/default.css">  
+    <script type="text/javascript" src="common/easyui/jquery-1.9.1.min.js"></script>  
+    <script type="text/javascript" src="common/easyui/jquery.easyui.min.js"></script> 
+    <script type="text/javascript" src="common/easyui/locale/easyui-lang-zh_CN.js"></script>  
+</head>
+<body>
+<div id = "Screen">
+
+
+	<div id="logo">
+	<a href="#" title="医药吧"><img alt="logo" src="common/image/logo.png"></a>
+	<font color="green" size="6" style="font-weight: bold;">&nbsp;www.yi18.cn</font>
+	<div style="float: right;" id="userbar">欢迎  yi18 ！&nbsp;|&nbsp;<a href="add_drug.html">添加药品</a></div>
+	</div>
+   <div style="padding:10px;border:1px solid #ddd">  
+        <a href="#" class="easyui-linkbutton" data-options="plain:true">个人信息</a>  
+        <a href="#" class="easyui-menubutton" data-options="menu:'#mm1'">药品管理</a>     
+        <a href="#" class="easyui-linkbutton" data-options="plain:true">关于</a>
+       
+         <div id="mm1" style="width:150px;">  
+        <div >药品审核</div>  
+        <div >药品信息</div> 
+        <div class="menu-sep"></div>  
+        <div>  
+            <span>药品分类</span>  
+            <div style="width:150px;">  
+                <div>一级分类</div>  
+                <div>二级分类</div>    
+            </div>  
+        </div>
+        </div>
+       
+        <div style="float: right;">
+        <input class="easyui-searchbox" data-options="prompt:'请输入查询信息',menu:'#mm',searcher:doSearch" style="width:340px"></input> 
+   		<script>  
+        function doSearch(value,name){  
+            alert('You input: ' + value+'('+name+')');  
+        }  
+    	</script> 
+    	<div id="mm" style="width:120px">  
+        	<div data-options="name:'all'">药品</div>  
+        	<div data-options="name:'pi'">病状</div>  
+    	</div> 
+   		
+   		</div>
+    </div> 
+   <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="98%" color=#5cc26f SIZE=1>
+    
+    <script type="text/javascript">  
+        var toolbar = [{  
+            text:'Add',  
+            iconCls:'icon-add',  
+            handler:function(){$('#w').window('open');}  
+        },{  
+            text:'Cut',  
+            iconCls:'icon-cut',  
+            handler:function(){alert('cut')}  
+        },'-',{  
+            text:'Save',  
+            iconCls:'icon-save',  
+            handler:function(){alert('save')}  
+        }];  
+    </script> 
+    
+ <table class="easyui-datagrid" style="width:500px;height:auto" title="药品信息"  data-options="toolbar:toolbar">  
+        <thead>  
+            <tr>  
+                <th data-options="field:'itemid'">Item ID</th>  
+                <th data-options="field:'productid'">Product</th>  
+                <th data-options="field:'listprice',align:'right'">List Price</th>  
+                <th data-options="field:'attr1'">Attribute</th>  
+            </tr>  
+        </thead>  
+        <tbody>  
+            <tr>  
+                <td>EST-1</td><td>FI-SW-01</td><td>36.50</td><td>Large</td>  
+            </tr>  
+            <tr>  
+                <td>EST-10</td><td>K9-DL-01</td><td>18.50</td><td>Spotted Adult Female</td>  
+            </tr>  
+            <tr>  
+                <td>EST-11</td><td>RP-SN-01</td><td>28.50</td><td>Venomless</td>  
+            </tr>  
+            <tr>  
+                <td>EST-12</td><td>RP-SN-01</td><td>26.50</td><td>Rattleless</td>  
+            </tr>  
+            <tr>  
+                <td>EST-13</td><td>RP-LI-02</td><td>35.50</td><td>Green Adult</td>  
+            </tr>  
+        </tbody>  
+    </table>  
+    
+    
+    <div id="w" class="easyui-window" title="添加药品分类" data-options="iconCls:'icon-save',closed:true" style="width:500px;height:200px;padding:10px;">  
+      
+        <div style="padding:10px 0 10px 60px">  
+        <form id="ff" method="post" action="">  
+            <table>  
+                <tr>  
+                    <td>名称:</td>  
+                    <td><input class="easyui-validatebox" type="text" name="name" data-options="required:true"></input></td>  
+                </tr>  
+                <tr>  
+                    <td>上级分类:</td>  
+                    <td><select id="cc" class="easyui-combobox" name="dept" style="width:200px;">  
+					    <option value="aa">根目录</option>  
+					    <option>西药</option>  
+					    <option>中药</option>  
+					    
+					</select></td>  
+                </tr>  
+                 
+                 
+                
+            </table>  
+        </form>  
+         
+        <div style="text-align:center;padding:5px">  
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()">保存</a>  
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">清除</a>  
+        </div>  
+    </div>  
+    <script>  
+        function submitForm(){  
+            $('#ff').form('submit');  
+        }  
+        function clearForm(){  
+            $('#ff').form('clear');  
+        }  
+    </script>  
+          
+    </div> 
+  
+  <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="98%" color=#5cc26f SIZE=1>
+   		
+<div id="Links">
+<div >
+<h3 class='caption'>+ 友情链接</h3>
+<p>
+<a href="http://www.xywy.com/" target="_blank" style='color:#A00;'>寻医问药</a>
+<a href="http://www.818.com/" target="_blank" style='color:#A00;'>818医药网</a>
+<a href="http://health.sina.com.cn/" target="_blank">新浪健康</a>
+<a href="http://www.familydoctor.com.cn/" target="_blank">家庭医生在线</a>
+<a href="http://yi18.cloudfoundry.com/" target="_blank">医药吧</a>
+
+
+</p>
+</div>
+</div>
+    <div id="Footer">&copy; 医药吧.中国网(yi18.cn) | <a href="#">关于我们</a> | <a href="#">医药吧手机版</a> | <a href="#">广告联系</a> | <a href="#" target="_blank">@新浪微博</a>  | 蜀ICP备110号
+</div>
+</div>
+</body>
+</html>
