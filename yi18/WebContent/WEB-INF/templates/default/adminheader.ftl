@@ -23,16 +23,34 @@
 	</div>
    <div style="padding:10px;border:1px solid #ddd">  
         <a href="${basePath}admin" class="easyui-linkbutton" data-options="plain:true">个人信息</a>  
-        <a href="#" class="easyui-menubutton" data-options="menu:'#mm1'">药品管理</a>     
+        <a href="#" class="easyui-menubutton" data-options="menu:'#mm1'">药品管理</a>    
+        <a href="#" class="easyui-menubutton" data-options="menu:'#mm2'">服务管理</a>   
         <a href="#" class="easyui-linkbutton" data-options="plain:true">关于</a>
        
-         <div id="mm1" style="width:150px;">  
+       
+        
+       
+       <div id="mm2" style="width:150px;">  
+         <div ><a href="${basePath}admin/partner">合作伙伴</a></div>  
+        <div ><a href="${basePath}admin/factory"> 生产厂家 </a></div> 
+       
+        <div>  <a href="${basePath}admin/links"> 友情链接</a></div>  
+	        
+        </div>
+       
+        <div id="mm1" style="width:150px;">  
         <div >药品审核</div>  
         <div ><a href="${basePath}admin/directory"> 药品目录信息 </a></div> 
         <div class="menu-sep"></div>  
         <div>  <a href="${basePath}admin/drugclass">   药品分类</a></div>  
         
         </div>
+       
+        
+        
+        
+       
+       
        
         <div style="float: right;">
         <input class="easyui-searchbox" data-options="prompt:'请输入查询信息',menu:'#mm',searcher:doSearch" style="width:340px"></input> 

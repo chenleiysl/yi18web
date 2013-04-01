@@ -22,10 +22,12 @@ import cn.yi18.entity.DrugInfo;
 import cn.yi18.pojo.Directory;
 import cn.yi18.pojo.Drug;
 import cn.yi18.pojo.Druginfo;
+import cn.yi18.pojo.Factory;
 import cn.yi18.pojo.POJO;
 import cn.yi18.service.DirectoryService;
 import cn.yi18.service.DrugInfoService;
 import cn.yi18.service.DrugService;
+import cn.yi18.service.FactoryService;
 
 public class DrugAction extends BaseAction
 {
@@ -76,6 +78,10 @@ public class DrugAction extends BaseAction
 					
 				   }else if(name.equals("ingredient")){
 					   drug.setIngredient(Integer.parseInt(value));
+					
+				   
+				  }else if(name.equals("factory")){
+					   drug.setFactory(Long.parseLong(value));
 					
 				   }
 				   else if(name.equals("price")){
@@ -130,8 +136,10 @@ public class DrugAction extends BaseAction
 			return;
 			
 		}else {
+			List<Factory> factorys = factoryService.getAll();
 			List<Directory> list = directoryService.getAll();
 			root.put("list", list);
+			root.put("factorys", factorys);
 			printFreemarker("default/add_drug.ftl", root);
 			
 		}
@@ -158,4 +166,5 @@ public class DrugAction extends BaseAction
 	private DirectoryService directoryService = new DirectoryService();
 	private DrugService drugService = new DrugService();
 	private DrugInfoService drugInfoService = new DrugInfoService();
+	private FactoryService factoryService = new FactoryService();
 }

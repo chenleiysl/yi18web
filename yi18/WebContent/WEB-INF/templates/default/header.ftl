@@ -17,18 +17,18 @@
 <div id = "Screen">
 
 	<div id="logo">
-	<a href="#" title="医药吧"><img alt="logo" src="${basePath}common/image/logo.png"></a>
+	<a href="${basePath}" title="医药吧"><img alt="logo" src="${basePath}common/image/logo.png"></a>
 	<font color="green" size="6" style="font-weight: bold;">&nbsp;www.yi18.cn</font>
 	<div style="float: right;" id="userbar"><a href="${basePath}admin">登录</a>&nbsp;|&nbsp;<a href="${basePath}drug/add">添加药品</a></div>
 	</div>
    <div style="padding:10px;border:1px solid #ddd">  
-        <a href="#" class="easyui-linkbutton" data-options="plain:true">主页</a>  
+        <a href="${basePath}" class="easyui-linkbutton" data-options="plain:true">主页</a>  
         <a href="#" class="easyui-linkbutton" data-options="plain:true">常见药品</a>  
         <a href="#" class="easyui-linkbutton" data-options="plain:true">病状查找</a>
          <a href="#" class="easyui-linkbutton" data-options="plain:true">疾病找药</a> 
          <a href="#" class="easyui-linkbutton" data-options="plain:true">用药咨询</a>
          <a href="#" class="easyui-linkbutton" data-options="plain:true">医药新闻</a>    
-        <a href="#" class="easyui-linkbutton" data-options="plain:true">关于</a>
+        <a href="#" class="easyui-linkbutton" data-options="plain:true">合作伙伴</a>
         <div style="float: right;">
         <input class="easyui-searchbox" data-options="prompt:'请输入查询信息',menu:'#mm',searcher:doSearch" style="width:340px"></input> 
    		<script>  

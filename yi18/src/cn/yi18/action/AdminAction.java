@@ -14,8 +14,14 @@ import com.google.gson.Gson;
 
 import cn.yi18.pojo.Directory;
 import cn.yi18.pojo.Drugclass;
+import cn.yi18.pojo.Factory;
+import cn.yi18.pojo.Links;
 import cn.yi18.pojo.POJO;
+import cn.yi18.pojo.Partner;
 import cn.yi18.service.DirectoryService;
+import cn.yi18.service.FactoryService;
+import cn.yi18.service.LinksService;
+import cn.yi18.service.PartnerService;
 
 public class AdminAction extends BaseAction {
 
@@ -29,11 +35,12 @@ public class AdminAction extends BaseAction {
 		
 		if(request.isSubmit())
 		{
+			Map map = request.getParameterMap();
+			  Directory directory = new Directory();
+			  BeanUtils.populate(directory , map);
 			if(request.getParameter("sub").equals("save"))
 			{
-				Map map = request.getParameterMap();
-				  Directory directory = new Directory();
-				  BeanUtils.populate(directory , map);
+				
 				  directory.save();
 				  String json = "{\"success\": true,   \"message\": \"保存成功.\" } ";
 				  printHtml(json);
@@ -41,9 +48,7 @@ public class AdminAction extends BaseAction {
 				
 			}else if(request.getParameter("sub").equals("edit"))
 			{
-				Map map = request.getParameterMap();
-				  Directory directory = new Directory();
-				  BeanUtils.populate(directory , map);
+				
 				  Directory bean = new Directory();
 				  Map<String, Object> dmap = new HashMap<String, Object>();
 				  dmap.put("title", directory.getTitle());
@@ -144,5 +149,123 @@ public class AdminAction extends BaseAction {
 		 
 	}
 	
+	public void factory() throws IllegalAccessException, InvocationTargetException
+	{
+		if(request.isSubmit())
+		{
+			Factory factory = new Factory();
+			Map map = request.getParameterMap();
+			BeanUtils.populate(factory, map);
+			if (request.getParameter("sub").equals("save")) 
+			{
+				
+					factory.save();
+				  String json = "{\"success\": true,   \"message\": \"保存成功.\" } ";
+				  printHtml(json);
+				  return;
+				
+				
+			}else if (request.getParameter("sub").equals("edit"))
+			{
+				Factory bean = new Factory();
+				Map<String, Object> vmap = new HashMap<String, Object>();
+				vmap.put("name", factory.getName());
+				vmap.put("description", factory.getDescription());
+				vmap.put("phone", factory.getPhone());
+				vmap.put("url", factory.getUrl());
+				vmap.put("address", factory.getAddress());
+				bean.update(vmap , factory.getId());
+				 String json = "{\"success\": true,   \"message\": \"修改成功.\" } ";
+				  printHtml(json);
+				  return;
+			}
+		}
+		else{
+			List<Factory> list = factoryService.getAll();
+			root.put("list", list);
+			printFreemarker("default/factory.ftl", root);
+		}
+		
+	}
+	
+	public void links() throws IllegalAccessException, InvocationTargetException
+	{
+		if(request.isSubmit())
+		{
+			Links links = new Links();
+			Map map = request.getParameterMap();
+			BeanUtils.populate(links, map);
+			if (request.getParameter("sub").equals("save")) 
+			{
+				
+					links.save();
+				  String json = "{\"success\": true,   \"message\": \"保存成功.\" } ";
+				  printHtml(json);
+				  return;
+				
+				
+			}else if (request.getParameter("sub").equals("edit"))
+			{
+				Links bean = new Links();
+				Map<String, Object> vmap = new HashMap<String, Object>();
+				vmap.put("title", links.getTitle());
+				vmap.put("url", links.getUrl());
+				vmap.put("focal", links.getFocal());
+				vmap.put("sequence", links.getSequence());
+				bean.update(vmap , links.getId());
+				 String json = "{\"success\": true,   \"message\": \"修改成功.\" } ";
+				  printHtml(json);
+				  return;
+			}
+		}
+		else{
+			List<Links> list = linksService.getAll();
+			root.put("list", list);
+			printFreemarker("default/links.ftl", root);
+		}
+	}
+	
+	
+	public void partner() throws IllegalAccessException, InvocationTargetException
+	{
+		if(request.isSubmit())
+		{
+			Partner partner  = new Partner();
+			Map map = request.getParameterMap();
+			BeanUtils.populate(partner, map);
+			if (request.getParameter("sub").equals("save")) 
+			{
+				
+				partner.save();
+				  String json = "{\"success\": true,   \"message\": \"保存成功.\" } ";
+				  printHtml(json);
+				  return;
+				
+				
+			}else if (request.getParameter("sub").equals("edit"))
+			{
+				Partner bean = new Partner();
+				Map<String, Object> vmap = new HashMap<String, Object>();
+				vmap.put("title", partner.getTitle());
+				vmap.put("url", partner.getUrl());
+				vmap.put("description", partner.getDescription());
+				vmap.put("sequence", partner.getSequence());
+				bean.update(vmap , partner.getId());
+				 String json = "{\"success\": true,   \"message\": \"修改成功.\" } ";
+				  printHtml(json);
+				  return;
+			}
+		}
+		else{
+			List<Partner> list = partnerService.getAll();
+			root.put("list", list);
+			printFreemarker("default/partner.ftl", root);
+		}
+	}
+	
+	
 	private DirectoryService directoryService = new DirectoryService ();
+	private FactoryService factoryService = new FactoryService();
+	private LinksService linksService = new LinksService();
+	private PartnerService partnerService = new PartnerService();
 }

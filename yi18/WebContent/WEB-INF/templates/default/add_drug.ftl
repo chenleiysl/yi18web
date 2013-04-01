@@ -34,11 +34,13 @@
                     <td><input class="easyui-validatebox" type="text" name="alias" style="width: 300px"></input></td>  
                		<td> 该产品其它的名称，如果有多个名称可用（;）隔开。 </td>
                 </tr> 
+             <!--
               <tr>  
                     <td>药品图片:</td>  
                     <td><input class="easyui-validatebox" type="file" name="image" style="width: 300px"></input></td>  
                 	<td> 为了更加形象的现实药品，在这里给药品上传一个“头像”。 </td>
                 </tr> 
+                -->
                   <tr>  
                     <td>药品类型:</td>  
                     <td><select id="cc" class="easyui-combobox" name="ingredient" style="width:200px;">  
@@ -66,7 +68,16 @@
                 </tr> 
                <tr>  
                     <td>生产公司:</td>  
-                    <td> <input class="easyui-validatebox" type="text" name="factory" style="width: 300px"></input> </td>  
+                    <td>
+                    
+                    <select id="cc" class="easyui-combobox" name="factory" style="width:200px;">  
+					    <option value="0">其它生产商</option>  
+					     <#list factorys as item>
+					     <option value="${item.getId()}">${item.name}</option> 
+					     </#list>
+					    
+					</select>
+                     </td>  
                 </tr> 
                
             </table>  

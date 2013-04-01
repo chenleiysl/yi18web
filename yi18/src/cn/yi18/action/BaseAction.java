@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -18,6 +19,8 @@ import org.slf4j.LoggerFactory;
 
 import cn.yi18.http.*;
 import cn.yi18.jdbc.DBManager;
+import cn.yi18.pojo.Links;
+import cn.yi18.service.LinksService;
 
 
 import freemarker.template.Configuration;
@@ -206,6 +209,7 @@ public  abstract class BaseAction
 	 root.put("url", request.getRequestURL()); 
 	 root.put("session_id", session.getId()); 
 	 root.put("isLogin", session.isLogin());
+	 root.put("links", _getLinks());
 	
 	 //设置默认信息
 	 if(root.get("title")==null)  root.put("title", "医药吧");
@@ -230,6 +234,14 @@ public  abstract class BaseAction
 	}
       
   }
+ 
+ 
+ private List<Links> _getLinks() 
+ {
+	 LinksService linksService = new LinksService();
+	 return linksService.getAll();
+	
+ }
 	
 
 }
