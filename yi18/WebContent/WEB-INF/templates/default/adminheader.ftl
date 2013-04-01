@@ -6,6 +6,7 @@
 		<meta name="keywords" content="${keywords}">
 		<meta name="description" content="${description}">
 	<meta name="author" content="${author}"/>
+	<link rel="shortcut icon" type="image/x-icon" href="${basePath}common/image/favicon.ico" />
     <link rel="stylesheet" type="text/css" href="${basePath}common/easyui/themes/metro/easyui.css">  
     <link rel="stylesheet" type="text/css" href="${basePath}common/easyui/themes/icon.css">  
      <link rel="stylesheet" type="text/css" href="${basePath}common/css/default.css">  
