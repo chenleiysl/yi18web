@@ -19,6 +19,7 @@ public class Drug extends POJO
 	protected float price;//产考价格
 	protected Long factory;//生产厂家
 	protected int allow;//是否允许显示，，是否通过管理员审核，1：通过，0：等待，-1 不通过
+	protected Long drugclass;//药品分类
 	protected Timestamp time = new Timestamp(new Date().getTime());//时间
 	public String getName() {
 		return name;
@@ -73,6 +74,12 @@ public class Drug extends POJO
 	}
 	public void setAllow(int allow) {
 		this.allow = allow;
+	}
+	public Long getDrugclass() {
+		return drugclass;
+	}
+	public void setDrugclass(Long drugclass) {
+		this.drugclass = drugclass;
 	}
 	public Timestamp getTime() {
 		return time;

@@ -29,7 +29,7 @@
          <a href="#" class="easyui-linkbutton" data-options="plain:true">疾病找药</a> 
          <a href="#" class="easyui-linkbutton" data-options="plain:true">用药咨询</a>
          <a href="#" class="easyui-linkbutton" data-options="plain:true">医药新闻</a>    
-        <a href="#" class="easyui-linkbutton" data-options="plain:true">合作伙伴</a>
+        <a href="${basePath}index/partner" class="easyui-linkbutton" data-options="plain:true">合作伙伴</a>
         <div style="float: right;">
         <input class="easyui-searchbox" data-options="prompt:'请输入查询信息',menu:'#mm',searcher:doSearch" style="width:340px"></input> 
    		<script>  

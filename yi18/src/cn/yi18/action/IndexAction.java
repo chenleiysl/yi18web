@@ -21,5 +21,14 @@ public class IndexAction extends BaseAction
 	{
 		printFreemarker("default/index.ftl", root);
 	}
+	
+	public void about()
+	{
+		printFreemarker("default/about.ftl", root);
+	}
 
+	public void partner()
+	{
+		printFreemarker("default/partner_show.ftl", root);
+	}
 }

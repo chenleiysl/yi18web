@@ -12,13 +12,17 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import com.google.gson.Gson;
 
+import cn.yi18.entity.DrugInfo;
 import cn.yi18.pojo.Directory;
+import cn.yi18.pojo.Drug;
 import cn.yi18.pojo.Drugclass;
 import cn.yi18.pojo.Factory;
 import cn.yi18.pojo.Links;
 import cn.yi18.pojo.POJO;
 import cn.yi18.pojo.Partner;
 import cn.yi18.service.DirectoryService;
+import cn.yi18.service.DrugInfoService;
+import cn.yi18.service.DrugService;
 import cn.yi18.service.FactoryService;
 import cn.yi18.service.LinksService;
 import cn.yi18.service.PartnerService;
@@ -264,8 +268,49 @@ public class AdminAction extends BaseAction {
 	}
 	
 	
+	public void drug()
+	{
+		List<Drug> list = drugService.getNoCheck();
+		root.put("list", list);
+		printFreemarker("default/drug_check_list.ftl", root);
+	}
+	
+	public void checkdrug()
+	{
+		if(request.isSubmit())
+		{
+			
+		}else 
+		{
+			String[] params = request.getParams();
+			if(params!=null)
+			{
+				Long id = Long.parseLong(params[0]);
+				Drug bean = new Drug();
+				Drug drug = bean.get(id);
+				List<DrugInfo> list = drugInfoService.getDrugInfo(id);
+				List<Factory> factorys = factoryService.getAll();
+				root.put("drug", drug);
+				root.put("list", list);
+				root.put("factorys", factorys);
+				
+				Drugclass dbean = new Drugclass();
+				 Map<String, Object> map = new HashMap<String, Object>();
+				 map.put("level", 2);
+				List<Drugclass> drugclassess = (List<Drugclass>) dbean.getlist(map );
+				
+				root.put("drugclass", drugclassess);
+				printFreemarker("default/drug_check.ftl", root);
+			}
+		}
+		
+	}
+	
 	private DirectoryService directoryService = new DirectoryService ();
 	private FactoryService factoryService = new FactoryService();
 	private LinksService linksService = new LinksService();
 	private PartnerService partnerService = new PartnerService();
+	private DrugService drugService = new DrugService();
+	private DrugInfoService drugInfoService = new DrugInfoService();
+	
 }

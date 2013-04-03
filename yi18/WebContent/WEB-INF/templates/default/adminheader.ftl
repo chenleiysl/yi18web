@@ -40,10 +40,10 @@
         </div>
        
         <div id="mm1" style="width:150px;">  
-        <div >药品审核</div>  
+        <div ><a href="${basePath}admin/drug">药品审核</a></div>  
         <div ><a href="${basePath}admin/directory"> 药品目录信息 </a></div> 
         <div class="menu-sep"></div>  
-        <div>  <a href="${basePath}admin/drugclass">   药品分类</a></div>  
+        <div>  <a href="${basePath}admin/drugclass">药品分类</a></div>  
         
         </div>
        
