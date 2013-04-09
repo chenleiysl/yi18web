@@ -1,6 +1,7 @@
 package cn.yi18.action;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import javax.servlet.ServletException;
+
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
@@ -18,6 +21,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.lang3.time.DateFormatUtils;
 
+import cn.yi18.entity.DrugClass;
 import cn.yi18.entity.DrugInfo;
 import cn.yi18.pojo.Directory;
 import cn.yi18.pojo.Drug;
@@ -25,12 +29,24 @@ import cn.yi18.pojo.Druginfo;
 import cn.yi18.pojo.Factory;
 import cn.yi18.pojo.POJO;
 import cn.yi18.service.DirectoryService;
+import cn.yi18.service.DrugClassService;
 import cn.yi18.service.DrugInfoService;
 import cn.yi18.service.DrugService;
 import cn.yi18.service.FactoryService;
 
 public class DrugAction extends BaseAction
 {
+	
+	
+	
+	public void list() throws ServletException, IOException {
+		
+		List<DrugClass> tree = drugClassService.getTree();
+		root.put("tree", tree);
+		printFreemarker("default/drug_list.ftl", root);
+	}
+	
+	
 	public void add() throws FileUploadException
 	{
 		if(request.isSubmit())
@@ -283,4 +299,7 @@ public class DrugAction extends BaseAction
 	private DrugService drugService = new DrugService();
 	private DrugInfoService drugInfoService = new DrugInfoService();
 	private FactoryService factoryService = new FactoryService();
+	private DrugClassService  drugClassService = new DrugClassService();
+	
+	
 }

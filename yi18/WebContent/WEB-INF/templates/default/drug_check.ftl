@@ -16,10 +16,10 @@
      $(document).ready(function(){
 	     $('#ff').form('load',{  
 	     			id:${drug.getId()} ,
-	                name:${drug.name} ,
+	                name:'${drug.name}' ,
 	                alias:'${drug.alias}',
 	                ingredient:${drug.ingredient},
-	                prescription:${drug.prescription},
+	                prescription:'${drug.prescription}',
 	                term:'${drug.term}',
 	                price:${drug.price},
 	                factory:${drug.factory}
