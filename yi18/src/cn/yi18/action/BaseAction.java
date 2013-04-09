@@ -58,8 +58,9 @@ public  abstract class BaseAction
 		this.context = request.getSession().getServletContext();
 		this.session = new SessionContext(request);
 		cfg = new Configuration();
-   cfg.setServletContextForTemplateLoading(
+		cfg.setServletContextForTemplateLoading(
 		   request.getSession().getServletContext(), "WEB-INF/templates");
+		cfg.setDefaultEncoding("UTF-8");
 	}
 	
 	/**
@@ -218,6 +219,7 @@ public  abstract class BaseAction
 	 if(root.get("author")==null)  root.put("author", "yi18.cn");
 	try {
 		Template  t = cfg.getTemplate(ftl);
+		t.setEncoding("UTF-8");
 		response.setContentType("text/html; charset=" + t.getEncoding());
 		Writer out = response.getWriter();
 	   try {
