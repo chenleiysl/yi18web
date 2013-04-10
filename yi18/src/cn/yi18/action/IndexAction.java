@@ -23,13 +23,19 @@ public class IndexAction extends BaseAction
 		printFreemarker("default/index.ftl", root);
 	}
 	
+	/**
+	 * 关于我们
+	 */
 	public void about()
 	{
 		printFreemarker("default/about.ftl", root);
 	}
 
+	/**
+	 * 合作伙伴
+	 */
 	public void partner()
 	{
-		printFreemarker("default/partner_show.ftl", root);
+		printFreemarker("default/partner.ftl", root);
 	}
 }

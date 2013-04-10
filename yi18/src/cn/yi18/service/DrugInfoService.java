@@ -4,6 +4,8 @@ import java.util.List;
 
 import cn.yi18.dao.DrugInfoDao;
 import cn.yi18.entity.DrugInfo;
+import cn.yi18.enums.DrugEnum;
+import cn.yi18.pojo.Druginfo;
 
 public class DrugInfoService {
 
@@ -13,4 +15,7 @@ public class DrugInfoService {
 	{
 		return drugInfoDao.getDrugInfo(id);
 	}
+	
+	
+	
 }

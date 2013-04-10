@@ -21,7 +21,7 @@
     <div class="easyui-tabs" style="width:920px;height:350px">  
         <div title="药品词条" style="padding:10px"> 
         <div style="float: right;width:300px" >
-        	<img alt="" src="${drug.image!!}"> 
+        	<img alt="" src="${basePath}common/avatar/${drug.image!!}"> 
         </div>
              <table width="50%">
              <tr><td width="20%" >名称</td><td>${drug.name}</td></tr>

@@ -172,4 +172,4 @@
           
     </div> 
 
-<#include "footer.ftl">
+<#include "../default/footer.ftl">

@@ -30,11 +30,20 @@ import cn.yi18.service.PartnerService;
 public class AdminAction extends BaseAction {
 
 	
+	/**
+	 * 默认admin页面
+	 */
 	@Override
 	public void execute() throws ServletException, IOException {
-		printFreemarker("default/admin.ftl", root);
+		printFreemarker("admin/index.ftl", root);
 	}
 	
+	
+	/**
+	 * 药品目录信息
+	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException
+	 */
 	public void directory() throws IllegalAccessException, InvocationTargetException {
 		
 		if(request.isSubmit())
@@ -72,12 +81,17 @@ public class AdminAction extends BaseAction {
 			
 			List<Directory> list =directoryService.getAll(); 
 			root.put("list", list);
-			printFreemarker("default/directory.ftl", root);
+			printFreemarker("admin/directory.ftl", root);
 		}
 		
 	}
 	
 	
+	/**
+	 * 药品分类操作
+	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException
+	 */
 	public void drugclass() throws IllegalAccessException, InvocationTargetException
 	{
 		
@@ -139,7 +153,7 @@ public class AdminAction extends BaseAction {
 			 map.put("level", 1);
 			List<Drugclass> roots = (List<Drugclass>) bean.getlist(map );
 			root.put("roots", roots);
-			printFreemarker("default/drugclass.ftl", root);
+			printFreemarker("admin/drugclass.ftl", root);
 		}
 	}
 	
@@ -153,6 +167,12 @@ public class AdminAction extends BaseAction {
 		 
 	}
 	
+	
+	/**
+	 * 生产厂家
+	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException
+	 */
 	public void factory() throws IllegalAccessException, InvocationTargetException
 	{
 		if(request.isSubmit())
@@ -187,11 +207,17 @@ public class AdminAction extends BaseAction {
 		else{
 			List<Factory> list = factoryService.getAll();
 			root.put("list", list);
-			printFreemarker("default/factory.ftl", root);
+			printFreemarker("admin/factory.ftl", root);
 		}
 		
 	}
 	
+	
+	/**
+	 * 友情链接
+	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException
+	 */
 	public void links() throws IllegalAccessException, InvocationTargetException
 	{
 		if(request.isSubmit())
@@ -225,11 +251,16 @@ public class AdminAction extends BaseAction {
 		else{
 			List<Links> list = linksService.getAll();
 			root.put("list", list);
-			printFreemarker("default/links.ftl", root);
+			printFreemarker("admin/links.ftl", root);
 		}
 	}
 	
 	
+	/**
+	 * 合作伙伴
+	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException
+	 */
 	public void partner() throws IllegalAccessException, InvocationTargetException
 	{
 		if(request.isSubmit())
@@ -263,25 +294,28 @@ public class AdminAction extends BaseAction {
 		else{
 			List<Partner> list = partnerService.getAll();
 			root.put("list", list);
-			printFreemarker("default/partner.ftl", root);
+			printFreemarker("admin/partner.ftl", root);
 		}
 	}
 	
 	
+	/**
+	 * 显示没有审核的药品
+	 */
 	public void drug()
 	{
 		List<Drug> list = drugService.getNoCheck();
 		root.put("list", list);
-		printFreemarker("default/drug_check_list.ftl", root);
+		printFreemarker("admin/drug_check_list.ftl", root);
 	}
 	
+	
+	/*
+	 * 读取需要显示的药品信息
+	 */
 	public void checkdrug()
 	{
-		if(request.isSubmit())
-		{
-			
-		}else 
-		{
+		
 			String[] params = request.getParams();
 			if(params!=null)
 			{
@@ -300,9 +334,9 @@ public class AdminAction extends BaseAction {
 				List<Drugclass> drugclassess = (List<Drugclass>) dbean.getlist(map );
 				
 				root.put("drugclass", drugclassess);
-				printFreemarker("default/drug_check.ftl", root);
+				printFreemarker("admin/drug_check.ftl", root);
 			}
-		}
+		
 		
 	}
 	

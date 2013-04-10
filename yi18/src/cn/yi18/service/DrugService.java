@@ -51,5 +51,28 @@ public class DrugService
 		// TODO Auto-generated method stub
 		
 	}
+	
+	
+	/**
+	 * 取得最新的药品
+	 * @param size
+	 * @return
+	 */
+	public List<Drug> getNew(int size)
+	{
+		Drug bean = new Drug();
+		String filter = " allow = "+DrugEnum.Check_Status.IsCheck.getValue();
+		return (List<Drug>) bean.filter(filter , 1, size);
+	}
+	
+	/**
+	 * 取得访问最多的药品
+	 * @param page
+	 * @param size
+	 * @return
+	 */
+	public List<Drug> getHot(int page,int size) {
+		return  drugDao.getHot(page, size);
+	}
 
 }

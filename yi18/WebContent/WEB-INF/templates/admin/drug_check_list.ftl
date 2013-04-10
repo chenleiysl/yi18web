@@ -26,4 +26,4 @@
     </table>  
  
 
-<#include "footer.ftl">
+<#include "../default/footer.ftl">

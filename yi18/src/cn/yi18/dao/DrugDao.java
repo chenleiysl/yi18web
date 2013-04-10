@@ -14,5 +14,14 @@ public class DrugDao
 		return QueryHelper.query(Drug.class, sql, DrugEnum.Check_Status.NoCheck.getValue());
 		
 	}
+	
+	public List<Drug> getHot(int page ,int size ) 
+	{
+		String sql ="SELECT * FROM yi18_drug WHERE allow = ? ORDER BY count DESC";
+		
+		return QueryHelper.query_slice(Drug.class,sql, page,size, DrugEnum.Check_Status.IsCheck.getValue());
+	}
+	
+	
 
 }

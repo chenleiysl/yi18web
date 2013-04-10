@@ -70,139 +70,26 @@
                 	 <div class='ProjectList'>	
                			 <ul class='List'>
                 	
+                	<#list hots as item>
                 	<li>
-				    <h3><a href="/p/kissy-editor" target="_blank">所见即所得的HTML编辑器 <em>KISSY Editor</em></a></h3>    
+				    <h3><a href="${basePath}drug/show/${item.getId()}" target="_blank">${item.alias} <em>${item.name}</em></a></h3>    
 					
 					<table width='100%'><tr><td>
 						<p class='detail'>
-									KISSY Editor 是开源项目 KISSY UI Library 的一个所见即所得的HTML编辑器组件。KISSY 目前基于 YUI 2.x 开发，目标是打造一系列小巧灵活、简洁实用、使用起来让人感觉愉悦的 UI 组件。目前已有 CSS 基础框架、搜索提示 Suggest 和今天发布的富文本编辑器等...
-						    	<a href="/p/kissy-editor" target="_blank" class='more'>更多KISSY Editor信息</a>
+									${item.term}
+						    	<a href="${basePath}drug/show/${item.getId()}" target="_blank" class='more'>更多${item.name}</a>
 						</p>
 					</td>
-						<td width='100' valign='top' align='right'><a href="/p/kissy-editor" target="_blank"><img src="http://www.oschina.net/img/logo/ckeditor.gif"/></a></td>
+						<td width='100' valign='top' align='right'>
+						<a href="${basePath}drug/show/${item.getId()}" target="_blank"><img src="${basePath}common/avatar/${item.image}" width="100" /></a>
+						
+						</td>
 						</tr>
 						</table>
 				    
 					    </li>
-							<li>
-				    <h3><a href="/p/areaedit" target="_blank">PHP的可视化HTML编辑器 <em>AreaEdit</em></a></h3>    
-					<table width='100%'><tr><td>
-						<p class='detail'>
-									AreaEdit是一个WYSIWYG HTML Editor组件专门设计用于PHP Web应用程序中。
-						    	<a href="/p/areaedit" target="_blank" class='more'>更多AreaEdit信息</a>
-						</p>
-					</td>
-					<td width='100' valign='top' align='right'><a href="/p/kissy-editor" target="_blank"><img src="http://www.oschina.net/img/logo/ckeditor.gif"/></a></td>
-						
-						</tr></table>
-				    
-					    </li>
-					    <li>
-				    <h3><a href="/p/areaedit" target="_blank">PHP的可视化HTML编辑器 <em>AreaEdit</em></a></h3>    
-					<table width='100%'><tr><td>
-						<p class='detail'>
-									AreaEdit是一个WYSIWYG HTML Editor组件专门设计用于PHP Web应用程序中。
-						    	<a href="/p/areaedit" target="_blank" class='more'>更多AreaEdit信息</a>
-						</p>
-					</td>
-					<td width='100' valign='top' align='right'><a href="/p/kissy-editor" target="_blank"><img src="http://www.oschina.net/img/logo/ckeditor.gif"/></a></td>
-						
-						</tr></table>
-				    
-					    </li>
-					    <li>
-				    <h3><a href="/p/areaedit" target="_blank">PHP的可视化HTML编辑器 <em>AreaEdit</em></a></h3>    
-					<table width='100%'><tr><td>
-						<p class='detail'>
-									AreaEdit是一个WYSIWYG HTML Editor组件专门设计用于PHP Web应用程序中。
-						    	<a href="/p/areaedit" target="_blank" class='more'>更多AreaEdit信息</a>
-						</p>
-					</td>
-					<td width='100' valign='top' align='right'><a href="/p/kissy-editor" target="_blank"><img src="http://www.oschina.net/img/logo/ckeditor.gif"/></a></td>
-						
-						</tr></table>
-				    
-					    </li>
-					    <li>
-				    <h3><a href="/p/areaedit" target="_blank">PHP的可视化HTML编辑器 <em>AreaEdit</em></a></h3>    
-					<table width='100%'><tr><td>
-						<p class='detail'>
-									AreaEdit是一个WYSIWYG HTML Editor组件专门设计用于PHP Web应用程序中。
-						    	<a href="/p/areaedit" target="_blank" class='more'>更多AreaEdit信息</a>
-						</p>
-					</td>
-					<td width='100' valign='top' align='right'><a href="/p/kissy-editor" target="_blank"><img src="http://www.oschina.net/img/logo/ckeditor.gif"/></a></td>
-						
-						</tr></table>
-				    
-					    </li>
-					    <li>
-				    <h3><a href="/p/areaedit" target="_blank">PHP的可视化HTML编辑器 <em>AreaEdit</em></a></h3>    
-					<table width='100%'><tr><td>
-						<p class='detail'>
-									AreaEdit是一个WYSIWYG HTML Editor组件专门设计用于PHP Web应用程序中。
-						    	<a href="/p/areaedit" target="_blank" class='more'>更多AreaEdit信息</a>
-						</p>
-					</td>
-					<td width='100' valign='top' align='right'><a href="/p/kissy-editor" target="_blank"><img src="http://www.oschina.net/img/logo/ckeditor.gif"/></a></td>
-						
-						</tr></table>
-				    
-					    </li>
-					    <li>
-				    <h3><a href="/p/areaedit" target="_blank">PHP的可视化HTML编辑器 <em>AreaEdit</em></a></h3>    
-					<table width='100%'><tr><td>
-						<p class='detail'>
-									AreaEdit是一个WYSIWYG HTML Editor组件专门设计用于PHP Web应用程序中。itor组件专门设计用于PHP Web应用程序中。itor组件专门设计用于PHP Web应用程序中。itor组件专门设计用于PHP Web应用程序中。itor组件专门设计用于PHP Web应用程序中。itor组件专门设计用于PHP Web应用程序中。
-						    	<a href="/p/areaedit" target="_blank" class='more'>更多AreaEdit信息</a>
-						</p>
-					</td>
-					<td width='100' valign='top' align='right'><a href="/p/kissy-editor" target="_blank"><img src="${basePath}common/image/logo.png"/></a></td>
-						
-						</tr></table>
-				    
-					    </li>
-					    <li>
-				    <h3><a href="/p/areaedit" target="_blank">PHP的可视化HTML编辑器 <em>AreaEdit</em></a></h3>    
-					<table width='100%'><tr><td>
-						<p class='detail'>
-									AreaEdit是一个WYSIWYG HTML Editor组件专门设计用于PHP Web应用程序中。
-						    	<a href="/p/areaedit" target="_blank" class='more'>更多AreaEdit信息</a>
-						</p>
-					</td>
-					<td width='100' valign='top' align='right'><a href="/p/kissy-editor" target="_blank"><img src="${basePath}common/image/logo1.jpg" width="100"/></a></td>
-						
-						</tr></table>
-				    
-					    </li>
-					    <li>
-				    <h3><a href="/p/areaedit" target="_blank">PHP的可视化HTML编辑器 <em>AreaEdit</em></a></h3>    
-					<table width='100%'><tr><td>
-						<p class='detail'>
-									AreaEdit是一个WYSIWYG HTML Editor组件专门设计用于PHP Web应用程序中。
-						    	<a href="/p/areaedit" target="_blank" class='more'>更多AreaEdit信息</a>
-						</p>
-					</td>
-					<td width='100' valign='top' align='right'><a href="/p/kissy-editor" target="_blank"><img src="http://www.oschina.net/img/logo/ckeditor.gif"/></a></td>
-						
-						</tr></table>
-				    
-					    </li>
-					    <li>
-				    <h3><a href="/p/areaedit" target="_blank">PHP的可视化HTML编辑器 <em>AreaEdit</em></a></h3>    
-					<table width='100%'><tr><td>
-						<p class='detail'>
-									AreaEdit是一个WYSIWYG HTML Editor组件专门设计用于PHP Web应用程序中。
-						    	<a href="/p/areaedit" target="_blank" class='more'>更多AreaEdit信息</a>
-						</p>
-					</td>
-					<td width='100' valign='top' align='right'><a href="/p/kissy-editor" target="_blank"><img src="http://www.oschina.net/img/logo/ckeditor.gif"/></a></td>
-						
-						</tr></table>
-				    
-					    </li>
-					    
-                	
+					 
+                	</#list>
                 	</ul>
                 	
                 	
@@ -230,28 +117,26 @@
                 <div title="最新添加" data-options="" style="padding:10px">
                 <div class='ProjectList'>	
                 <ul class='List'>
-				              <li>
-				    <h3><a href="/p/quarkjs" target="_blank">HTML5游戏框架 <em>QuarkJS</em></a></h3>    
+				           	<#list news as item>
+                	<li>
+				    <h3><a href="${basePath}drug/show/${item.getId()}" target="_blank">${item.alias} <em>${item.name}</em></a></h3>    
+					
 					<table width='100%'><tr><td>
 						<p class='detail'>
-									Quark JS (quark.js) 是一个全新的 javascript 的 HTML5 游戏开发框架，目前由@flashlizi负责维护，有@大城小胖 @真阿当 @06wj @Bobby_casperCBY @裕波 @米粽my @寒冬winter等一起参与完善。...
-						    	<a href="/p/quarkjs" target="_blank" class='more'>更多QuarkJS信息</a>
+									${item.term}
+						    	<a href="${basePath}drug/show/${item.getId()}" target="_blank" class='more'>更多${item.name}</a>
 						</p>
 					</td>
-						</tr></table>
+						<td width='100' valign='top' align='right'>
+						<a href="${basePath}drug/show/${item.getId()}" target="_blank"><img src="${basePath}common/avatar/${item.image}" width="100" /></a>
+						
+						</td>
+						</tr>
+						</table>
 				    
 					    </li>
-							<li>
-				    <h3><a href="/p/flarevideo" target="_blank">HTML5 视频播放器 <em>Flare Video</em></a></h3>    
-					<table width='100%'><tr><td>
-						<p class='detail'>
-									Flare video 是一个开源的 HTML5 视频播放器，会自动判断浏览器是否支持 HTML5 ，如果不支持则使用 Flash 技术播放。Flare video 可通过 CSS/HTML/JS 进行功能和界面的定制，支持全屏播放。
-						    	<a href="/p/flarevideo" target="_blank" class='more'>更多Flare Video信息</a>
-						</p>
-					</td>
-						</tr></table>
-				    
-					    </li>
+					 
+                	</#list>
 						</ul>
                 	</div>
                 </div>

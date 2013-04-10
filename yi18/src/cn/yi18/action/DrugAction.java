@@ -43,12 +43,28 @@ public class DrugAction extends BaseAction
 		
 		List<DrugClass> tree = drugClassService.getTree();
 		root.put("tree", tree);
-		root.put("open", tree.get(tree.size()-1).getDrugclass().getId());
+		
+		String[] params = request.getParams();
+		if(params==null)
+		{
+			List<Drug> news = drugService.getNew(10);
+			List<Drug> hots = drugService.getHot(1, 10);
+			root.put("news", news);
+			root.put("hots", hots);
+			root.put("open", tree.get(tree.size()-1).getDrugclass().getId());
+			
+		}
+		
+		
 		//root.put("open", 1);
 		printFreemarker("default/drug_list.ftl", root);
 	}
 	
 	
+	/**
+	 * 添加药品信息
+	 * @throws FileUploadException
+	 */
 	public void add() throws FileUploadException
 	{
 		if(request.isSubmit())
@@ -164,6 +180,10 @@ public class DrugAction extends BaseAction
 	}
 	
 	
+	/**
+	 * 更新药品信息
+	 * @throws FileUploadException
+	 */
 	public void update() throws FileUploadException
 	{
 		
@@ -176,10 +196,10 @@ public class DrugAction extends BaseAction
 			HashMap<String, String> extMap = new HashMap<String, String>();
 			extMap.put("image", "gif,jpg,jpeg,png,bmp");
 			
-			String urlPath=request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/";
+			//String urlPath=request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/";
 			String readlityPath=request.getSession().getServletContext().getRealPath("/");
-			String saveUrl=urlPath+"common/temp/";
-			String savePath=readlityPath+"common/temp/";
+			//String saveUrl=urlPath+"common/temp/";
+			String savePath=readlityPath+"common/avatar/";
 			FileItemFactory factory = new DiskFileItemFactory();
 			ServletFileUpload upload = new ServletFileUpload(factory);
 			upload.setHeaderEncoding("UTF-8");
@@ -252,7 +272,7 @@ public class DrugAction extends BaseAction
 					}
 
 					String newFileName = DateFormatUtils.format(new Date(), "yyyyMMddHHmmss") + "_" + new Random().nextInt(1000) + "." + fileExt;
-					drug.setImage(saveUrl+newFileName);
+					drug.setImage(newFileName);
 						File uploadedFile = new File(savePath, newFileName);
 						try {
 							item.write(uploadedFile);
@@ -279,7 +299,9 @@ public class DrugAction extends BaseAction
 	}
 	
 	
-	
+	/**
+	 * 显示药品信息
+	 */
 	public void show()
 	{
 		String[] params = request.getParams();
@@ -292,7 +314,7 @@ public class DrugAction extends BaseAction
 			root.put("drug", drug);
 			root.put("list", list);
 			
-			printFreemarker("default/show_drug.ftl", root);
+			printFreemarker("default/drug.ftl", root);
 		}
 	}
 	

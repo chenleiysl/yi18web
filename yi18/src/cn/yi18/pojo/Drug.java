@@ -20,6 +20,7 @@ public class Drug extends POJO
 	protected Long factory;//生产厂家
 	protected int allow;//是否允许显示，，是否通过管理员审核，1：通过，0：等待，-1 不通过
 	protected Long drugclass;//药品分类
+	protected int count;//访问次数
 	protected Timestamp time = new Timestamp(new Date().getTime());//时间
 	public String getName() {
 		return name;
@@ -80,6 +81,12 @@ public class Drug extends POJO
 	}
 	public void setDrugclass(Long drugclass) {
 		this.drugclass = drugclass;
+	}
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
 	}
 	public Timestamp getTime() {
 		return time;

@@ -2,4 +2,4 @@
 
  用户信息
 
-<#include "footer.ftl">
+<#include "../default/footer.ftl">
