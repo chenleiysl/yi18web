@@ -43,6 +43,8 @@ public class DrugAction extends BaseAction
 		
 		List<DrugClass> tree = drugClassService.getTree();
 		root.put("tree", tree);
+		root.put("open", tree.get(tree.size()-1).getDrugclass().getId());
+		//root.put("open", 1);
 		printFreemarker("default/drug_list.ftl", root);
 	}
 	

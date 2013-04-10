@@ -7,7 +7,7 @@
     <filter-class>cn.yi18.filter.URLMappingFilter</filter-class>
     <init-param>
     	<param-name>ignore</param-name>
-    	<param-value>/action/,/commons/</param-value>
+    	<param-value>/action/,/common/</param-value>
     </init-param>
     <init-param>
     	<param-name>ignoreExts</param-name>

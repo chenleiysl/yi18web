@@ -20,6 +20,36 @@
 }
 
 
+.pager {height:28px;line-height:28px;margin:2px 0;}
+.pager li {
+	font-size: 14px;
+	text-align: center;
+	margin: 0 2px 0 0;
+	display:inline;
+}
+.pager li a {
+	font-family:Courier New,Arial;
+    color: #58595b;
+    background-color:#f0f0f0;
+    padding: 3px 5px;
+    text-decoration:none;
+}
+.pager li a:hover {
+	color:#000;
+}
+.pager li.prev a {
+    background-color:#333;
+    color:#333;	
+}
+.pager li.next a {
+    background-color:#7798CB;
+    color:#333;	
+}
+.pager li.current a {
+	color: #fff;
+    background: #7798CB;
+}
+
 
 #userbar {
 	text-align:right;
@@ -97,7 +127,10 @@ color:#666;
 	}
 
 
-#logo img {border-width: 0px 0px 0px 0px}
+#logo img {border-width: 0px 0px 0px 0px;}
+
+
+
 
 
 

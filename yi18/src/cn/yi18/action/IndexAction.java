@@ -14,6 +14,7 @@ public class IndexAction extends BaseAction
 		//User bean = new User();
 		// User user = bean.get(1);
 		printFreemarker("default/index.ftl", root);
+		//printHtml("欢迎来到医药吧，我们将于2013年6月正式推出，敬请期待！");
 		
 	}
 	
