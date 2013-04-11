@@ -16,7 +16,7 @@
             <tr>  
                <td>${item.name}</td>
                
-               <td>${item.term}</td>
+               <td>${item.subTerm(40)}</td>
                <td>${item.time}</td>  
                
                <td><a href="${basePath}admin/checkdrug/${item.getId()}" >审核</a></td>  

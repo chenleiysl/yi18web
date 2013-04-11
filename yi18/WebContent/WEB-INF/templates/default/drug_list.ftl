@@ -23,7 +23,7 @@
 .LeftMenu table.Menu td{margin:10px 0 10px 0;border-bottom:1px dashed #ddd;list-style-type:none;}
 .LeftMenu table.Menu td a{text-decoration:none;}
 .LeftMenu table.Menu td a:hover {color:green;}
-
+.Select{background: #eee;}
 .LeftMenu table.Menu td .count{font-size:9pt;float: right;}
 
  </style>
@@ -46,10 +46,17 @@
                 <div class="LeftMenu"> 
                    <table class="Menu" width="100%">
                    <#list item.list as it>
-                	<tr><td><a href="#">${it.title}  </a></td>
-                	<td><span class="count">123</span></td>
-                	</tr>
-                	
+                   
+	                  
+	                   
+	                   <tr <#if it.getId()==id> class="Select"  </#if> ><td><a href="${basePath}drug/list/${it.getId()}">${it.title}  </a></td>
+	                	<td><span class="count">123</span></td>
+	                	</tr>
+	                	
+	                	
+	                 
+                   
+                   
                 	</#list>
                 	</table> 
                 	
@@ -64,19 +71,19 @@
            
         </div>  
         
-        <div data-options="region:'center',title:'<a href=\'#\'>常见药品<a>'" >  
+        <div data-options="region:'center',title:'<a href=\'${basePath}drug/list\'>药品分类<a> &raquo;<#if drugclass??>${drugclass.title}<#else>常见药品</#if>(${page.total}种) '" > 
             <div class="easyui-tabs" data-options="fit:true,border:false,plain:true">  
                 <div title="最热药品" data-options="" style="padding:10px">
                 	 <div class='ProjectList'>	
                			 <ul class='List'>
                 	
-                	<#list hots as item>
+                	<#list page.list as item>
                 	<li>
 				    <h3><a href="${basePath}drug/show/${item.getId()}" target="_blank">${item.alias} <em>${item.name}</em></a></h3>    
 					
 					<table width='100%'><tr><td>
 						<p class='detail'>
-									${item.term}
+									${item.subTerm(400)}
 						    	<a href="${basePath}drug/show/${item.getId()}" target="_blank" class='more'>更多${item.name}</a>
 						</p>
 					</td>
@@ -98,15 +105,7 @@
                 	
                 	<div>
                 	
-            <ul class="pager">
-        <li class='page current'>
-        <a href="">1</a></li>
-        <li class='page'><a href="">2</a>
-        </li><li class='page'><a href="">3</a></li>
-        <li class='page'><a href="">4</a></li>
-        <li class='page'><a href="">10</a></li>
-        <li class='page next'><a href="#">&gt;</a></li>  
-          </ul>
+        		<#include "page.ftl">
 		
                 	</div>
                 

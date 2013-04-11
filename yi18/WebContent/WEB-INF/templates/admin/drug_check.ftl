@@ -99,8 +99,9 @@
                     <td>
                     
                     <select id="cc" class="easyui-combobox" name="drugclass" style="width:200px;">  
+					     <option value="0">其它分类</option>
 					     <#list drugclass as item>
-					      <option value="0">其它分类</option>  
+					        
 					     <option value="${item.getId()}">${item.title}</option> 
 					     </#list>
 					    

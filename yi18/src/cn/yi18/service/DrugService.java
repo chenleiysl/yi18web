@@ -8,6 +8,8 @@ import cn.yi18.dao.DrugDao;
 import cn.yi18.enums.DrugEnum;
 import cn.yi18.pojo.Drug;
 import cn.yi18.pojo.Druginfo;
+import cn.yi18.pojo.POJO;
+import cn.yi18.util.PageUtil;
 
 public class DrugService 
 {
@@ -73,6 +75,47 @@ public class DrugService
 	 */
 	public List<Drug> getHot(int page,int size) {
 		return  drugDao.getHot(page, size);
+	}
+
+	public List<Drug> getNew(int size, long id) {
+		
+		Drug bean = new Drug();
+		String filter = " allow = "+DrugEnum.Check_Status.IsCheck.getValue()+" AND drugclass="+id;
+		return (List<Drug>) bean.filter(filter , 1, size);
+	}
+
+	public List<Drug> getHot(int page, int size, long id) 
+	{
+		
+		return drugDao.getHot(page, size,id);
+	}
+	
+	
+	
+	/**
+	 * 
+	 * @param page
+	 * @param size
+	 * @return
+	 */
+	public PageUtil getPageHot(int page, int size) {
+		Drug bean = new Drug();
+		String filter =  " allow = "+DrugEnum.Check_Status.IsCheck.getValue();
+		int total = bean.totalCount(filter);//取得总数
+		List<Drug> list = getHot(page, size);
+		PageUtil pageUtil = new PageUtil(list , page, size, total);
+		return pageUtil;
+		
+	}
+	
+	public PageUtil getPageHot(int page, int size, long id) {
+		Drug bean = new Drug();
+		String filter = " allow = "+DrugEnum.Check_Status.IsCheck.getValue()+" AND drugclass="+id;
+		int total = bean.totalCount(filter);//取得总数
+		List<Drug> list = getHot(page, size,id);
+		PageUtil pageUtil = new PageUtil(list , page, size, total);
+		return pageUtil;
+		
 	}
 
 }

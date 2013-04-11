@@ -3,6 +3,8 @@ package cn.yi18.pojo;
 import java.sql.Timestamp;
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * 药品信息
  * @author 陈磊
@@ -93,6 +95,19 @@ public class Drug extends POJO
 	}
 	public void setTime(Timestamp time) {
 		this.time = time;
+	}
+	
+	
+	
+
+	public String subTerm(int size)
+	{
+		String r=StringUtils.substring(term, 0, size);
+		if (term.length()>size) 
+		{
+			r=r+"…";
+		}
+		return r;
 	}
 	
 	

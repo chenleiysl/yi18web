@@ -24,7 +24,7 @@
 	</div>
    <div style="padding:10px;border:1px solid #ddd">  
         <a href="${basePath}" class="easyui-linkbutton" data-options="plain:true">主页</a>  
-        <a href="${basePath}drug/list" class="easyui-linkbutton" data-options="plain:true">常见药品</a>  
+        <a href="${basePath}drug/list" class="easyui-linkbutton" data-options="plain:true">药品分类</a>  
         <a href="#" class="easyui-linkbutton" data-options="plain:true">病状查找</a>
          <a href="#" class="easyui-linkbutton" data-options="plain:true">疾病找药</a> 
          <a href="#" class="easyui-linkbutton" data-options="plain:true">用药咨询</a>

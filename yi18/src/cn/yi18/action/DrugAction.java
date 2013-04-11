@@ -25,6 +25,7 @@ import cn.yi18.entity.DrugClass;
 import cn.yi18.entity.DrugInfo;
 import cn.yi18.pojo.Directory;
 import cn.yi18.pojo.Drug;
+import cn.yi18.pojo.Drugclass;
 import cn.yi18.pojo.Druginfo;
 import cn.yi18.pojo.Factory;
 import cn.yi18.pojo.POJO;
@@ -33,26 +34,44 @@ import cn.yi18.service.DrugClassService;
 import cn.yi18.service.DrugInfoService;
 import cn.yi18.service.DrugService;
 import cn.yi18.service.FactoryService;
+import cn.yi18.util.PageUtil;
 
 public class DrugAction extends BaseAction
 {
-	
+	private final int SIZE=10;
 	
 	
 	public void list() throws ServletException, IOException {
 		
+		int page= request.getParameter("p")==null?1:Integer.parseInt(request.getParameter("p"));
+		// 取得页面，如果没有默认为1
 		List<DrugClass> tree = drugClassService.getTree();
 		root.put("tree", tree);
 		
 		String[] params = request.getParams();
 		if(params==null)
 		{
-			List<Drug> news = drugService.getNew(10);
-			List<Drug> hots = drugService.getHot(1, 10);
+			List<Drug> news = drugService.getNew(SIZE);
+			PageUtil hots = drugService.getPageHot(page, SIZE);
+			root.put("id", 0);
 			root.put("news", news);
-			root.put("hots", hots);
+			root.put("page", hots);
 			root.put("open", tree.get(tree.size()-1).getDrugclass().getId());
 			
+		}else 
+		{
+			long id = Long.parseLong(params[0]);//药品分类的id
+			Drugclass bean = new Drugclass();
+			Drugclass drugclass = bean.get(id); //取得分类
+			
+			
+			List<Drug> news = drugService.getNew(SIZE,id);
+			PageUtil hots = drugService.getPageHot(page, SIZE,id);
+			root.put("id", id);
+			root.put("news", news);
+			root.put("page", hots);
+			root.put("drugclass",drugclass);
+			root.put("open", drugclass.get_parentId());//打开的栏目
 		}
 		
 		

@@ -15,11 +15,30 @@ public class DrugDao
 		
 	}
 	
+	public int  getTotal() 
+	{
+		
+		return 0;
+		
+	}
+	
+	/**
+	 * 取得热门药品
+	 * @param page
+	 * @param size
+	 * @return
+	 */
 	public List<Drug> getHot(int page ,int size ) 
 	{
-		String sql ="SELECT * FROM yi18_drug WHERE allow = ? ORDER BY count DESC";
+		String sql ="SELECT * FROM yi18_drug WHERE allow = ?  ORDER BY count DESC";
 		
 		return QueryHelper.query_slice(Drug.class,sql, page,size, DrugEnum.Check_Status.IsCheck.getValue());
+	}
+
+	public List<Drug> getHot(int page, int size, long id) {
+			String sql ="SELECT * FROM yi18_drug WHERE allow = ? AND drugclass=? ORDER BY count DESC";
+		
+		return QueryHelper.query_slice(Drug.class,sql, page,size, DrugEnum.Check_Status.IsCheck.getValue(),id);
 	}
 	
 	

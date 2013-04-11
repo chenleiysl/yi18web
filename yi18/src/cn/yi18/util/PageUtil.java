@@ -14,12 +14,14 @@ public class PageUtil
 	 private int page;
 	 private int size;
 	 private int totalpage;
+	 private int total;
 	 public PageUtil(List<? extends POJO> list,int page, int size, int total) 
 	 {
 		this.list= list;
 		this.page= page;
 		this.size = size<1 ?Integer.MAX_VALUE:size;
 		this.totalpage = total%size==0?total/size:(total/size+1);
+		this.total = total;
 	}
 	 public PageUtil() {
 		
@@ -47,6 +49,12 @@ public class PageUtil
 	}
 	public void setTotalpage(int totalpage) {
 		this.totalpage = totalpage;
+	}
+	public int getTotal() {
+		return total;
+	}
+	public void setTotal(int total) {
+		this.total = total;
 	}
 	 
 
