@@ -2,7 +2,7 @@
 
 
   <div id="Message">
-<samp class="date">  <a href="#">常用药</a>&raquo;<a href="#">感冒药</a> &raquo;<a href="#">${drug.name}</a>  </samp> 
+<samp class="date">  <a href="${basePath}drug/list">药品分类</a>&raquo;<a href="#">感冒药</a> &raquo;<a href="#">${drug.name}</a>  </samp> 
 
 </div>
     

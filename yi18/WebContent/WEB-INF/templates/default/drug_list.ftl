@@ -31,7 +31,7 @@
   <div style="margin:10px 0;"></div>  
     <div class="easyui-layout" style="width:980px;height:1800px;">  
     
-     <div data-options="region:'west',split:true" title="常见药品" style="width:240px;">  
+     <div data-options="region:'west',split:true" title="药品分类" style="width:240px;">  
      
             <div class="easyui-accordion" data-options="fit:true,border:false">  
             
@@ -71,7 +71,7 @@
            
         </div>  
         
-        <div data-options="region:'center',title:'<a href=\'${basePath}drug/list\'>药品分类<a> &raquo;<#if drugclass??>${drugclass.title}<#else>常见药品</#if>(${page.total}种) '" > 
+        <div data-options="region:'center',title:'药品分类 &raquo;<#if drugclass??>${drugclass.title}<#else>常见药品</#if>(${page.total}种) '" > 
             <div class="easyui-tabs" data-options="fit:true,border:false,plain:true">  
                 <div title="最热药品" data-options="" style="padding:10px">
                 	 <div class='ProjectList'>	
