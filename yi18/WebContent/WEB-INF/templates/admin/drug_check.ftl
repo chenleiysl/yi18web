@@ -123,7 +123,7 @@
 				    editor_${item.getId()} = K.create('#editor_${item.getId()}', {
 						
 						items : ['bold', 'italic', 'underline', 'strikethrough', 'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'formatblock', 'insertorderedlist', 'insertunorderedlist', '|','forecolor',
-								 'hilitecolor', 'fontname', 'fontsize', '|','link', 'unlink', 'emoticons',   'flash', 'table', 'quote', '|', 'fullscreen', 'source', 'about'],
+								 'hilitecolor', 'fontname', 'fontsize', '|','link', 'unlink', 'emoticons', 'table', 'quote', '|', 'fullscreen', 'source', 'about']
 				
 				    });
 				});
