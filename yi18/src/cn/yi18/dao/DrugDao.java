@@ -15,12 +15,6 @@ public class DrugDao
 		
 	}
 	
-	public int  getTotal() 
-	{
-		
-		return 0;
-		
-	}
 	
 	/**
 	 * 取得热门药品

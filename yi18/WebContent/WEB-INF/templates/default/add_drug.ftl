@@ -54,7 +54,7 @@
                     <td>处方类型:</td>  
                     <td><select id="cc" class="easyui-combobox" name="prescription" style="width:200px;">  
 					    <option value="0">非处方药</option>  
-					    <option value="0">处方药</option>  
+					    <option value="1">处方药</option>  
 					</select></td>  
                 </tr> 
                  <tr>  
@@ -63,7 +63,7 @@
                 </tr> 
                   <tr>  
                     <td>药品的词条:</td>  
-                    <td> <textarea  name="term" style="width:300px;"></textarea>  </td>  
+                    <td> <textarea  name="term" style="width:300px;height:100px"></textarea>  </td>  
                     <td> 药品的简介，简要说明 </td>
                 </tr> 
                <tr>  
@@ -108,7 +108,7 @@
                           
                     }  
                 }]">  
-                   <textarea id="editor_${item.getId()}" name="editor_${item.getId()}" style="width:700px;height:300px;"></textarea>  
+                   <textarea id="editor_${item.getId()}" name="editor_${item.getId()}" style="width:700px;height:250px;"></textarea>  
 						
 				<script>
 					var editor_${item.getId()};
