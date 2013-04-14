@@ -54,85 +54,46 @@
 
 </div>
     
-      <div id="tt">  
-        <a href="javascript:void(0)" class="icon-save" onclick="javascript:alert('add')" title="保存"></a>  
-  
-        
-    </div> 
-    
-    <script type="text/javascript">
-    function add()
-    {
-    	alert("");
-    }
-    
-    </script>
-    
-   <div id="p" class="easyui-panel" title="添加药品" style="width:880px;height:500px;padding:10px;" data-options="tools:'#tt'"> 
+      
+   
+   <div id="p" class="easyui-panel" title="添加新闻" style="width:880px;height:700px;padding:10px;" data-options="tools:'#tt'"> 
   <div data-options="region:'west',split:true" title="展开/收缩" style="width:780px;height: 400px">  
      
-            <div class="easyui-accordion" data-options="fit:true,border:false">  
-            
-                <div title="药品基本信息" data-options="selected:true" style="padding:10px;">  
-                 <form id="ff" method="post" enctype="multipart/form-data">      
+           
+                 
+                 <form id="ff" method="post" >      
             <table>  
                 <tr>  
-                    <td>药品名称:</td>  
-                    <td><input class="easyui-validatebox" type="text" name="name" data-options="required:true" style="width: 300px"></input></td>  
-                	<td>* </td>
+                    <td>标题:</td>  
+                    <td><input class="easyui-validatebox" type="title" name="name" data-options="required:true" style="width: 400px"></input></td>  
+                	
                 </tr>  
-                <tr>  
-                    <td>药品别名:</td>  
-                    <td><input class="easyui-validatebox" type="text" name="name" style="width: 300px"></input></td>  
-               		<td> 该产品其它的名称，如果有多个名称可用（;）隔开。 </td>
-                </tr> 
-              <tr>  
-                    <td>药品图片:</td>  
-                    <td><input class="easyui-validatebox" type="file" name="name" style="width: 300px"></input></td>  
-                	<td> 为了更加形象的现实药品，在这里给药品上传一个“头像”。 </td>
-                </tr> 
-                  <tr>  
-                    <td>药品类型:</td>  
-                    <td><select id="cc" class="easyui-combobox" name="dept" style="width:200px;">  
-					    <option value="aa">中成药</option>  
-					    <option>西药</option>  
-					    <option>中药</option>  
-					    
-					</select></td>  
-                </tr> 
-                 <tr >  
-                    <td>处方类型:</td>  
-                    <td><select id="cc" class="easyui-combobox" name="dept" style="width:200px;">  
-					    <option value="aa">非处方药</option>  
-					    <option>处方药</option>  
-					</select></td>  
-                </tr> 
+ 
                  <tr>  
-                    <td>常考价格:</td>  
-                    <td><input id="ss" class="easyui-numberbox" value="0。00" data-options="min:0,precision:2" >  </td>  
+                    <td>内容:</td>  
+                    <td> <textarea id="editor_id" name="message" style="width:750px;height:450px;">
+						
+						</textarea>  
+						
+						<script>
+							var editor_id;
+							KindEditor.ready(function(K) {
+								editor_id = K.create('#editor_id', {
+								items : ['bold', 'italic', 'underline', 'strikethrough', 'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'formatblock', 'insertorderedlist', 'insertunorderedlist', '|','forecolor',
+										 'hilitecolor', 'fontname', 'fontsize', '|','link', 'unlink', 'emoticons',   'table', 'quote', '|', 'fullscreen', 'source', 'about']
+						
+						    });
+						});
+				</script>
+						</td>  
                 </tr> 
                
                
             </table>  
+            
+             <input type="submit" name="sub" value="保存">
          </form>
-                </div>  
-                <div title="Title2"  style="padding:10px;" data-options="  
-                 
-                tools:[{  
-                    iconCls:'icon-help', 
-                    title:'帮助', 
-                    handler:function(){  
-                        alert('help');  
-                    }  
-                }]">  
-                   <textarea id="editor_id" name="content" style="width:700px;height:300px;">
-						&lt;strong&gt;HTML内容&lt;/strong&gt;
-						</textarea>  
-                </div>  
-                <div title="Title3" style="padding:10px">  
-                    content3  
-                </div>  
-            </div>  
+                
             
         </div>
     
