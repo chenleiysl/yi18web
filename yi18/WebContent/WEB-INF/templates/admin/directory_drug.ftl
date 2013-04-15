@@ -50,6 +50,7 @@
         <div style="padding:10px 0 10px 60px">  
         <form id="ff" method="post" action="${basePath}admin/directory"> 
         	<input type="hidden" name="id" value="0">
+        	<input type="hidden" name="type" value="1">
             <table>  
                 <tr>  
                     <td>目录名称:</td>  

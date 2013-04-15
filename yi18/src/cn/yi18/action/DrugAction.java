@@ -190,7 +190,7 @@ public class DrugAction extends BaseAction
 			
 		}else {
 			List<Factory> factorys = factoryService.getAll();
-			List<Directory> list = directoryService.getAll();
+			List<Directory> list = directoryService.getDrug();
 			root.put("list", list);
 			root.put("factorys", factorys);
 			printFreemarker("default/add_drug.ftl", root);

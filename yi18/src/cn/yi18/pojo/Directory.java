@@ -21,7 +21,7 @@ public class Directory extends POJO
 	protected String description;//描述
 	protected Timestamp time = new Timestamp(new Date().getTime());//创建时间
 	protected int sequence;//目录的线索顺序
-	
+	protected int type;//类型
 	
 	public String getTitle() {
 		return title;
@@ -46,6 +46,12 @@ public class Directory extends POJO
 	}
 	public void setSequence(int sequence) {
 		this.sequence = sequence;
+	}
+	public int getType() {
+		return type;
+	}
+	public void setType(int type) {
+		this.type = type;
 	}
 	public Timestamp getTime() {
 		return time;

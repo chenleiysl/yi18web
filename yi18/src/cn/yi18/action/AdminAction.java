@@ -13,6 +13,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import com.google.gson.Gson;
 
 import cn.yi18.entity.DrugInfo;
+import cn.yi18.enums.DirectoryEnum;
 import cn.yi18.enums.NewsEnum;
 import cn.yi18.pojo.Directory;
 import cn.yi18.pojo.Drug;
@@ -22,6 +23,7 @@ import cn.yi18.pojo.Links;
 import cn.yi18.pojo.News;
 import cn.yi18.pojo.POJO;
 import cn.yi18.pojo.Partner;
+import cn.yi18.pojo.Symptomclass;
 import cn.yi18.service.DirectoryService;
 import cn.yi18.service.DrugInfoService;
 import cn.yi18.service.DrugService;
@@ -52,8 +54,8 @@ public class AdminAction extends BaseAction {
 		if(request.isSubmit())
 		{
 			Map map = request.getParameterMap();
-			  Directory directory = new Directory();
-			  BeanUtils.populate(directory , map);
+			Directory directory = new Directory();
+			BeanUtils.populate(directory , map);
 			if(request.getParameter("sub").equals("save"))
 			{
 				
@@ -81,10 +83,16 @@ public class AdminAction extends BaseAction {
 			
 		}else 
 		{
-			
-			List<Directory> list =directoryService.getAll(); 
-			root.put("list", list);
-			printFreemarker("admin/directory.ftl", root);
+			String type = request.getParams()[0];
+			if(type.equals(DirectoryEnum.Type.Drug.getValue()+"")){
+				List<Directory> list =directoryService.getDrug(); 
+				root.put("list", list);
+				printFreemarker("admin/directory_drug.ftl", root);
+			}else if(type.equals(DirectoryEnum.Type.Symptom.getValue()+"")){
+				List<Directory> list =directoryService.getSymptom(); 
+				root.put("list", list);
+				printFreemarker("admin/directory_symptom.ftl", root);
+			}
 		}
 		
 	}
@@ -100,11 +108,12 @@ public class AdminAction extends BaseAction {
 		
 		if(request.isSubmit())
 		{
+			Drugclass drugclass= new Drugclass();
+			Map map = request.getParameterMap();
+			BeanUtils.populate(drugclass , map);
 			if(request.getParameter("sub").equals("save"))
 			{
-				Drugclass drugclass= new Drugclass();
-				Map map = request.getParameterMap();
-				BeanUtils.populate(drugclass , map);
+				
 				if(drugclass.get_parentId()==0)
 				{
 					drugclass.setLevel(1);
@@ -119,9 +128,7 @@ public class AdminAction extends BaseAction {
 				
 			}else if(request.getParameter("sub").equals("edit"))
 			{
-				Drugclass drugclass= new Drugclass();
-				Map map = request.getParameterMap();
-				BeanUtils.populate(drugclass , map);
+				
 				if(drugclass.get_parentId()==0)
 				{
 					drugclass.setLevel(1);
@@ -160,9 +167,89 @@ public class AdminAction extends BaseAction {
 		}
 	}
 	
+	
+	/**
+	 * 病状分类操作
+	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException
+	 */
+	public void symptomclass() throws IllegalAccessException, InvocationTargetException
+	{
+		
+		if(request.isSubmit())
+		{
+			Symptomclass symptomclass= new Symptomclass();
+			Map map = request.getParameterMap();
+			BeanUtils.populate(symptomclass , map);
+			if(request.getParameter("sub").equals("save"))
+			{
+				
+				if(symptomclass.get_parentId()==0)
+				{
+					symptomclass.setLevel(1);
+					symptomclass.setState("closed");
+				}else {
+					symptomclass.setLevel(2);
+				}
+				symptomclass.save();
+				 String json = "{\"success\": true,   \"message\": \"添加成功.\" } ";
+				  printHtml(json);
+				  return;
+				
+			}else if(request.getParameter("sub").equals("edit"))
+			{
+				
+				if(symptomclass.get_parentId()==0)
+				{
+					symptomclass.setLevel(1);
+					symptomclass.setState("closed");
+				}else {
+					symptomclass.setLevel(2);
+					symptomclass.setState(null);
+				}
+				Symptomclass bean = new Symptomclass();
+				  Map<String, Object> dmap = new HashMap<String, Object>();
+				  dmap.put("title", symptomclass.getTitle());
+				  dmap.put("_parentId", symptomclass.get_parentId());
+				  dmap.put("state", symptomclass.getState());
+				  dmap.put("level", symptomclass.getLevel());
+				  bean.update(dmap, symptomclass.getId());
+				  String json = "{\"success\": true,   \"message\": \"修改成功.\" } ";
+				  printHtml(json);
+				  return;
+				
+			}
+				
+			  
+			
+		}else 
+		{
+			//Directory bean = new Directory();
+			//List<Directory> list =(List<Directory>) bean.list(); 
+			//root.put("list", list);
+			
+			Symptomclass bean = new Symptomclass();
+			 Map<String, Object> map = new HashMap<String, Object>();
+			 map.put("level", 1);
+			List<Symptomclass> roots = (List<Symptomclass>) bean.getlist(map );
+			root.put("roots", roots);
+			printFreemarker("admin/symptomclass.ftl", root);
+		}
+	}
+	
+	
 	public void jsondrugclass(){
 		Drugclass bean = new Drugclass();
 		List<Drugclass> rows = (List<Drugclass>) bean.list();
+		Gson gson = new Gson();
+		String json = gson.toJson(rows);
+		json= "{\"rows\":"+json+"}";
+		printJson(json);
+		 
+	}
+	public void jsonsymptomclass(){
+		Symptomclass bean = new Symptomclass();
+		List<Symptomclass> rows = (List<Symptomclass>) bean.list();
 		Gson gson = new Gson();
 		String json = gson.toJson(rows);
 		json= "{\"rows\":"+json+"}";

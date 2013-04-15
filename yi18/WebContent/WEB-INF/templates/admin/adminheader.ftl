@@ -26,11 +26,18 @@
    <div style="padding:10px;border:1px solid #ddd">  
         <a href="${basePath}admin" class="easyui-linkbutton" data-options="plain:true">个人信息</a>  
         <a href="#" class="easyui-menubutton" data-options="menu:'#mm1'">药品管理</a>    
+         <a href="#" class="easyui-menubutton" data-options="menu:'#mm3'">病状管理</a> 
         <a href="#" class="easyui-menubutton" data-options="menu:'#mm2'">服务管理</a>   
         <a href="#" class="easyui-linkbutton" data-options="plain:true">关于</a>
        
        
         
+          <div id="mm3" style="width:150px;">  
+		      <div ><a href="${basePath}admin/drug">病状审核</a></div>  
+		        <div ><a href="${basePath}admin/directory/2"> 病状目录信息 </a></div> 
+		        <div class="menu-sep"></div>  
+		        <div>  <a href="${basePath}admin/symptomclass">病状分类</a></div>   
+        </div>
        
        <div id="mm2" style="width:150px;">  
        <div ><a href="${basePath}admin/news">综合资讯</a></div>  
@@ -43,7 +50,7 @@
        
         <div id="mm1" style="width:150px;">  
         <div ><a href="${basePath}admin/drug">药品审核</a></div>  
-        <div ><a href="${basePath}admin/directory"> 药品目录信息 </a></div> 
+        <div ><a href="${basePath}admin/directory/1"> 药品目录信息 </a></div> 
         <div class="menu-sep"></div>  
         <div>  <a href="${basePath}admin/drugclass">药品分类</a></div>  
         

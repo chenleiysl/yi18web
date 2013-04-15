@@ -21,6 +21,25 @@ public class DirectoryEnum
 		  	}
 	}
 	
+	
+	/**
+	 * 目录的类型
+	 * @author 陈磊
+	 *
+	 */
+	public enum Type
+	{
+			Drug(1),Symptom(2);//
+		 	private int value;
+		  private Type(int value) {
+			   this.value = value;
+			}
+		  public int getValue()
+		  	{
+			  return this.value;
+		  	}
+	}
+	
 
 	
 	

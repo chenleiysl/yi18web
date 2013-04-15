@@ -2,8 +2,10 @@ package cn.yi18.pojo;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.Locale;
 
 import org.apache.commons.lang3.StringUtils;
+import org.ocpsoft.prettytime.PrettyTime;
 
 /**
  * 综合资讯
@@ -63,6 +65,11 @@ public class News extends POJO
 			r=r+"…";
 		}
 		return r;
+	}
+	
+	public String prettyTime() {
+		PrettyTime p = new PrettyTime(new Locale("ZH_CN"));
+        return p.format(new Date());
 	}
 	
 }

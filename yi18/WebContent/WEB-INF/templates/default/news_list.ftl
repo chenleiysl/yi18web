@@ -30,12 +30,12 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    margin:0 1px;
+    margin:8px 0px;
 }
 
- .List .date {float:right;margin-left:20px;color:#666;}
- .List .stat {float:right;margin-left:10px;color:#666;}
-.List li em {font-style:normal;color:#A00;margin:0 2px;} 
+ .List .date {float:right;margin-left:20px;color:#666; margin:8px ;}
+ .List .stat {float:right;margin-left:10px;color:#666; margin:8px ;}
+.List li em {font-style:normal;color:#A00;margin:8px 2px;} 
 
 
  .ListAll {margin:20px 10px;}
@@ -77,7 +77,7 @@
     	<#list week as item>
 			<li>
 				<h3><a href="${basePath}news/show/${item.getId()}" target="_blank">${item.title}</a></h3>
-				<span class='date'>发布于 ${item.time}</span>	
+				<span class='date'>发布于 ${item.time?string("yyyy-MM-dd")}</span>	
 				<span class='stat'><em> ${item.count}</em>浏览</span>			
 			</li>
 		</#list>									
@@ -92,7 +92,7 @@
     	<#list week as item>
 			<li>
 				<h3><a href="${basePath}news/show/${item.getId()}" target="_blank">${item.title}</a></h3>
-				<span class='date'>发布于 ${item.time}</span>	
+				<span class='date'>发布于${item.time?string("yyyy-MM-dd")}</span>	
 				<span class='stat'><em> ${item.count}</em>浏览</span>			
 			</li>
 		</#list>									
@@ -114,7 +114,7 @@
 				<li>				
 					
 				<h2><a href="${basePath}news/show/${item.getId()}" target="_blank">${item.title}</a></h2>
-				<p class='date'><a href="">${item.author}</a> 发布于 8小时前 (${item.time}) - 1评</p>				
+				<p class='date'><a href="">${item.author}</a> 发布于 ${item.prettyTime()} (${item.time?string("yyyy-MM-dd")}) - ${item.count}阅读</p>				
 				<p class='detail'>${item.subMessage(100)}</p>
 				<p class='more'><a href="${basePath}news/show/${item.getId()}" target="_blank" class='more'>显示全文</a></p>
 			</li>
