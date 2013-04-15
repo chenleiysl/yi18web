@@ -13,11 +13,13 @@ import org.apache.commons.beanutils.BeanUtils;
 import com.google.gson.Gson;
 
 import cn.yi18.entity.DrugInfo;
+import cn.yi18.enums.NewsEnum;
 import cn.yi18.pojo.Directory;
 import cn.yi18.pojo.Drug;
 import cn.yi18.pojo.Drugclass;
 import cn.yi18.pojo.Factory;
 import cn.yi18.pojo.Links;
+import cn.yi18.pojo.News;
 import cn.yi18.pojo.POJO;
 import cn.yi18.pojo.Partner;
 import cn.yi18.service.DirectoryService;
@@ -25,6 +27,7 @@ import cn.yi18.service.DrugInfoService;
 import cn.yi18.service.DrugService;
 import cn.yi18.service.FactoryService;
 import cn.yi18.service.LinksService;
+import cn.yi18.service.NewsService;
 import cn.yi18.service.PartnerService;
 
 public class AdminAction extends BaseAction {
@@ -340,11 +343,46 @@ public class AdminAction extends BaseAction {
 		
 	}
 	
+	
+	public void news()
+	{
+		root.put("list", newsService.getNoCheck());
+		printFreemarker("admin/news_check_list.ftl", root);
+	}
+	
+	public void checknews() throws IllegalAccessException, InvocationTargetException 
+	{
+		if (request.isSubmit())
+		{
+			News bean = new News();
+			Map map = request.getParameterMap();
+			BeanUtils.populate(bean, map);
+			
+			Map<String, Object> vmap = new HashMap<String, Object>();
+			vmap.put("title", bean.getTitle());
+			vmap.put("message", bean.getMessage());
+			vmap.put("author", bean.getAuthor());
+			vmap.put("allow", NewsEnum.Check_Status.IsCheck.getValue());
+			bean.update(vmap , bean.getId());
+			sendRedirect(request.basePath()+"admin/news");
+			
+		}else 
+		{
+		
+			String sid= request.getParams()[0];
+			News news = new News();
+			news = news.get(Long.parseLong(sid));
+			root.put("news", news);
+			printFreemarker("admin/news_check.ftl", root);
+		}
+	}
+	
 	private DirectoryService directoryService = new DirectoryService ();
 	private FactoryService factoryService = new FactoryService();
 	private LinksService linksService = new LinksService();
 	private PartnerService partnerService = new PartnerService();
 	private DrugService drugService = new DrugService();
 	private DrugInfoService drugInfoService = new DrugInfoService();
+	private NewsService newsService = new NewsService();
 	
 }

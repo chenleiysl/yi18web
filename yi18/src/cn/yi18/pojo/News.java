@@ -3,6 +3,8 @@ package cn.yi18.pojo;
 import java.sql.Timestamp;
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * 综合资讯
  * @author 陈磊
@@ -13,12 +15,20 @@ public class News extends POJO
 	protected String title;//资讯标题
 	protected String message;//资讯内容
 	protected int count ;//访问次数
+	protected int allow;//是否允许显示，，是否通过管理员审核，1：通过，0：等待，-1 不通过
+	protected String author;//作者
 	protected Timestamp time = new Timestamp(new Date().getTime());//添加时间
 	public String getTitle() {
 		return title;
 	}
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	public String getAuthor() {
+		return author;
+	}
+	public void setAuthor(String author) {
+		this.author = author;
 	}
 	public String getMessage() {
 		return message;
@@ -32,11 +42,27 @@ public class News extends POJO
 	public void setCount(int count) {
 		this.count = count;
 	}
+	public int getAllow() {
+		return allow;
+	}
+	public void setAllow(int allow) {
+		this.allow = allow;
+	}
 	public Timestamp getTime() {
 		return time;
 	}
 	public void setTime(Timestamp time) {
 		this.time = time;
+	}
+	
+	public String subMessage(int size)
+	{
+		String r=StringUtils.substring(message, 0, size);
+		if (message.length()>size) 
+		{
+			r=r+"…";
+		}
+		return r;
 	}
 	
 }

@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>医药吧_添加药品</title>
+    <link rel="stylesheet" type="text/css" href="common/easyui/themes/metro/easyui.css">  
+    <link rel="stylesheet" type="text/css" href="common/easyui/themes/icon.css">  
+     <link rel="stylesheet" type="text/css" href="common/css/default.css">  
+    <script type="text/javascript" src="common/easyui/jquery-1.9.1.min.js"></script>  
+    <script type="text/javascript" src="common/easyui/jquery.easyui.min.js"></script> 
+    <script type="text/javascript" src="common/easyui/locale/easyui-lang-zh_CN.js"></script>  
+<link rel="stylesheet" href="common/kindeditor/themes/default/default.css" />
+
+
+
+
+
+</head>
+<body>
+<div id = "Screen">
+
+	<div id="logo">
+	<a href="#" title="医药吧"><img alt="logo" src="common/image/logo.png"></a>
+	<font color="green" size="6" style="font-weight: bold;">&nbsp;www.yi18.cn</font>
+	<div style="float: right;" id="userbar"><a href="#">登录</a>&nbsp;|&nbsp;<a href="#">添加药品</a></div>
+	</div>
+   <div style="padding:10px;border:1px solid #ddd">  
+        <a href="#" class="easyui-linkbutton" data-options="plain:true">主页</a>  
+        <a href="#" class="easyui-linkbutton" data-options="plain:true">常见药品</a>  
+        <a href="#" class="easyui-linkbutton" data-options="plain:true">病状查找</a>
+         <a href="#" class="easyui-linkbutton" data-options="plain:true">疾病找药</a> 
+         <a href="#" class="easyui-linkbutton" data-options="plain:true">用药咨询</a>
+         <a href="#" class="easyui-linkbutton" data-options="plain:true">医药新闻</a>    
+        <a href="#" class="easyui-linkbutton" data-options="plain:true">关于</a>
+        <div style="float: right;">
+        <input class="easyui-searchbox" data-options="prompt:'请输入查询信息',menu:'#mm',searcher:doSearch" style="width:340px"></input> 
+   		<script>  
+        function doSearch(value,name){  
+            alert('You input: ' + value+'('+name+')');  
+        }  
+    	</script> 
+    	<div id="mm" style="width:120px">  
+        	<div data-options="name:'all'">药品</div>  
+        	<div data-options="name:'pi'">病状</div>  
+    	</div> 
+   		
+   		</div>
+    </div> 
+   <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="98%" color=#5cc26f SIZE=1>
+    
+    
+<style type="text/css">
+.News h1.Title {font-size:18pt;}
+.News .PubDate {margin:15px 0 0px 0;color:#666;}
+#toolbar_wrapper{padding:10px 0 5px 0;}
+.toolbar{height:33px;margin:0;padding:0;vertical-align: middle;border:1px solid #CCC;-moz-box-shadow: 0 1px 3px rgba(198,198,198,0.5);-webkit-box-shadow: 0 1px 3px rgba(198,198,198,0.5);box-shadow: 0 1px 3px rgba(198,198,198,0.5);}
+.toolbar a{text-decoration:none;color:black;}
+.share{float:left;margin:0;padding:3px 0 0 0;line-height:25px;width:280px;}
+.share_sina{float:left;background:url(common/image/toolbar.gif) -1px -278px no-repeat;padding-left:25px;padding-right:5px;margin-left:3px;}
+.share_qq{float:left;background:url(common/image/toolbar.gif) -1px -316px no-repeat;padding-left:25px;padding-right:5px;}
+.options{float:right;margin:3px 5px 0 5px;padding:0;height:30px;line-height:25px;}
+.tool_title {float:left;text-align:center;vertical-align:middle;margin:0 0 0 5px;line-height:33px;}
+.options .tool_title{line-height:30px;}
+
+</style>
+    
+ 
+ <div style="margin:10px 0;"></div>  
+
+  <div style="margin:10px 0;"></div>
+  <div id="p" class="easyui-panel" title="综合信息" style="width:800px;padding:10px;"> 
+  
+  <div class='NewsBody'>
+	<div class='News'>
+		<div class="NewsEntity">
+		<!-- google_ad_section_start -->
+		<h1 class='Title' >工信部官员：微信收费是肯定的 正在研究中</h1>
+		<div class='PubDate'>
+        	<a href="http://my.oschina.net/osadmin">oschina</a>
+        	发布于： 2013年04月06日 (<a href="#comments">224评</a>)				
+        </div>
+<div class='NewsToolbar'>
+
+
+<div id='toolbar_wrapper'>
+	<div class='toolbar'>
+	<div class="tool_title"><b>分享到&nbsp;</b></div>
+	<div class='share'><a class="share_sina" title="分享到新浪微博" href="javascript:void((function(s,d,e,r,l,p,t,z,c){var%20f='http://v.t.sina.com.cn/share/share.php?appkey=858381728',u=z||d.location,p=['&url=',e(u),'&title=',e(t||d.title),'&source=',e(r),'&sourceUrl=',e(l),'&content=',c||'gb2312','&pic=',e(p||'')].join('');function%20a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=440,height=430,left=',(s.width-440)/2,',top=',(s.height-430)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent))setTimeout(a,0);else%20a();})(screen,document,encodeURIComponent,'','','','工信部官员：微信收费是肯定的 正在研究中: ','','utf-8'));">新浪微博</a><a class="share_qq" title="分享到腾讯微博" href="javascript:(function(){window.open('http://v.t.qq.com/share/share.php?url='+encodeURIComponent(document.location)+'&amp;appkey=96f54f97c4de46e393c4835a266207f4&amp;site=&amp;title='+encodeURIComponent(document.title)+encodeURIComponent(': '),'', 'width=450, height=400, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, location=yes, resizable=no, status=no');}())">腾讯微博</a></div>
+	<div class='options'>
+			
+					</div>
+	</div>
+</div>		
+</div>
+<div  >
+<p><img src="http://static.oschina.net/uploads/img/201304/06081605_fsfa.jpg" alt="" /></p>
+<p>【财经网专稿】记者 张剑锋 &ldquo;微信收费是肯定，但具体如何收费还在斟酌研究中。&rdquo;4月2日，《证券市场周刊》从接近工信部决策层的知情人士处获悉。这是继日前工信部长苗圩表态运营商收费有合理后，日前工信部接近决策层的官员又给予确切表态。</p>
+<p>作为典型的OTT应用，微信对移动运营商的短信、语音业务冲击巨大。运营商认为微信的崛起侵蚀了短信彩信甚至语音通话业务，占用了大量的信令资源，给运营商网络带来压力。</p>
+<p>有互联网观察人士老冀分析称，中国移动的反应最为激烈，董事长奚国华和总裁李跃都先后发言批评过微信。中国联通则相对缓和得多，中国联通董事长 常小兵在不同场合均表示，运营商和腾讯这样的OTT公司不是水火关系，他个人更期盼发展成为鱼水关系。中国电信的高层则从来没有公开表过态。</p>
+<p>财报数据显示，2012年上半年，中国移动的数据业务收入已经占到营收的28.5%，而中国联通和中国电信分别只有19.9%和14.0%。而微信的迅速发展对中国移动的冲击最大。</p>
+<p>微信所带来的巨大数据流量给中国移动惹了麻烦。</p>
+<p>微信使用的移动通信的数据业务，是要通过移动终端与基站之间的数据交换实现。</p>
+<p>但是基站的数据又是通过骨干网传输过来的。由于历史原因，90%都掌握在电信和联通两家运营商的手中，移动加上旗下的铁通最多也就10%的份额。</p>
+<p>而此前，腾讯掌门人马化腾称微信带给运营商的流量实际上应该是运营商统计的数倍。他委婉表示，微信是帮助运营商赚钱的利器。</p>
+<p>上述工信部官员称，坊间怨声载道的&ldquo;双重收费&rdquo;，并非双重收费，未来公布的收费的统计方法，与运营商的统计方法不一样，目前如何收费还在研究中，&ldquo;但OTT迟早会抛弃传统管道的 &rdquo;。</p>
+		
+		
+		</div>
+		
+		</div>
+		</div>
+		</div>
+		 
+    </div>  
+ 
+ 
+  
+  <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="98%" color=#5cc26f SIZE=1>
+   		
+<div id="Links" style="text-align:left;">
+<div >
+<h3 class='caption'>+ 友情链接</h3>
+<p>
+<a href="http://www.xywy.com/" target="_blank" style='color:#A00;'>寻医问药</a>
+<a href="http://www.818.com/" target="_blank" style='color:#A00;'>818医药网</a>
+<a href="http://health.sina.com.cn/" target="_blank">新浪健康</a>
+<a href="http://www.familydoctor.com.cn/" target="_blank">家庭医生在线</a>
+<a href="http://yi18.cloudfoundry.com/" target="_blank">医药吧</a>
+
+
+</p>
+</div>
+</div>
+    <div id="Footer">&copy; 医药吧.中国网(yi18.cn) | <a href="#">关于我们</a> | <a href="#">医药吧手机版</a> | <a href="#">广告联系</a> | <a href="#" target="_blank">@新浪微博</a>  | 蜀ICP备110号
+</div>
+</div>
+</body>
+</html>

@@ -33,6 +33,7 @@
         
        
        <div id="mm2" style="width:150px;">  
+       <div ><a href="${basePath}admin/news">综合资讯</a></div>  
          <div ><a href="${basePath}admin/partner">合作伙伴</a></div>  
         <div ><a href="${basePath}admin/factory"> 生产厂家 </a></div> 
        

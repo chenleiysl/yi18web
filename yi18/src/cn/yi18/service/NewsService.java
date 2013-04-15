@@ -1,8 +1,12 @@
 package cn.yi18.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cn.yi18.dao.NewsDao;
+import cn.yi18.enums.NewsEnum;
+import cn.yi18.jdbc.QueryHelper;
 import cn.yi18.pojo.News;
 import cn.yi18.pojo.POJO;
 import cn.yi18.util.PageUtil;
@@ -42,7 +46,8 @@ public class NewsService
 	public PageUtil getNews(int page,int size)
 	{
 		News bean = new News();
-		List<News> list =(List<News>) bean.list(page, size) ;
+		String filter=" allow = "+NewsEnum.Check_Status.IsCheck.getValue();
+		List<News> list =(List<News>) bean.filter(filter, page, size) ;
 		PageUtil pageUtil = new PageUtil(list , page, size, _getTotalCount());
 		
 		return pageUtil;
@@ -58,7 +63,8 @@ public class NewsService
 	{
 		News bean = new News();
 		
-		return (List<News>) bean.list(1, size) ;
+		String filter=" allow = "+NewsEnum.Check_Status.IsCheck.getValue();
+		return (List<News>) bean.filter(filter ,1, size) ;
 		
 	}
 	
@@ -69,7 +75,16 @@ public class NewsService
 	public int _getTotalCount()
 	{
 		News bean = new News();
-		return bean.totalCount();
+		
+		String filter=" allow = "+NewsEnum.Check_Status.IsCheck.getValue();
+		return bean.totalCount(filter);
+	}
+	
+	public List<News> getNoCheck() 
+	{
+		News bean = new News();
+		String filter = " allow = "+NewsEnum.Check_Status.NoCheck.getValue();
+		return (List<News>) bean.filter(filter , 1, 20);
 	}
 	
 	private NewsDao newsDao = new NewsDao();
