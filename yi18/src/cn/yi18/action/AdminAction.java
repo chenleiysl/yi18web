@@ -13,6 +13,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import com.google.gson.Gson;
 
 import cn.yi18.entity.DrugInfo;
+import cn.yi18.entity.SymptomInfo;
 import cn.yi18.enums.DirectoryEnum;
 import cn.yi18.enums.NewsEnum;
 import cn.yi18.pojo.Directory;
@@ -24,6 +25,7 @@ import cn.yi18.pojo.News;
 import cn.yi18.pojo.POJO;
 import cn.yi18.pojo.Partner;
 import cn.yi18.pojo.Symptomclass;
+import cn.yi18.pojo.Symptoms;
 import cn.yi18.service.DirectoryService;
 import cn.yi18.service.DrugInfoService;
 import cn.yi18.service.DrugService;
@@ -31,6 +33,8 @@ import cn.yi18.service.FactoryService;
 import cn.yi18.service.LinksService;
 import cn.yi18.service.NewsService;
 import cn.yi18.service.PartnerService;
+import cn.yi18.service.SymptomInfoService;
+import cn.yi18.service.SymptomService;
 
 public class AdminAction extends BaseAction {
 
@@ -237,6 +241,15 @@ public class AdminAction extends BaseAction {
 		}
 	}
 	
+	/**
+	 * 显示没有审核的药品
+	 */
+	public void symptom()
+	{
+		List<Symptoms> list = symptomService.getNoCheck();
+		root.put("list", list);
+		printFreemarker("admin/symptom_check_list.ftl", root);
+	}
 	
 	public void jsondrugclass(){
 		Drugclass bean = new Drugclass();
@@ -430,6 +443,37 @@ public class AdminAction extends BaseAction {
 		
 	}
 	
+	/**
+	 * 核对病状
+	 */
+	public void checksymptom()
+	{
+		
+			String[] params = request.getParams();
+			if(params!=null)
+			{
+				Long id = Long.parseLong(params[0]);
+				Symptoms bean = new Symptoms();
+				Symptoms syptoms = bean.get(id);
+				
+				List<SymptomInfo> list = symptomInfoService.getDrugInfo(id);
+				
+				root.put("syptoms", syptoms);
+				root.put("list", list);
+				
+				Symptomclass sbean = new Symptomclass();
+				
+//				Drugclass dbean = new Drugclass();
+				 Map<String, Object> map = new HashMap<String, Object>();
+				 map.put("level", 2);
+				List<Symptomclass> symptomclass = (List<Symptomclass>) sbean.getlist(map );
+//				
+				root.put("symptomclass", symptomclass);
+				printFreemarker("admin/symptom_check.ftl", root);
+			}
+		
+		
+	}
 	
 	public void news()
 	{
@@ -471,5 +515,7 @@ public class AdminAction extends BaseAction {
 	private DrugService drugService = new DrugService();
 	private DrugInfoService drugInfoService = new DrugInfoService();
 	private NewsService newsService = new NewsService();
+	private SymptomService symptomService = new SymptomService();
+	private SymptomInfoService symptomInfoService = new SymptomInfoService();
 	
 }

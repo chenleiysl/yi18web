@@ -33,7 +33,7 @@
        
         
           <div id="mm3" style="width:150px;">  
-		      <div ><a href="${basePath}admin/drug">病状审核</a></div>  
+		      <div ><a href="${basePath}admin/symptom">病状审核</a></div>  
 		        <div ><a href="${basePath}admin/directory/2"> 病状目录信息 </a></div> 
 		        <div class="menu-sep"></div>  
 		        <div>  <a href="${basePath}admin/symptomclass">病状分类</a></div>   
