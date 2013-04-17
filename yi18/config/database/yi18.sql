@@ -6,6 +6,19 @@ CREATE SCHEMA IF NOT EXISTS `yi18` DEFAULT CHARACTER SET utf8 ;
 USE `yi18` ;
 
 -- -----------------------------------------------------
+-- Table `yi18`.`yi18_departments`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_departments` (
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT ,
+  `name` VARCHAR(64) NULL DEFAULT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COMMENT = '科室';
+
+
+-- -----------------------------------------------------
 -- Table `yi18`.`yi18_directory`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_directory` (
@@ -21,6 +34,79 @@ ENGINE = InnoDB
 AUTO_INCREMENT = 8
 DEFAULT CHARACTER SET = utf8
 COMMENT = '药品内容的目录';
+
+
+-- -----------------------------------------------------
+-- Table `yi18`.`yi18_disease`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_disease` (
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT ,
+  ` name` VARCHAR(64) NOT NULL COMMENT '疾病名称' ,
+  `description` VARCHAR(1024) NULL DEFAULT NULL COMMENT '疾病描述 ' ,
+  `diseaseclass` BIGINT(20) NULL DEFAULT NULL COMMENT '疾病分类' ,
+  `place` BIGINT(20) NULL DEFAULT NULL COMMENT '发病部位' ,
+  `departments` BIGINT(20) NULL DEFAULT NULL COMMENT '就诊科室' ,
+  `infectious` SMALLINT(6) NULL DEFAULT NULL COMMENT '传 染 性 0：不传染，1传染' ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COMMENT = '疾病信息表';
+
+
+-- -----------------------------------------------------
+-- Table `yi18`.`yi18_diseasedepartments`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_diseasedepartments` (
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT ,
+  `disease` BIGINT(20) NULL DEFAULT NULL ,
+  `departments` BIGINT(20) NULL DEFAULT NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `yi18`.`yi18_diseaseinfo`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_diseaseinfo` (
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '疾病信息的id编号' ,
+  `drug` BIGINT(20) NOT NULL COMMENT '疾病的编号' ,
+  `directory` BIGINT(20) NULL DEFAULT NULL COMMENT '疾病词条' ,
+  `message` TEXT NULL DEFAULT NULL COMMENT '添加的内容' ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB
+AUTO_INCREMENT = 34
+DEFAULT CHARACTER SET = utf8
+COMMENT = '疾病的基本信息';
+
+
+-- -----------------------------------------------------
+-- Table `yi18`.`yi18_diseaseplace`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_diseaseplace` (
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT ,
+  `disease` BIGINT(20) NULL DEFAULT NULL ,
+  `place` BIGINT(20) NULL DEFAULT NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `yi18`.`yi18_diseasseclass`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_diseasseclass` (
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '疾病分类的Id编号' ,
+  `title` VARCHAR(64) NOT NULL COMMENT '疾病分类的标题' ,
+  `level` SMALLINT(6) NOT NULL DEFAULT '1' COMMENT '分类的级别，0：root，1,2等' ,
+  `_parentId` BIGINT(20) NULL DEFAULT NULL COMMENT '上级药品的id' ,
+  `state` VARCHAR(45) NULL DEFAULT NULL ,
+  `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '添加药品分类的时间' ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB
+AUTO_INCREMENT = 7
+DEFAULT CHARACTER SET = utf8
+COMMENT = '疾病分类，主要用于药品分类';
 
 
 -- -----------------------------------------------------
@@ -164,6 +250,18 @@ ENGINE = InnoDB
 AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8
 COMMENT = '合作伙伴';
+
+
+-- -----------------------------------------------------
+-- Table `yi18`.`yi18_place`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_place` (
+  `id` BIGINT(20) NOT NULL ,
+  `name` VARCHAR(64) NULL DEFAULT NULL COMMENT '名称' ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COMMENT = '人的身体部分，主要是疾病的发病部分';
 
 
 -- -----------------------------------------------------
