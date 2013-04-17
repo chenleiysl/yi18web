@@ -456,7 +456,7 @@ public class AdminAction extends BaseAction {
 				Symptoms bean = new Symptoms();
 				Symptoms syptoms = bean.get(id);
 				
-				List<SymptomInfo> list = symptomInfoService.getDrugInfo(id);
+				List<SymptomInfo> list = symptomInfoService.getSymptomInfo(id);
 				
 				root.put("syptoms", syptoms);
 				root.put("list", list);

@@ -12,7 +12,7 @@ public class SymptomInfoService {
 
 	private SymptomInfoDao symptomInfoDao = new SymptomInfoDao();
 	
-	public List<SymptomInfo> getDrugInfo(long id)
+	public List<SymptomInfo> getSymptomInfo(long id)
 	{
 		return symptomInfoDao.getSymptomInfo(id);
 	}

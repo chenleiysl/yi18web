@@ -31,14 +31,14 @@
   <div style="margin:10px 0;"></div>  
     <div class="easyui-layout" style="width:980px;height:1800px;">  
     
-     <div data-options="region:'west',split:true" title="药品分类" style="width:240px;">  
+     <div data-options="region:'west',split:true" title="病状分类" style="width:380px;">  
      
-            <div class="easyui-accordion" data-options="fit:true,border:false">  
+            <div class="easyui-tabs" data-options="fit:true,border:false,tabPosition:'left'">  
             
             <#list tree as item>
                  
-                <div title="${item.drugclass.title}" 
-                <#if item.drugclass.getId() == open>
+                <div title="${item.symptomclass.title}" 
+                <#if item.symptomclass.getId() == open>
                 data-options="selected:true" 
                 </#if>
                 style="padding:10px;"> 
@@ -46,17 +46,9 @@
                 <div class="LeftMenu"> 
                    <table class="Menu" width="100%">
                    <#list item.list as it>
-                   
-	                  
-	                   
-	                   <tr <#if it.getId()==id> class="Select"  </#if> ><td><a href="${basePath}drug/list/${it.getId()}">${it.title}  </a></td>
+	                   <tr <#if it.getId()==id> class="Select"  </#if> ><td><a href="${basePath}symptom/list/${it.getId()}">${it.title}  </a></td>
 	                	<td><span class="count">123</span></td>
 	                	</tr>
-	                	
-	                	
-	                 
-                   
-                   
                 	</#list>
                 	</table> 
                 	
@@ -71,26 +63,24 @@
            
         </div>  
         
-        <div data-options="region:'center',title:'药品分类 &raquo;<#if drugclass??>${drugclass.title}<#else>常见药品</#if>(${page.total}种) '" > 
+        
+        <div data-options="region:'center',title:'病状分类 &raquo;<#if symptomclass??>${symptomclass.title}<#else>常见病状</#if>(${page.total}种) '" > 
             <div class="easyui-tabs" data-options="fit:true,border:false,plain:true">  
-                <div title="最热药品" data-options="" style="padding:10px">
+                <div title="最热病状" data-options="" style="padding:10px">
                 	 <div class='ProjectList'>	
                			 <ul class='List'>
                 	
                 	<#list page.list as item>
                 	<li>
-				    <h3><a href="${basePath}drug/show/${item.getId()}" target="_blank">${item.alias} <em>${item.name}</em></a></h3>    
+				    <h3><a href="${basePath}symptom/show/${item.getId()}" target="_blank"> <em>${item.name}</em></a></h3>    
 					
 					<table width='100%'><tr><td>
 						<p class='detail'>
-									${item.subTerm(400)}
-						    	<a href="${basePath}drug/show/${item.getId()}" target="_blank" class='more'>更多${item.name}</a>
+									${item.subDescription(200)}
+						    	<a href="${basePath}symptom/show/${item.getId()}" target="_blank" class='more'>更多${item.name}</a>
 						</p>
 					</td>
-						<td width='100' valign='top' align='right'>
-						<a href="${basePath}drug/show/${item.getId()}" target="_blank"><img src="${basePath}common/avatar/${item.image}" width="100" /></a>
 						
-						</td>
 						</tr>
 						</table>
 				    
@@ -118,18 +108,15 @@
                 <ul class='List'>
 				           	<#list news as item>
                 	<li>
-				    <h3><a href="${basePath}drug/show/${item.getId()}" target="_blank">${item.alias} <em>${item.name}</em></a></h3>    
+				    <h3><a href="${basePath}symptom/show/${item.getId()}" target="_blank"><em>${item.name}</em></a></h3>    
 					
 					<table width='100%'><tr><td>
 						<p class='detail'>
-									${item.subTerm(400)}
-						    	<a href="${basePath}drug/show/${item.getId()}" target="_blank" class='more'>更多${item.name}</a>
+									${item.subDescription(200)}
+						    	<a href="${basePath}symptom/show/${item.getId()}" target="_blank" class='more'>更多${item.name}</a>
 						</p>
 					</td>
-						<td width='100' valign='top' align='right'>
-						<a href="${basePath}drug/show/${item.getId()}" target="_blank"><img src="${basePath}common/avatar/${item.image}" width="100" /></a>
 						
-						</td>
 						</tr>
 						</table>
 				    

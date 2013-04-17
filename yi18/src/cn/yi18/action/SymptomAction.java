@@ -27,6 +27,8 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 
 import cn.yi18.entity.DrugClass;
 import cn.yi18.entity.DrugInfo;
+import cn.yi18.entity.SymptomClass;
+import cn.yi18.entity.SymptomInfo;
 import cn.yi18.pojo.Directory;
 import cn.yi18.pojo.Drug;
 import cn.yi18.pojo.Drugclass;
@@ -41,6 +43,8 @@ import cn.yi18.service.DrugClassService;
 import cn.yi18.service.DrugInfoService;
 import cn.yi18.service.DrugService;
 import cn.yi18.service.FactoryService;
+import cn.yi18.service.SymptomClassService;
+import cn.yi18.service.SymptomInfoService;
 import cn.yi18.service.SymptomService;
 import cn.yi18.util.PageUtil;
 
@@ -136,12 +140,78 @@ public class SymptomAction extends BaseAction
 	}
 	
 	
+	
+	/**
+	 * 显示病状信息
+	 */
+	public void show()
+	{
+		String[] params = request.getParams();
+		if(params!=null)
+		{
+			Long id = Long.parseLong(params[0]);
+			Symptoms bean = new Symptoms();
+			Symptoms symptoms = bean.get(id);
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("count", symptoms.getCount()+1);
+			bean.update(map , id);
+			List<SymptomInfo> list = symptomInfoService.getSymptomInfo(id);
+			root.put("symptoms", symptoms);
+			root.put("list", list);
+			
+			printFreemarker("default/symptom.ftl", root);
+		}
+	}
 
+	
+public void list() throws ServletException, IOException {
+		
+	
+	 DrugService drugService = new DrugService();
+	
+	 
+	
+		int page= request.getParameter("p")==null?1:Integer.parseInt(request.getParameter("p"));
+		// 取得页面，如果没有默认为1
+		List<SymptomClass> tree = symptomClassService.getTree();
+		root.put("tree", tree);
+		
+		String[] params = request.getParams();
+		if(params==null)
+		{
+			List<Symptoms> news = symptomService.getNew(SIZE);
+			PageUtil hots = symptomService.getPageHot(page, SIZE);
+			root.put("id", 0);
+			root.put("news", news);
+			root.put("page", hots);
+			root.put("open", tree.get(0).getSymptomclass().getId());
+			
+		}else 
+		{
+			long id = Long.parseLong(params[0]);//药品分类的id
+			Symptomclass bean = new Symptomclass();
+			Symptomclass symptomclass = bean.get(id); //取得分类
+			
+			
+			List<Symptoms> news = symptomService.getNew(SIZE,id);
+			PageUtil hots = symptomService.getPageHot(page, SIZE,id);
+			root.put("id", id);
+			root.put("news", news);
+			root.put("page", hots);
+			root.put("symptomclass",symptomclass);
+			root.put("open", symptomclass.get_parentId());//打开的栏目
+		}
+		
+		
+		//root.put("open", 1);
+		printFreemarker("default/symptom_list.ftl", root);
+	}
 	
 	
 	private DirectoryService directoryService = new DirectoryService();
-	
+	private SymptomInfoService symptomInfoService = new SymptomInfoService();
 	private SymptomService  symptomService = new SymptomService();
+	private SymptomClassService symptomClassService = new SymptomClassService();
 	
 	
 }

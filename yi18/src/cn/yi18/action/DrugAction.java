@@ -329,6 +329,9 @@ public class DrugAction extends BaseAction
 			Long id = Long.parseLong(params[0]);
 			Drug bean = new Drug();
 			Drug drug = bean.get(id);
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("count", drug.getCount()+1);
+			bean.update(map , id);
 			List<DrugInfo> list = drugInfoService.getDrugInfo(id);
 			root.put("drug", drug);
 			root.put("list", list);
