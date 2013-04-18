@@ -29,7 +29,7 @@ public class DirectoryEnum
 	 */
 	public enum Type
 	{
-			Drug(1),Symptom(2);//
+			Drug(1),Symptom(2),Disease(3);//
 		 	private int value;
 		  private Type(int value) {
 			   this.value = value;

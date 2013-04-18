@@ -15,7 +15,7 @@ CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_departments` (
   UNIQUE INDEX `name_UNIQUE` (`name` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
-COMMENT = '科室';
+COMMENT = '科室,主要拥有疾病的分类';
 
 
 -- -----------------------------------------------------
@@ -27,11 +27,11 @@ CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_directory` (
   `issearch` SMALLINT(6) NULL DEFAULT '1' COMMENT '是否允许搜索检索，1：允许 0：不允许。也就是标记是否该目录下的内容允许通过搜索找到' ,
   `description` VARCHAR(1024) NULL DEFAULT NULL COMMENT '描述，，目录的描述' ,
   `sequence` SMALLINT(6) NULL DEFAULT NULL COMMENT '目录的显示顺序 从0开始' ,
-  `type` SMALLINT(6) NULL DEFAULT NULL COMMENT '分类 1:drug(药品)；2：symptom(病状)' ,
+  `type` SMALLINT(6) NULL DEFAULT NULL COMMENT '分类 1:drug(药品)；2：symptom(病状)；3：disease（疾病）' ,
   `time` TIMESTAMP NULL DEFAULT NULL COMMENT '目录的添加时间' ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
-AUTO_INCREMENT = 8
+AUTO_INCREMENT = 7
 DEFAULT CHARACTER SET = utf8
 COMMENT = '药品内容的目录';
 
@@ -44,9 +44,8 @@ CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_disease` (
   ` name` VARCHAR(64) NOT NULL COMMENT '疾病名称' ,
   `description` VARCHAR(1024) NULL DEFAULT NULL COMMENT '疾病描述 ' ,
   `diseaseclass` BIGINT(20) NULL DEFAULT NULL COMMENT '疾病分类' ,
-  `place` BIGINT(20) NULL DEFAULT NULL COMMENT '发病部位' ,
-  `departments` BIGINT(20) NULL DEFAULT NULL COMMENT '就诊科室' ,
   `infectious` SMALLINT(6) NULL DEFAULT NULL COMMENT '传 染 性 0：不传染，1传染' ,
+  `time` TIMESTAMP NULL DEFAULT NULL COMMENT '添加时间' ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
@@ -54,15 +53,33 @@ COMMENT = '疾病信息表';
 
 
 -- -----------------------------------------------------
+-- Table `yi18`.`yi18_diseaseclass`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_diseaseclass` (
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '疾病分类的Id编号' ,
+  `title` VARCHAR(64) NOT NULL COMMENT '疾病分类的标题' ,
+  `level` SMALLINT(6) NOT NULL DEFAULT '1' COMMENT '分类的级别，0：root，1,2等' ,
+  `_parentId` BIGINT(20) NULL DEFAULT NULL COMMENT '上级药品的id' ,
+  `state` VARCHAR(45) NULL DEFAULT NULL ,
+  `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '添加药品分类的时间' ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB
+AUTO_INCREMENT = 7
+DEFAULT CHARACTER SET = utf8
+COMMENT = '疾病分类，主要用于疾病的标准分类';
+
+
+-- -----------------------------------------------------
 -- Table `yi18`.`yi18_diseasedepartments`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_diseasedepartments` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT ,
-  `disease` BIGINT(20) NULL DEFAULT NULL ,
-  `departments` BIGINT(20) NULL DEFAULT NULL ,
+  `disease` BIGINT(20) NULL DEFAULT NULL COMMENT '疾病的id' ,
+  `departments` BIGINT(20) NULL DEFAULT NULL COMMENT '科室的id' ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+DEFAULT CHARACTER SET = utf8
+COMMENT = '疾病对应科室，一个科室对应多个疾病，一个疾病对应多个科室。';
 
 
 -- -----------------------------------------------------
@@ -85,28 +102,12 @@ COMMENT = '疾病的基本信息';
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_diseaseplace` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT ,
-  `disease` BIGINT(20) NULL DEFAULT NULL ,
-  `place` BIGINT(20) NULL DEFAULT NULL ,
+  `disease` BIGINT(20) NULL DEFAULT NULL COMMENT '疾病的id' ,
+  `place` BIGINT(20) NULL DEFAULT NULL COMMENT '身体部位的id' ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `yi18`.`yi18_diseasseclass`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_diseasseclass` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '疾病分类的Id编号' ,
-  `title` VARCHAR(64) NOT NULL COMMENT '疾病分类的标题' ,
-  `level` SMALLINT(6) NOT NULL DEFAULT '1' COMMENT '分类的级别，0：root，1,2等' ,
-  `_parentId` BIGINT(20) NULL DEFAULT NULL COMMENT '上级药品的id' ,
-  `state` VARCHAR(45) NULL DEFAULT NULL ,
-  `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '添加药品分类的时间' ,
-  PRIMARY KEY (`id`) )
-ENGINE = InnoDB
-AUTO_INCREMENT = 7
 DEFAULT CHARACTER SET = utf8
-COMMENT = '疾病分类，主要用于药品分类';
+COMMENT = '主要用于疾病和身体部位的对应，一个疾病对应多个身体部位，一个身体部位对应对个疾病';
 
 
 -- -----------------------------------------------------
@@ -128,7 +129,7 @@ CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_drug` (
   `time` TIMESTAMP NULL DEFAULT NULL COMMENT '创建时间' ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
-AUTO_INCREMENT = 11
+AUTO_INCREMENT = 15
 DEFAULT CHARACTER SET = utf8
 COMMENT = '药品库，主要包括药品的名称，描述，摘要，生产厂商等';
 
@@ -145,7 +146,7 @@ CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_drugclass` (
   `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '添加药品分类的时间' ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
-AUTO_INCREMENT = 7
+AUTO_INCREMENT = 9
 DEFAULT CHARACTER SET = utf8
 COMMENT = '药品分类，主要用于药品分类';
 
@@ -160,7 +161,7 @@ CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_druginfo` (
   `message` TEXT NULL DEFAULT NULL COMMENT '添加的内容' ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
-AUTO_INCREMENT = 34
+AUTO_INCREMENT = 46
 DEFAULT CHARACTER SET = utf8
 COMMENT = '药品的基本信息';
 
@@ -222,15 +223,15 @@ COMMENT = '记录用户的登录状态，如记住登录状态等功能，同时
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_news` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT 'id编号' ,
-  `title` VARCHAR(128) NULL DEFAULT NULL COMMENT '标题' ,
+  `title` VARCHAR(128) NOT NULL COMMENT '标题' ,
   `author` VARCHAR(64) NULL DEFAULT NULL COMMENT '作者' ,
   `message` TEXT NULL DEFAULT NULL COMMENT '内容' ,
   `count` INT(11) NULL DEFAULT NULL COMMENT '访问次数' ,
-  `allow` SMALLINT(6) NULL DEFAULT NULL COMMENT '是否允许显示，，是否通过管理员审核，1：通过，0：等待，-1 不通过' ,
+  `allow` INT(11) NULL DEFAULT NULL COMMENT '是否允许显示，，是否通过管理员审核，1：通过，0：等待，-1 不通过' ,
   `time` TIMESTAMP NULL DEFAULT NULL COMMENT '添加时间' ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
-AUTO_INCREMENT = 4
+AUTO_INCREMENT = 8
 DEFAULT CHARACTER SET = utf8
 COMMENT = '综合的新闻信息';
 
@@ -247,7 +248,7 @@ CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_partner` (
   `sequence` SMALLINT(6) NULL DEFAULT NULL COMMENT '合作伙伴的排列顺序' ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
-AUTO_INCREMENT = 2
+AUTO_INCREMENT = 3
 DEFAULT CHARACTER SET = utf8
 COMMENT = '合作伙伴';
 
@@ -291,7 +292,7 @@ CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_symptomclass` (
   `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '添加药品分类的时间' ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
-AUTO_INCREMENT = 11
+AUTO_INCREMENT = 17
 DEFAULT CHARACTER SET = utf8
 COMMENT = '病状分类，主要用于药品分类';
 
@@ -306,7 +307,7 @@ CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_symptominfo` (
   `message` TEXT NULL DEFAULT NULL COMMENT '添加的内容' ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
-AUTO_INCREMENT = 38
+AUTO_INCREMENT = 40
 DEFAULT CHARACTER SET = utf8
 COMMENT = '病状的基本信息';
 
@@ -324,7 +325,7 @@ CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_symptoms` (
   `time` TIMESTAMP NULL DEFAULT NULL COMMENT '添加时间' ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
-AUTO_INCREMENT = 2
+AUTO_INCREMENT = 3
 DEFAULT CHARACTER SET = utf8
 COMMENT = '病状信息';
 

@@ -17,6 +17,7 @@ import cn.yi18.entity.SymptomInfo;
 import cn.yi18.enums.DirectoryEnum;
 import cn.yi18.enums.NewsEnum;
 import cn.yi18.pojo.Directory;
+import cn.yi18.pojo.Diseaseclass;
 import cn.yi18.pojo.Drug;
 import cn.yi18.pojo.Drugclass;
 import cn.yi18.pojo.Factory;
@@ -96,6 +97,10 @@ public class AdminAction extends BaseAction {
 				List<Directory> list =directoryService.getSymptom(); 
 				root.put("list", list);
 				printFreemarker("admin/directory_symptom.ftl", root);
+			}else if(type.equals(DirectoryEnum.Type.Disease.getValue()+"")){
+				List<Directory> list =directoryService.getDisease(); 
+				root.put("list", list);
+				printFreemarker("admin/directory_disease.ftl", root);
 			}
 		}
 		
@@ -171,6 +176,75 @@ public class AdminAction extends BaseAction {
 		}
 	}
 	
+	
+	/**
+	 * 疾病分类操作
+	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException
+	 */
+	public void diseaseclass() throws IllegalAccessException, InvocationTargetException
+	{
+		
+		if(request.isSubmit())
+		{
+			Diseaseclass diseaseclass= new Diseaseclass();
+			Map map = request.getParameterMap();
+			BeanUtils.populate(diseaseclass , map);
+			if(request.getParameter("sub").equals("save"))
+			{
+				
+				if(diseaseclass.get_parentId()==0)
+				{
+					diseaseclass.setLevel(1);
+					diseaseclass.setState("closed");
+				}else {
+					diseaseclass.setLevel(2);
+				}
+				diseaseclass.save();
+				 String json = "{\"success\": true,   \"message\": \"添加成功.\" } ";
+				  printHtml(json);
+				  return;
+				
+			}else if(request.getParameter("sub").equals("edit"))
+			{
+				
+				if(diseaseclass.get_parentId()==0)
+				{
+					diseaseclass.setLevel(1);
+					diseaseclass.setState("closed");
+				}else {
+					diseaseclass.setLevel(2);
+					diseaseclass.setState(null);
+				}
+				Drugclass bean = new Drugclass();
+				  Map<String, Object> dmap = new HashMap<String, Object>();
+				  dmap.put("title", diseaseclass.getTitle());
+				  dmap.put("_parentId", diseaseclass.get_parentId());
+				  dmap.put("state", diseaseclass.getState());
+				  dmap.put("level", diseaseclass.getLevel());
+				  bean.update(dmap, diseaseclass.getId());
+				  String json = "{\"success\": true,   \"message\": \"修改成功.\" } ";
+				  printHtml(json);
+				  return;
+				
+			}
+				
+			  
+			
+		}else 
+		{
+			//Directory bean = new Directory();
+			//List<Directory> list =(List<Directory>) bean.list(); 
+			//root.put("list", list);
+			
+			Diseaseclass bean = new Diseaseclass();
+			 Map<String, Object> map = new HashMap<String, Object>();
+			 map.put("level", 1);
+			List<Diseaseclass> roots = (List<Diseaseclass>) bean.getlist(map );
+			root.put("roots", roots);
+			printFreemarker("admin/diseaseclass.ftl", root);
+		}
+	}
 	
 	/**
 	 * 病状分类操作
@@ -254,6 +328,15 @@ public class AdminAction extends BaseAction {
 	public void jsondrugclass(){
 		Drugclass bean = new Drugclass();
 		List<Drugclass> rows = (List<Drugclass>) bean.list();
+		Gson gson = new Gson();
+		String json = gson.toJson(rows);
+		json= "{\"rows\":"+json+"}";
+		printJson(json);
+		 
+	}
+	public void jsondiseaseclass(){
+		Diseaseclass bean = new Diseaseclass();
+		List<Diseaseclass> rows = (List<Diseaseclass>) bean.list();
 		Gson gson = new Gson();
 		String json = gson.toJson(rows);
 		json= "{\"rows\":"+json+"}";

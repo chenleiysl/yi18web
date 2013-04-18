@@ -27,10 +27,21 @@
         <a href="${basePath}admin" class="easyui-linkbutton" data-options="plain:true">个人信息</a>  
         <a href="#" class="easyui-menubutton" data-options="menu:'#mm1'">药品管理</a>    
          <a href="#" class="easyui-menubutton" data-options="menu:'#mm3'">病状管理</a> 
+         <a href="#" class="easyui-menubutton" data-options="menu:'#mm4'">疾病管理</a>  
         <a href="#" class="easyui-menubutton" data-options="menu:'#mm2'">服务管理</a>   
         <a href="#" class="easyui-linkbutton" data-options="plain:true">关于</a>
        
        
+        <div id="mm4" style="width:150px;">  
+		      <div ><a href="${basePath}admin/symptom">疾病审核</a></div>  
+		        <div ><a href="${basePath}admin/directory/3"> 疾病目录信息 </a></div> 
+		       
+		        <div>  <a href="${basePath}admin/diseaseclass">疾病分类</a></div>   
+		        <div class="menu-sep"></div>  
+		        <div>  <a href="${basePath}admin/symptomclass">科室分类</a></div>  
+		        <div>  <a href="${basePath}admin/symptomclass">部位分类</a></div> 
+		        
+        </div>
         
           <div id="mm3" style="width:150px;">  
 		      <div ><a href="${basePath}admin/symptom">病状审核</a></div>  

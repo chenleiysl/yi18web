@@ -34,4 +34,12 @@ public class DirectoryService
 		map.put("type", DirectoryEnum.Type.Symptom.getValue());
 		return (List<Directory>) bean.getlist(map ); 
 	}
+	
+	public List<Directory> getDisease()
+	{
+		Directory bean = new Directory();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("type", DirectoryEnum.Type.Disease.getValue());
+		return (List<Directory>) bean.getlist(map ); 
+	}
 }
