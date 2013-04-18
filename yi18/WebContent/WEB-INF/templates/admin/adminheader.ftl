@@ -33,13 +33,13 @@
        
        
         <div id="mm4" style="width:150px;">  
-		      <div ><a href="${basePath}admin/symptom">疾病审核</a></div>  
+		      <div ><a href="${basePath}admin/disease">疾病审核</a></div>  
 		        <div ><a href="${basePath}admin/directory/3"> 疾病目录信息 </a></div> 
 		       
 		        <div>  <a href="${basePath}admin/diseaseclass">疾病分类</a></div>   
 		        <div class="menu-sep"></div>  
-		        <div>  <a href="${basePath}admin/symptomclass">科室分类</a></div>  
-		        <div>  <a href="${basePath}admin/symptomclass">部位分类</a></div> 
+		        <div>  <a href="${basePath}admin/department">科室分类</a></div>  
+		        <div>  <a href="${basePath}admin/place">部位分类</a></div> 
 		        
         </div>
         

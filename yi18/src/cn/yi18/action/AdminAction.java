@@ -12,11 +12,14 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import com.google.gson.Gson;
 
+import cn.yi18.entity.DiseaseInfo;
 import cn.yi18.entity.DrugInfo;
 import cn.yi18.entity.SymptomInfo;
 import cn.yi18.enums.DirectoryEnum;
 import cn.yi18.enums.NewsEnum;
+import cn.yi18.pojo.Departments;
 import cn.yi18.pojo.Directory;
+import cn.yi18.pojo.Disease;
 import cn.yi18.pojo.Diseaseclass;
 import cn.yi18.pojo.Drug;
 import cn.yi18.pojo.Drugclass;
@@ -25,9 +28,12 @@ import cn.yi18.pojo.Links;
 import cn.yi18.pojo.News;
 import cn.yi18.pojo.POJO;
 import cn.yi18.pojo.Partner;
+import cn.yi18.pojo.Place;
 import cn.yi18.pojo.Symptomclass;
 import cn.yi18.pojo.Symptoms;
 import cn.yi18.service.DirectoryService;
+import cn.yi18.service.DiseaseInfoService;
+import cn.yi18.service.DiseaseService;
 import cn.yi18.service.DrugInfoService;
 import cn.yi18.service.DrugService;
 import cn.yi18.service.FactoryService;
@@ -102,6 +108,94 @@ public class AdminAction extends BaseAction {
 				root.put("list", list);
 				printFreemarker("admin/directory_disease.ftl", root);
 			}
+		}
+		
+	}
+	
+	
+	public void place() throws IllegalAccessException, InvocationTargetException {
+		
+	
+		if(request.isSubmit())
+		{
+			Map map = request.getParameterMap();
+			Place place = new Place();
+			BeanUtils.populate(place , map);
+			if(request.getParameter("sub").equals("save"))
+			{
+				
+				place.save();
+				  String json = "{\"success\": true,   \"message\": \"保存成功.\" } ";
+				  printHtml(json);
+				  return;
+				
+			}else if(request.getParameter("sub").equals("edit"))
+			{
+				
+				  
+				  Map<String, Object> dmap = new HashMap<String, Object>();
+				  dmap.put("name", place.getName());
+				  
+					Place bean = new Place();
+				  bean.update(dmap , place.getId());
+				  String json = "{\"success\": true,   \"message\": \"修改成功.\" } ";
+				  printHtml(json);
+				  return;
+			}
+			  
+			
+		}else 
+		{
+
+
+			Place bean = new Place();
+			List<Place> list = (List<Place>) bean.list();
+			root.put("list", list);
+			printFreemarker("admin/place.ftl", root);
+			
+		}
+		
+	}
+	public void department() throws IllegalAccessException, InvocationTargetException {
+		
+		
+		if(request.isSubmit())
+		{
+			Map map = request.getParameterMap();
+			Departments departments = new Departments();
+			BeanUtils.populate(departments , map);
+			if(request.getParameter("sub").equals("save"))
+			{
+				
+				departments.save();
+				  String json = "{\"success\": true,   \"message\": \"保存成功.\" } ";
+				  printHtml(json);
+				  return;
+				
+			}else if(request.getParameter("sub").equals("edit"))
+			{
+				
+				  
+				  Map<String, Object> dmap = new HashMap<String, Object>();
+				  dmap.put("name", departments.getName());
+				  
+				  Departments bean = new Departments();
+				  bean.update(dmap , departments.getId());
+				  String json = "{\"success\": true,   \"message\": \"修改成功.\" } ";
+				  printHtml(json);
+				  return;
+			}
+			  
+			
+		}else 
+		{
+
+
+			 Departments bean = new Departments();
+			List<Place> list = (List<Place>) bean.list();
+			root.put("list", list);
+			printFreemarker("admin/departments.ftl", root);
+			
 		}
 		
 	}
@@ -325,6 +419,17 @@ public class AdminAction extends BaseAction {
 		printFreemarker("admin/symptom_check_list.ftl", root);
 	}
 	
+	
+	
+	/*
+	 * 
+	 */
+	public void disease()
+	{
+		List<Disease> list = diseaseService.getNoCheck();
+		root.put("list", list);
+		printFreemarker("admin/disease_check_list.ftl", root);
+	}
 	public void jsondrugclass(){
 		Drugclass bean = new Drugclass();
 		List<Drugclass> rows = (List<Drugclass>) bean.list();
@@ -558,6 +663,35 @@ public class AdminAction extends BaseAction {
 		
 	}
 	
+	public void checkdisease()
+	{
+		
+			String[] params = request.getParams();
+			if(params!=null)
+			{
+				Long id = Long.parseLong(params[0]);
+				Disease bean = new Disease();
+				Disease disease = bean.get(id);
+				
+				List<DiseaseInfo> list = diseaseInfoService.getSymptomInfo(id);
+				
+				root.put("disease", disease);
+				root.put("list", list);
+				
+				Diseaseclass sbean = new Diseaseclass();
+				
+//				Drugclass dbean = new Drugclass();
+				 Map<String, Object> map = new HashMap<String, Object>();
+				 map.put("level", 2);
+				List<Diseaseclass> diseaseclasses = (List<Diseaseclass>) sbean.getlist(map );
+//				
+				root.put("diseaseclass", diseaseclasses);
+				printFreemarker("admin/diseaseclass_check.ftl", root);
+			}
+		
+		
+	}
+	
 	public void news()
 	{
 		root.put("list", newsService.getNoCheck());
@@ -600,5 +734,7 @@ public class AdminAction extends BaseAction {
 	private NewsService newsService = new NewsService();
 	private SymptomService symptomService = new SymptomService();
 	private SymptomInfoService symptomInfoService = new SymptomInfoService();
+	private DiseaseService diseaseService = new DiseaseService();
+	private DiseaseInfoService diseaseInfoService = new DiseaseInfoService();
 	
 }
