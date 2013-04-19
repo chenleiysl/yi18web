@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>医药吧_首页</title>
+    <link rel="stylesheet" type="text/css" href="common/easyui/themes/default/easyui.css">  
+    <link rel="stylesheet" type="text/css" href="common/easyui/themes/icon.css">  
+     <link rel="stylesheet" type="text/css" href="common/css/default.css">  
+    <script type="text/javascript" src="common/easyui/jquery-1.9.1.min.js"></script>  
+    <script type="text/javascript" src="common/easyui/jquery.easyui.min.js"></script> 
+    <script type="text/javascript" src="common/easyui/locale/easyui-lang-zh_CN.js"></script>  
+
+<style type="text/css">
+    
+    /* 项目详细列表 */
+.ProjectList {background:#fff;}
+.ProjectList ul.List {margin:20px 5px;}
+.ProjectList ul.List li {margin:10px 0 20px 0;border-bottom:1px dashed #ddd;list-style-type:none;}
+.ProjectList ul.List li h3 {font-size:12pt;text-decoration:none;background:url('${basePath}common/image/r_arrow.gif') no-repeat left center;padding-left:16px;}
+.ProjectList ul.List li h3 em {font-style:normal;color:#060;}
+.ProjectList ul.List li h3 a { text-decoration:none;}
+.ProjectList ul.List li a .name {color:#060;display:inline;margin:0;}
+.ProjectList ul.List li a.more {font-weight:normal;color:#A00;display:block;margin:10px 0 0 0;}
+.ProjectList ul.List li a:hover {color:#FF3300;text-decoration:underline;}
+.ProjectList ul.List li p.detail {margin:5px 0 5px 15px;color:#666;font-size:9pt;}
+.ProjectList ul.List li p.news {margin:10px 0 5px 0;}
+.ProjectList ul.List li p.news a {color:#333;}
+.ProjectList table td {vertical-align:top;padding:0px 0 5px 0;}
+
+.LeftMenu {font-size:12pt;font-weight: bold;}
+.LeftMenu table.Menu td{margin:10px 0 10px 0;border-bottom:1px dashed #ddd;list-style-type:none;}
+.LeftMenu table.Menu td a{text-decoration:none;}
+.LeftMenu table.Menu td a:hover {color:green;}
+.Select{background: #eee;}
+.LeftMenu table.Menu td .count{font-size:9pt;float: right;}
+
+ </style>
+
+</head>
+<body>
+<div id = "Screen">
+
+	<div id="logo">
+	<a href="#" title="医药吧"><img alt="logo" src="common/image/logo.png"></a>
+	<font color="green" size="6" style="font-weight: bold;">&nbsp;www.yi18.cn</font>
+	<div style="float: right;" id="userbar"><a href="admin.html">登录</a>&nbsp;|&nbsp;<a href="add_drug.html">添加疾病</a></div>
+	</div>
+   <div style="padding:10px;border:1px solid #ddd">  
+        <a href="#" class="easyui-linkbutton" data-options="plain:true">主页</a>  
+        <a href="#" class="easyui-linkbutton" data-options="plain:true">常见疾病</a>  
+        <a href="#" class="easyui-linkbutton" data-options="plain:true">病状查找</a>
+         <a href="#" class="easyui-linkbutton" data-options="plain:true">疾病找药</a> 
+         <a href="#" class="easyui-linkbutton" data-options="plain:true">用药咨询</a>
+         <a href="#" class="easyui-linkbutton" data-options="plain:true">医药新闻</a>    
+        <a href="#" class="easyui-linkbutton" data-options="plain:true">关于</a>
+        <div style="float: right;">
+        <input class="easyui-searchbox" data-options="prompt:'请输入查询信息',menu:'#mm',searcher:doSearch" style="width:340px"></input> 
+   		<script>  
+        function doSearch(value,name){  
+            alert('You input: ' + value+'('+name+')');  
+        }  
+    	</script> 
+    	<div id="mm" style="width:120px">  
+        	<div data-options="name:'all'">疾病</div>  
+        	<div data-options="name:'pi'">病状</div>  
+    	</div> 
+   		
+   		</div>
+    </div> 
+   <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="98%" color=#5cc26f SIZE=1>
+    
+    
+    
+    <div style="margin:10px 0;"></div>  
+    <div class="easyui-layout" style="width:980px;height:1800px;">  
+    
+     <div data-options="region:'west',split:true" title="疾病分类" style="width:120px;">  
+     		 <div style="padding:5px;border:1px solid #ddd">  
+             <a href="#" class="easyui-menubutton" style="width: 100px" data-options="menu:'#mm1'">疾病分类</a>
+             <a href="#" class="easyui-menubutton" style="width: 100px" data-options="menu:'#mm2'">就诊科室</a>
+              <a href="#" class="easyui-menubutton" style="width: 100px" data-options="menu:'#mm2'">身体部位</a>
+     		</div>
+     </div>
+     
+     <div id="mm1" style="width:150px;">  
+        <div data-options="iconCls:'icon-undo'">Undo</div>  
+        <div data-options="iconCls:'icon-redo'">Redo</div>  
+        <div class="menu-sep"></div>  
+        <div>Cut</div>  
+        <div>Copy</div>  
+        <div>Paste</div>  
+        <div class="menu-sep"></div>  
+        <div>  
+            <span>Toolbar</span>  
+            <div style="width:150px;">  
+                <div>Address</div>  
+                <div>Link</div>  
+                <div>Navigation Toolbar</div>  
+                <div>Bookmark Toolbar</div>  
+                <div class="menu-sep"></div>  
+                <div>New Toolbar...</div>  
+            </div>  
+        </div>  
+        <div data-options="iconCls:'icon-remove'">Delete</div>  
+        <div>Select All</div>  
+    </div> 
+     
+     
+     
+     <div data-options="region:'center',title:'疾病分类 '" > 
+            <div class="easyui-tabs" data-options="fit:true,border:false,plain:true">  
+                <div title="常见疾病" data-options="" style="padding:10px">
+                
+                 <div class='ProjectList'>	
+               			 <ul class='List'>
+                	
+                	
+                	<li>
+				    <h3><a href="" target="_blank"> <em>1212</em></a></h3>    
+					
+					<table width='100%'><tr><td>
+						<p class='detail'>
+									121212
+						    	<a href="" target="_blank" class='more'>更多1212</a>
+						</p>
+					</td>
+						
+						</tr>
+						</table>
+				    
+					    </li>
+					 
+                	
+                	</ul>
+                	
+                	
+         
+                	</div>
+                
+                
+                </div>
+                  <div title="新增疾病" data-options="" style="padding:10px">
+                </div>
+              </div>
+     </div>
+
+
+     </div>
+    
+    
+  
+  <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="98%" color=#5cc26f SIZE=1>
+   		
+<div id="Links">
+<div >
+<h3 class='caption'>+ 友情链接</h3>
+<p>
+<a href="http://www.xywy.com/" target="_blank" style='color:#A00;'>寻医问药</a>
+<a href="http://www.818.com/" target="_blank" style='color:#A00;'>818医药网</a>
+<a href="http://health.sina.com.cn/" target="_blank">新浪健康</a>
+<a href="http://www.familydoctor.com.cn/" target="_blank">家庭医生在线</a>
+<a href="http://yi18.cloudfoundry.com/" target="_blank">医药吧</a>
+
+
+</p>
+</div>
+</div>
+    <div id="Footer">&copy; 医药吧.中国网(yi18.cn) | <a href="#">关于我们</a> | <a href="#">医药吧手机版</a> | <a href="#">广告联系</a> | <a href="#" target="_blank">@新浪微博</a>  | 蜀ICP备110号
+</div>
+</div>
+</body>
+</html>

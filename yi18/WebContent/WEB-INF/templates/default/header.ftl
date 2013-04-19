@@ -27,8 +27,8 @@
         <a href="${basePath}" class="easyui-linkbutton" data-options="plain:true">主页</a>  
         <a href="${basePath}drug/list" class="easyui-linkbutton" data-options="plain:true">药品分类</a>  
         <a href="${basePath}symptom/list" class="easyui-linkbutton" data-options="plain:true">病状查找</a>
-         <a href="#" class="easyui-linkbutton" data-options="plain:true">疾病找药</a> 
-         <a href="#" class="easyui-linkbutton" data-options="plain:true">用药咨询</a>
+         <a href="${basePath}disease/list" class="easyui-linkbutton" data-options="plain:true">疾病中心</a> 
+         <a href="${basePath}lore/list" class="easyui-linkbutton" data-options="plain:true">健康知识</a>
          <a href="${basePath}news/list" class="easyui-linkbutton" data-options="plain:true">医药新闻</a>    
         <a href="${basePath}index/partner" class="easyui-linkbutton" data-options="plain:true">合作伙伴</a>
         <div style="float: right;">

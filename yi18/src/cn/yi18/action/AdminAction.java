@@ -25,6 +25,8 @@ import cn.yi18.pojo.Drug;
 import cn.yi18.pojo.Drugclass;
 import cn.yi18.pojo.Factory;
 import cn.yi18.pojo.Links;
+import cn.yi18.pojo.Lore;
+import cn.yi18.pojo.Loreclass;
 import cn.yi18.pojo.News;
 import cn.yi18.pojo.POJO;
 import cn.yi18.pojo.Partner;
@@ -38,6 +40,7 @@ import cn.yi18.service.DrugInfoService;
 import cn.yi18.service.DrugService;
 import cn.yi18.service.FactoryService;
 import cn.yi18.service.LinksService;
+import cn.yi18.service.LoreService;
 import cn.yi18.service.NewsService;
 import cn.yi18.service.PartnerService;
 import cn.yi18.service.SymptomInfoService;
@@ -201,6 +204,50 @@ public class AdminAction extends BaseAction {
 	}
 	
 	
+	public void loreclass() throws IllegalAccessException, InvocationTargetException {
+		
+		
+		if(request.isSubmit())
+		{
+			Map map = request.getParameterMap();
+			Loreclass loreclass = new Loreclass();
+			BeanUtils.populate(loreclass , map);
+			if(request.getParameter("sub").equals("save"))
+			{
+				
+				loreclass.save();
+				  String json = "{\"success\": true,   \"message\": \"保存成功.\" } ";
+				  printHtml(json);
+				  return;
+				
+			}else if(request.getParameter("sub").equals("edit"))
+			{
+				
+				  
+				  Map<String, Object> dmap = new HashMap<String, Object>();
+				  dmap.put("name", loreclass.getName());
+				  
+				  Loreclass bean = new Loreclass();
+				  bean.update(dmap , loreclass.getId());
+				  String json = "{\"success\": true,   \"message\": \"修改成功.\" } ";
+				  printHtml(json);
+				  return;
+			}
+			  
+			
+		}else 
+		{
+
+
+			Loreclass bean = new Loreclass();
+			List<Loreclass> list = (List<Loreclass>) bean.list();
+			root.put("list", list);
+			printFreemarker("admin/loreclass.ftl", root);
+			
+		}
+		
+	}
+	
 	/**
 	 * 药品分类操作
 	 * @throws IllegalAccessException
@@ -310,7 +357,7 @@ public class AdminAction extends BaseAction {
 					diseaseclass.setLevel(2);
 					diseaseclass.setState(null);
 				}
-				Drugclass bean = new Drugclass();
+					Diseaseclass bean = new Diseaseclass();
 				  Map<String, Object> dmap = new HashMap<String, Object>();
 				  dmap.put("title", diseaseclass.getTitle());
 				  dmap.put("_parentId", diseaseclass.get_parentId());
@@ -673,7 +720,7 @@ public class AdminAction extends BaseAction {
 				Disease bean = new Disease();
 				Disease disease = bean.get(id);
 				
-				List<DiseaseInfo> list = diseaseInfoService.getSymptomInfo(id);
+				List<DiseaseInfo> list = diseaseInfoService.getDiseaseInfo(id);
 				
 				root.put("disease", disease);
 				root.put("list", list);
@@ -697,6 +744,13 @@ public class AdminAction extends BaseAction {
 		root.put("list", newsService.getNoCheck());
 		printFreemarker("admin/news_check_list.ftl", root);
 	}
+	
+	public void lore()
+	{
+		root.put("list", loreService.getNoCheck());
+		printFreemarker("admin/lore_check_list.ftl", root);
+	}
+	
 	
 	public void checknews() throws IllegalAccessException, InvocationTargetException 
 	{
@@ -725,6 +779,38 @@ public class AdminAction extends BaseAction {
 		}
 	}
 	
+	
+	public void checkrole() throws IllegalAccessException, InvocationTargetException 
+	{
+		if (request.isSubmit())
+		{
+			Lore bean = new Lore();
+			Map map = request.getParameterMap();
+			BeanUtils.populate(bean, map);
+			
+			Map<String, Object> vmap = new HashMap<String, Object>();
+			vmap.put("title", bean.getTitle());
+			vmap.put("loreclass", bean.getLoreclass());
+			vmap.put("message", bean.getMessage());
+			vmap.put("author", bean.getAuthor());
+			vmap.put("allow", NewsEnum.Check_Status.IsCheck.getValue());
+			bean.update(vmap , bean.getId());
+			sendRedirect(request.basePath()+"admin/lore");
+			
+		}else 
+		{
+		
+			String sid= request.getParams()[0];
+			Lore lore = new Lore();
+			lore = lore.get(Long.parseLong(sid));
+			Loreclass bean = new Loreclass();
+			List<Loreclass> list = (List<Loreclass>) bean.list();
+			root.put("lore", lore);
+			root.put("list", list);
+			printFreemarker("admin/lore_check.ftl", root);
+		}
+	}
+	
 	private DirectoryService directoryService = new DirectoryService ();
 	private FactoryService factoryService = new FactoryService();
 	private LinksService linksService = new LinksService();
@@ -732,6 +818,7 @@ public class AdminAction extends BaseAction {
 	private DrugService drugService = new DrugService();
 	private DrugInfoService drugInfoService = new DrugInfoService();
 	private NewsService newsService = new NewsService();
+	private LoreService loreService = new LoreService();
 	private SymptomService symptomService = new SymptomService();
 	private SymptomInfoService symptomInfoService = new SymptomInfoService();
 	private DiseaseService diseaseService = new DiseaseService();

@@ -12,6 +12,9 @@ public class Disease extends POJO
 	protected Long diseaseclass;//疾病分类
 	protected int infectious;//传 染 性 0：不传染，1传染
 	protected int allow;//是否允许显示，，是否通过管理员审核，1：通过，0：等待，-1 不通过
+	protected int count;//访问次数
+	
+
 	protected Timestamp time = new Timestamp(new Date().getTime());//时间
 	public String getName() {
 		return name;
@@ -43,6 +46,13 @@ public class Disease extends POJO
 	public void setInfectious(int infectious) {
 		this.infectious = infectious;
 	}
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
+
 	public Timestamp getTime() {
 		return time;
 	}

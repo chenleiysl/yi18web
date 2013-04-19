@@ -60,7 +60,7 @@
 					    
 					</select>
 					    
-					</select></td>  
+					</td>  
                 </tr> 
                
             </table> 

@@ -14,7 +14,7 @@ public class DiseaseInfoService {
 
 	private DiseaseInfoDao diseaseInfoDao = new DiseaseInfoDao();
 	
-	public List<DiseaseInfo> getSymptomInfo(long id)
+	public List<DiseaseInfo> getDiseaseInfo(long id)
 	{
 		return diseaseInfoDao.getDiseaseinfo(id);
 	}

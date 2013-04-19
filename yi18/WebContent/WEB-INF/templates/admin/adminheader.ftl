@@ -28,9 +28,18 @@
         <a href="#" class="easyui-menubutton" data-options="menu:'#mm1'">药品管理</a>    
          <a href="#" class="easyui-menubutton" data-options="menu:'#mm3'">病状管理</a> 
          <a href="#" class="easyui-menubutton" data-options="menu:'#mm4'">疾病管理</a>  
+         <a href="#" class="easyui-menubutton" data-options="menu:'#mm5'">知识管理</a>  
         <a href="#" class="easyui-menubutton" data-options="menu:'#mm2'">服务管理</a>   
         <a href="#" class="easyui-linkbutton" data-options="plain:true">关于</a>
        
+       
+        <div id="mm5" style="width:150px;">  
+		      <div ><a href="${basePath}admin/lore">健康知识审核</a></div>  
+
+		    <div>  <a href="${basePath}admin/loreclass">健康知识分类</a></div>   
+		       
+		        
+        </div>
        
         <div id="mm4" style="width:150px;">  
 		      <div ><a href="${basePath}admin/disease">疾病审核</a></div>  

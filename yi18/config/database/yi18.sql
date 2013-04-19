@@ -14,6 +14,7 @@ CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_departments` (
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `name_UNIQUE` (`name` ASC) )
 ENGINE = InnoDB
+AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8
 COMMENT = '科室,主要拥有疾病的分类';
 
@@ -31,7 +32,7 @@ CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_directory` (
   `time` TIMESTAMP NULL DEFAULT NULL COMMENT '目录的添加时间' ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
-AUTO_INCREMENT = 7
+AUTO_INCREMENT = 8
 DEFAULT CHARACTER SET = utf8
 COMMENT = '药品内容的目录';
 
@@ -41,13 +42,16 @@ COMMENT = '药品内容的目录';
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_disease` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT ,
-  ` name` VARCHAR(64) NOT NULL COMMENT '疾病名称' ,
+  `name` VARCHAR(64) NOT NULL COMMENT '疾病名称' ,
   `description` VARCHAR(1024) NULL DEFAULT NULL COMMENT '疾病描述 ' ,
   `diseaseclass` BIGINT(20) NULL DEFAULT NULL COMMENT '疾病分类' ,
   `infectious` SMALLINT(6) NULL DEFAULT NULL COMMENT '传 染 性 0：不传染，1传染' ,
+  `allow` SMALLINT(6) NULL DEFAULT NULL COMMENT '是否允许显示，，是否通过管理员审核，1：通过，0：等待，-1 不通过' ,
   `time` TIMESTAMP NULL DEFAULT NULL COMMENT '添加时间' ,
+  `count` INT(11) NULL DEFAULT NULL COMMENT '阅读次数' ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
+AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8
 COMMENT = '疾病信息表';
 
@@ -64,7 +68,7 @@ CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_diseaseclass` (
   `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '添加药品分类的时间' ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
-AUTO_INCREMENT = 7
+AUTO_INCREMENT = 11
 DEFAULT CHARACTER SET = utf8
 COMMENT = '疾病分类，主要用于疾病的标准分类';
 
@@ -87,12 +91,12 @@ COMMENT = '疾病对应科室，一个科室对应多个疾病，一个疾病对
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_diseaseinfo` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '疾病信息的id编号' ,
-  `drug` BIGINT(20) NOT NULL COMMENT '疾病的编号' ,
+  `disease` BIGINT(20) NOT NULL COMMENT '疾病的编号' ,
   `directory` BIGINT(20) NULL DEFAULT NULL COMMENT '疾病词条' ,
   `message` TEXT NULL DEFAULT NULL COMMENT '添加的内容' ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
-AUTO_INCREMENT = 34
+AUTO_INCREMENT = 5
 DEFAULT CHARACTER SET = utf8
 COMMENT = '疾病的基本信息';
 
@@ -219,6 +223,39 @@ COMMENT = '记录用户的登录状态，如记住登录状态等功能，同时
 
 
 -- -----------------------------------------------------
+-- Table `yi18`.`yi18_lore`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_lore` (
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT 'id编号' ,
+  `title` VARCHAR(128) NOT NULL COMMENT '标题' ,
+  `author` VARCHAR(64) NULL DEFAULT NULL COMMENT '作者' ,
+  `message` TEXT NULL DEFAULT NULL COMMENT '内容' ,
+  `count` INT(11) NULL DEFAULT NULL COMMENT '访问次数' ,
+  `allow` INT(11) NULL DEFAULT NULL COMMENT '是否允许显示，，是否通过管理员审核，1：通过，0：等待，-1 不通过' ,
+  `loreclass` BIGINT(20) NULL DEFAULT NULL COMMENT '健康知识分类' ,
+  `time` TIMESTAMP NULL DEFAULT NULL COMMENT '添加时间' ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB
+AUTO_INCREMENT = 10
+DEFAULT CHARACTER SET = utf8
+COMMENT = '健康知识';
+
+
+-- -----------------------------------------------------
+-- Table `yi18`.`yi18_loreclass`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_loreclass` (
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT ,
+  `name` VARCHAR(64) NULL DEFAULT NULL COMMENT '名称' ,
+  `description` VARCHAR(1024) NULL DEFAULT NULL COMMENT '描述' ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB
+AUTO_INCREMENT = 3
+DEFAULT CHARACTER SET = utf8
+COMMENT = '健康知识分类';
+
+
+-- -----------------------------------------------------
 -- Table `yi18`.`yi18_news`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_news` (
@@ -257,10 +294,11 @@ COMMENT = '合作伙伴';
 -- Table `yi18`.`yi18_place`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_place` (
-  `id` BIGINT(20) NOT NULL ,
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(64) NULL DEFAULT NULL COMMENT '名称' ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
+AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8
 COMMENT = '人的身体部分，主要是疾病的发病部分';
 
