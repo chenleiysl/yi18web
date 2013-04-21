@@ -48,108 +48,25 @@
  </style>
     <div>
       <div style="float: right;">
-       <div id="tt">  
-        <a href="javascript:void(0)" class="icon-redo" onclick="javascript:alert('add')"></a> 
-        </div>
-     <div id="p1" class="easyui-panel" title="推荐信息" style="width:280px;height:350px;padding:10px;"   data-options="tools:'#tt'">  
-       <ul class='List'   >
-			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/3" target="_blank">斯蒂芬地方</a></h3>
-						
-			</li>
-			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/3" target="_blank">斯蒂芬地方</a></h3>
-						
-			</li>
-			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/3" target="_blank">斯蒂芬地方</a></h3>
-						
-			</li>
-			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/3" target="_blank">斯蒂芬地方</a></h3>
-						
-			</li>
-			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/3" target="_blank">斯蒂芬地方</a></h3>
-						
-			</li>
-			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/3" target="_blank">斯蒂芬地方</a></h3>
-						
-			</li>
-			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/3" target="_blank">斯蒂芬地方</a></h3>
-						
-			</li>
-			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/3" target="_blank">斯蒂芬地方</a></h3>
-						
-			</li>
-			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/3" target="_blank">斯蒂芬地方</a></h3>
-						
-			</li>
-			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/3" target="_blank">斯蒂芬地方</a></h3>
-						
-			</li>
-			</ul>
+     
+     <div id="p1" class="easyui-panel" title="网站通告" style="width:280px;height:350px;padding:10px;"   >  
+       2013年6月，医药吧测试版正式推出！
     </div> 
     </div>
     <div>
-      <div id="p" class="easyui-panel" title="最新综合信息" style="width:700px;height:350px;padding:10px;">  
+      <div id="nn">  
+        <a href="${basePath}news/list" class="icon-redo" ></a> 
+        </div>
+      <div id="p" class="easyui-panel" title="最新综合信息" style="width:700px;height:350px;padding:10px;" data-options="tools:'#nn'">  
        <ul class='List'   >
+       <#list news as item>
 			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/3" target="_blank">斯蒂芬地方</a></h3>
-				<span class='date'>发布于 2013-04-15</span>	
-				<span class='stat'><em> 2</em>浏览</span>			
+				<h3><a href="${basePath}news/show/${item.getId()}" target="_blank">${item.title}</a></h3>
+				<span class='date'>发布于 ${item.time?string("yyyy-MM-dd")}</span>	
+				<span class='stat'><em> ${item.count}</em>浏览</span>			
 			</li>
-			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/1" target="_blank">师德师风第三方斯蒂芬</a></h3>
-				<span class='date'>发布于 2013-04-15</span>	
-				<span class='stat'><em> 1</em>浏览</span>			
-			</li>
-			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/2" target="_blank">阿斯顿是的撒</a></h3>
-				<span class='date'>发布于 2013-04-15</span>	
-				<span class='stat'><em> 0</em>浏览</span>			
-			</li>
-			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/2" target="_blank">阿斯顿是的撒</a></h3>
-				<span class='date'>发布于 2013-04-15</span>	
-				<span class='stat'><em> 0</em>浏览</span>			
-			</li>
-			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/2" target="_blank">阿斯顿是的撒</a></h3>
-				<span class='date'>发布于 2013-04-15</span>	
-				<span class='stat'><em> 0</em>浏览</span>			
-			</li>
-			
-			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/2" target="_blank">阿斯顿是的撒</a></h3>
-				<span class='date'>发布于 2013-04-15</span>	
-				<span class='stat'><em> 0</em>浏览</span>			
-			</li>
-			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/2" target="_blank">阿斯顿是的撒</a></h3>
-				<span class='date'>发布于 2013-04-15</span>	
-				<span class='stat'><em> 0</em>浏览</span>			
-			</li>
-			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/2" target="_blank">阿斯顿是的撒</a></h3>
-				<span class='date'>发布于 2013-04-15</span>	
-				<span class='stat'><em> 0</em>浏览</span>			
-			</li>
-			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/2" target="_blank">阿斯顿是的撒</a></h3>
-				<span class='date'>发布于 2013-04-15</span>	
-				<span class='stat'><em> 0</em>浏览</span>			
-			</li>
-			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/2" target="_blank">阿斯顿是的撒</a></h3>
-				<span class='date'>发布于 2013-04-15</span>	
-				<span class='stat'><em> 0</em>浏览</span>			
-			</li>
+			</#list>
+		
 			</ul>
 					 
     </div> 
@@ -159,33 +76,31 @@
   <div>
      
     <div>
-      <div id="p" class="easyui-panel" title="健康知识" style="width:998;height:300px;padding:10px;">  
+    
+     <div id="ll">  
+        <a href="${basePath}lore/list" class="icon-redo" ></a> 
+        </div>
+      <div id="p" class="easyui-panel" title="健康知识" style="width:998;height:300px;padding:10px;" data-options="tools:'#ll'">  
       <div style="width: 490px;float: right;">
        <ul class='List'   >
+			<#list month as item>
 			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/3" target="_blank">斯蒂芬地方</a></h3>
-				<span class='date'>发布于 2013-04-15</span>	
-				<span class='stat'><em> 2</em>浏览</span>			
+				<h3><a href="${basePath}lore/show/${item.getId()}" target="_blank">${item.title}</a></h3>
+				<span class='date'>发布于${item.time?string("yyyy-MM-dd")}</span>	
+				<span class='stat'><em> ${item.count}</em>浏览</span>			
 			</li>
+		</#list>
 			</ul>
       </div>
         <div style="width: 490px;">
        <ul class='List'   >
+			<#list week as item>
 			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/3" target="_blank">斯蒂芬地方</a></h3>
-				<span class='date'>发布于 2013-04-15</span>	
-				<span class='stat'><em> 2</em>浏览</span>			
+				<h3><a href="${basePath}lore/show/${item.getId()}" target="_blank">${item.title}</a></h3>
+				<span class='date'>发布于${item.time?string("yyyy-MM-dd")}</span>	
+				<span class='stat'><em> ${item.count}</em>浏览</span>			
 			</li>
-			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/3" target="_blank">斯蒂芬地方</a></h3>
-				<span class='date'>发布于 2013-04-15</span>	
-				<span class='stat'><em> 2</em>浏览</span>			
-			</li>
-			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/3" target="_blank">斯蒂芬地方</a></h3>
-				<span class='date'>发布于 2013-04-15</span>	
-				<span class='stat'><em> 2</em>浏览</span>			
-			</li>
+		</#list>
 			</ul>
       </div>
     </div> 
@@ -194,116 +109,35 @@
    
      <div>
       <div style="float: right;">
-     <div id="p1" class="easyui-panel" title="病状" style="width:498px;height:350px;padding:10px;">  
+      
+       <div id="ss">  
+        <a href="${basePath}symptom/list" class="icon-redo" ></a> 
+        </div>
+     <div id="p1" class="easyui-panel" title="病状" style="width:498px;height:350px;padding:10px;" data-options="tools:'#ss'">  
         <ul class='List'   >
+			<#list snews as item>
 			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/3" target="_blank">斯蒂芬地方</a></h3>
-				<span class='date'>发布于 2013-04-15</span>	
-				<span class='stat'><em> 2</em>浏览</span>			
+				<h3><a href="${basePath}symptom/show/${item.getId()}" target="_blank">${item.name}</a></h3>
+				<span class='date'>发布于${item.time?string("yyyy-MM-dd")}</span>	
+				<span class='stat'><em> ${item.count}</em>浏览</span>			
 			</li>
-			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/1" target="_blank">师德师风第三方斯蒂芬</a></h3>
-				<span class='date'>发布于 2013-04-15</span>	
-				<span class='stat'><em> 1</em>浏览</span>			
-			</li>
-			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/2" target="_blank">阿斯顿是的撒</a></h3>
-				<span class='date'>发布于 2013-04-15</span>	
-				<span class='stat'><em> 0</em>浏览</span>			
-			</li>
-			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/2" target="_blank">阿斯顿是的撒</a></h3>
-				<span class='date'>发布于 2013-04-15</span>	
-				<span class='stat'><em> 0</em>浏览</span>			
-			</li>
-			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/2" target="_blank">阿斯顿是的撒</a></h3>
-				<span class='date'>发布于 2013-04-15</span>	
-				<span class='stat'><em> 0</em>浏览</span>			
-			</li>
-			
-			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/2" target="_blank">阿斯顿是的撒</a></h3>
-				<span class='date'>发布于 2013-04-15</span>	
-				<span class='stat'><em> 0</em>浏览</span>			
-			</li>
-			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/2" target="_blank">阿斯顿是的撒</a></h3>
-				<span class='date'>发布于 2013-04-15</span>	
-				<span class='stat'><em> 0</em>浏览</span>			
-			</li>
-			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/2" target="_blank">阿斯顿是的撒</a></h3>
-				<span class='date'>发布于 2013-04-15</span>	
-				<span class='stat'><em> 0</em>浏览</span>			
-			</li>
-			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/2" target="_blank">阿斯顿是的撒</a></h3>
-				<span class='date'>发布于 2013-04-15</span>	
-				<span class='stat'><em> 0</em>浏览</span>			
-			</li>
-			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/2" target="_blank">阿斯顿是的撒</a></h3>
-				<span class='date'>发布于 2013-04-15</span>	
-				<span class='stat'><em> 0</em>浏览</span>			
-			</li>
+		</#list>
 			</ul> 
     </div> 
     </div>
     <div>
-      <div id="p3" class="easyui-panel" title="疾病" style="width:498px;height:350px;padding:10px;">  
+     <div id="dd">  
+        <a href="${basePath}disease/list" class="icon-redo" ></a> 
+        </div>
+      <div id="p3" class="easyui-panel" title="疾病" style="width:498px;height:350px;padding:10px;" data-options="tools:'#dd'">  
          <ul class='List'   >
+			<#list dnews as item>
 			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/3" target="_blank">斯蒂芬地方</a></h3>
-				<span class='date'>发布于 2013-04-15</span>	
-				<span class='stat'><em> 2</em>浏览</span>			
+				<h3><a href="${basePath}disease/show/${item.getId()}" target="_blank">${item.name}</a></h3>
+				<span class='date'>发布于${item.time?string("yyyy-MM-dd")}</span>	
+				<span class='stat'><em> ${item.count}</em>浏览</span>			
 			</li>
-			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/1" target="_blank">师德师风第三方斯蒂芬</a></h3>
-				<span class='date'>发布于 2013-04-15</span>	
-				<span class='stat'><em> 1</em>浏览</span>			
-			</li>
-			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/2" target="_blank">阿斯顿是的撒</a></h3>
-				<span class='date'>发布于 2013-04-15</span>	
-				<span class='stat'><em> 0</em>浏览</span>			
-			</li>
-			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/2" target="_blank">阿斯顿是的撒</a></h3>
-				<span class='date'>发布于 2013-04-15</span>	
-				<span class='stat'><em> 0</em>浏览</span>			
-			</li>
-			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/2" target="_blank">阿斯顿是的撒</a></h3>
-				<span class='date'>发布于 2013-04-15</span>	
-				<span class='stat'><em> 0</em>浏览</span>			
-			</li>
-			
-			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/2" target="_blank">阿斯顿是的撒</a></h3>
-				<span class='date'>发布于 2013-04-15</span>	
-				<span class='stat'><em> 0</em>浏览</span>			
-			</li>
-			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/2" target="_blank">阿斯顿是的撒</a></h3>
-				<span class='date'>发布于 2013-04-15</span>	
-				<span class='stat'><em> 0</em>浏览</span>			
-			</li>
-			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/2" target="_blank">阿斯顿是的撒</a></h3>
-				<span class='date'>发布于 2013-04-15</span>	
-				<span class='stat'><em> 0</em>浏览</span>			
-			</li>
-			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/2" target="_blank">阿斯顿是的撒</a></h3>
-				<span class='date'>发布于 2013-04-15</span>	
-				<span class='stat'><em> 0</em>浏览</span>			
-			</li>
-			<li>
-				<h3><a href="http://localhost:8080/yi18/news/show/2" target="_blank">阿斯顿是的撒</a></h3>
-				<span class='date'>发布于 2013-04-15</span>	
-				<span class='stat'><em> 0</em>浏览</span>			
-			</li>
+		</#list>
 			</ul>   
     </div> 
     </div>

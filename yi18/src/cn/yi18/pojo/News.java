@@ -69,7 +69,7 @@ public class News extends POJO
 	
 	public String prettyTime() {
 		PrettyTime p = new PrettyTime(new Locale("ZH_CN"));
-        return p.format(new Date());
+        return p.format(time);
 	}
 	
 }

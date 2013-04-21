@@ -96,7 +96,7 @@
       <div title="本月热点" style="padding:10px">
       
       <ul class='List'   >
-    	<#list week as item>
+    	<#list month as item>
 			<li>
 				<h3><a href="${basePath}lore/show/${item.getId()}" target="_blank">${item.title}</a></h3>
 				<span class='date'>发布于${item.time?string("yyyy-MM-dd")}</span>	
