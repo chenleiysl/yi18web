@@ -32,10 +32,11 @@
          <a href="${basePath}news/list" class="easyui-linkbutton" data-options="plain:true">医药新闻</a>    
         <a href="${basePath}index/partner" class="easyui-linkbutton" data-options="plain:true">合作伙伴</a>
         <div style="float: right;">
-        <input class="easyui-searchbox" data-options="prompt:'请输入查询信息',menu:'#mm',searcher:doSearch" style="width:340px"></input> 
+        <input class="easyui-searchbox" data-options="prompt:'请输入查询信息',menu:'#mm',searcher:doSearch" style="width:340px" value="${keyword!!}"></input> 
    		<script>  
         function doSearch(value,name){  
-            alert('You input: ' + value+'('+name+')');  
+        
+            window.location.href='${basePath}search?q='+value; 
         }  
     	</script> 
     	<div id="mm" style="width:120px">  

@@ -6,6 +6,9 @@ import java.util.Map;
 
 import cn.yi18.dao.DrugDao;
 import cn.yi18.enums.DrugEnum;
+import cn.yi18.lucene.DrugLucene;
+import cn.yi18.lucene.IndexFiles;
+import cn.yi18.lucene.PageInfo;
 import cn.yi18.pojo.Drug;
 import cn.yi18.pojo.Druginfo;
 import cn.yi18.pojo.POJO;
@@ -33,6 +36,8 @@ public class DrugService
 	public void update(Drug drug, List<Druginfo> druginfos)
 	{
 		
+		
+		String content = "";
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("alias", drug.getAlias());
 		map.put("name", drug.getName());
@@ -45,13 +50,23 @@ public class DrugService
 		map.put("prescription", drug.getPrescription());
 		map.put("allow", DrugEnum.Check_Status.IsCheck.getValue());
 		drug.update(map , drug.getId());
+		content=content+drug.getTerm();
 		for (Druginfo druginfo : druginfos) {
 			Map<String, Object> vmap = new HashMap<String, Object>();
 			vmap.put("message", druginfo.getMessage());
 			druginfo.update(vmap, druginfo.getId());
+			
+			content=content+druginfo.getMessage();//
 		}
 		// TODO Auto-generated method stub
 		
+		IndexFiles indexFiles = new DrugLucene();
+		PageInfo pageInfo = new PageInfo();
+		pageInfo.setTitle( drug.getName());
+		pageInfo.setId(drug.getId());
+		pageInfo.setUrl("drug/show/"+drug.getId());
+		pageInfo.setContent(content);
+		indexFiles.create(pageInfo );
 	}
 	
 	

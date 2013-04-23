@@ -82,19 +82,7 @@
        
        
        
-        <div style="float: right;">
-        <input class="easyui-searchbox" data-options="prompt:'请输入查询信息',menu:'#mm',searcher:doSearch" style="width:340px"></input> 
-   		<script>  
-        function doSearch(value,name){  
-            alert('You input: ' + value+'('+name+')');  
-        }  
-    	</script> 
-    	<div id="mm" style="width:120px">  
-        	<div data-options="name:'all'">药品</div>  
-        	<div data-options="name:'pi'">病状</div>  
-    	</div> 
-   		
-   		</div>
+      
     </div> 
      <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="98%" color=#5cc26f SIZE=1>
     
