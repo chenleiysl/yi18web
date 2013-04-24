@@ -12,6 +12,7 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import com.google.gson.Gson;
 
+
 import cn.yi18.entity.DiseaseInfo;
 import cn.yi18.entity.DrugInfo;
 import cn.yi18.entity.SymptomInfo;
@@ -33,6 +34,7 @@ import cn.yi18.pojo.Partner;
 import cn.yi18.pojo.Place;
 import cn.yi18.pojo.Symptomclass;
 import cn.yi18.pojo.Symptoms;
+import cn.yi18.pojo.User;
 import cn.yi18.service.DirectoryService;
 import cn.yi18.service.DiseaseInfoService;
 import cn.yi18.service.DiseaseService;
@@ -810,6 +812,39 @@ public class AdminAction extends BaseAction {
 			printFreemarker("admin/lore_check.ftl", root);
 		}
 	}
+	
+	
+	public void login() throws IllegalAccessException, InvocationTargetException
+	{
+		if (request.isSubmit())
+		{
+			Map map = request.getParameterMap();
+			  User vuser = new User();
+			  BeanUtils.populate(vuser , map);
+			  User bean = new User();
+			  Map<String, Object> vmap = new HashMap<String, Object>();
+			  vmap.put("account", vuser.getAccount());
+			  vmap.put("password", vuser.getPassword());
+			  User user = bean.get(vmap );
+			  if (user!=null)
+			  {
+				  //session.setUser(user);
+				  sendRedirect(request.basePath()+"admin");
+				  return;
+			  }else {
+				
+			
+				root.put("message", "你登录的账号或密码错误");
+				printFreemarker("default/login.ftl", root);
+				return;
+			  }
+			
+		}else {
+			printFreemarker("default/login.ftl", root);
+		}
+		
+	}
+	
 	
 	private DirectoryService directoryService = new DirectoryService ();
 	private FactoryService factoryService = new FactoryService();
