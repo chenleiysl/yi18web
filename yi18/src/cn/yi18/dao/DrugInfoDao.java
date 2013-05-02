@@ -10,10 +10,10 @@ public class DrugInfoDao
 	public List<DrugInfo> getDrugInfo(long id)
 	{
 		
-		String sql = "SELECT directory.title,druginfo.message,druginfo.id FROM "+
+		String sql = "SELECT directory.title,druginfo.message,druginfo.id ,directory.sequence FROM "+
 				"yi18_directory directory JOIN yi18_druginfo druginfo  "+   
 				"ON druginfo.directory =directory.id "+
-				"WHERE druginfo.drug=?";
+				"WHERE druginfo.drug=? ORDER BY directory.sequence";
 		List<DrugInfo> list = QueryHelper.query(DrugInfo.class, sql, id);
 		return list;
 		

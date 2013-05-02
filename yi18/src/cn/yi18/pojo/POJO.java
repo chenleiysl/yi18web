@@ -254,6 +254,28 @@ public class POJO implements Serializable
 		
 	}
 	
+	
+	public List<? extends POJO>  getlist(Map<String, Object> map,String order) 
+	{
+		String sql="SELECT * FROM  "+ tableName() + " where ";
+	 Set<String> sets = map.keySet();
+	 int i = 0;
+	  for (String string : sets) 
+		  {
+			  i++;
+			 sql=sql+string+" = ?";
+			 if (sets.size() > i) 
+			 	{
+				 sql=sql+" and ";
+			 	}
+			 else {
+					sql=sql+ " ORDER BY "+order;
+				}
+		  }
+		return QueryHelper.query(getClass(), sql, map.values().toArray());
+		
+	}
+	
 	/**
 	 * 返回默认的对象对应的表名
 	 * @return

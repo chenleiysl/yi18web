@@ -1,7 +1,7 @@
 <#include "adminheader.ftl">
 
  
- <table class="easyui-datagrid" style="width:970px;height:auto" title="验证药品信息"  data-options="toolbar:toolbar">  
+ <table class="easyui-datagrid" style="width:970px;height:auto" title="审核药品信息"  data-options="toolbar:toolbar">  
         <thead>  
             <tr>  
            	  
@@ -16,7 +16,7 @@
             <tr>  
                <td>${item.name}</td>
                
-               <td>${item.subTerm(40)}</td>
+               <td>${item.subTerm(50)}</td>
                <td>${item.time}</td>  
                
                <td><a href="${basePath}admin/checkdrug/${item.getId()}" >审核</a></td>  

@@ -8,16 +8,18 @@
 
 
 <div id="Message">
-<samp class="date">  <a href="#">药品信息</a>&raquo;<a href="#">添加药品</a>   </samp> <samp style="float: right;"> 共收录药品 <samp style="font-size: 12pt;color: red;font-weight: bolder;">17 </samp> 个     </samp> 
-
+<samp class="date">  <a href="${basePath}drug/list">药品信息</a>&raquo;<a href="${basePath}drug/add">添加药品</a>   </samp>
+<!--
+ <samp style="float: right;"> 共收录药品 <samp style="font-size: 12pt;color: red;font-weight: bolder;">17 </samp> 个     </samp> 
+-->
 </div>
     
      
     
-    <form id="ff" method="post" action="${basePath}drug/add?sub=save" enctype="multipart/form-data"> 
+    <form id="ff" method="post" action="${basePath}drug/add" > 
     
-   <div id="p" class="easyui-panel" title="添加药品" style="width:880px;height:500px;padding:10px;" data-options=""> 
-  <div data-options="region:'west',split:true" title="展开/收缩" style="width:780px;height: 400px">  
+   <div id="p" class="easyui-panel" title="添加药品" style="width:880px;height:600px;padding:10px;" data-options=""> 
+  <div data-options="region:'west',split:true" title="展开/收缩" style="width:780px;height: 450px">  
      
             <div class="easyui-accordion" data-options="fit:true,border:false">  
             
@@ -27,20 +29,13 @@
                 <tr>  
                     <td>药品名称:</td>  
                     <td><input class="easyui-validatebox" type="text" name="name" data-options="required:true" style="width: 300px"></input></td>  
-                	<td>* </td>
+                	
                 </tr>  
                 <tr>  
                     <td>药品别名:</td>  
                     <td><input class="easyui-validatebox" type="text" name="alias" style="width: 300px"></input></td>  
-               		<td> 该产品其它的名称，如果有多个名称可用（;）隔开。 </td>
+               		
                 </tr> 
-             <!--
-              <tr>  
-                    <td>药品图片:</td>  
-                    <td><input class="easyui-validatebox" type="file" name="image" style="width: 300px"></input></td>  
-                	<td> 为了更加形象的现实药品，在这里给药品上传一个“头像”。 </td>
-                </tr> 
-                -->
                   <tr>  
                     <td>药品类型:</td>  
                     <td><select id="cc" class="easyui-combobox" name="ingredient" style="width:200px;">  
@@ -63,8 +58,21 @@
                 </tr> 
                   <tr>  
                     <td>药品的词条:</td>  
-                    <td> <textarea  name="term" style="width:300px;height:100px"></textarea>  </td>  
-                    <td> 药品的简介，简要说明 </td>
+                    <td> <textarea  id="term" name="term" style="width:300px;height:100px"></textarea>  </td>  
+                    <script>
+					var editor_term;
+					KindEditor.ready(function(K) {
+				    editor_term = K.create('#term', {
+						uploadJson : '${basePath}common/kindeditor/jsp/upload_json.jsp',
+						fileManagerJson : '${basePath}common/kindeditor/jsp/file_manager_json.jsp',
+						items : ['bold', 'italic', 'underline', 'strikethrough', 'removeformat', '|',   'insertorderedlist', 'insertunorderedlist','forecolor',
+								 'hilitecolor', 'fontname', 'fontsize', '|','image','link', 'unlink',  'table',  '|', 'fullscreen',  'about']
+				
+				    });
+				});
+				</script>
+                    
+                    
                 </tr> 
                <tr>  
                     <td>生产公司:</td>  
@@ -114,9 +122,10 @@
 					var editor_${item.getId()};
 					KindEditor.ready(function(K) {
 				    editor_${item.getId()} = K.create('#editor_${item.getId()}', {
-						
+						uploadJson : '${basePath}common/kindeditor/jsp/upload_json.jsp',
+						fileManagerJson : '${basePath}common/kindeditor/jsp/file_manager_json.jsp',
 						items : ['bold', 'italic', 'underline', 'strikethrough', 'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'formatblock', 'insertorderedlist', 'insertunorderedlist', '|','forecolor',
-								 'hilitecolor', 'fontname', 'fontsize', '|','link', 'unlink', 'emoticons',   'table', 'quote', '|', 'fullscreen', 'source', 'about']
+								 'hilitecolor', 'fontname', 'fontsize', '|','image','link', 'unlink', 'emoticons',   'table',  '|', 'fullscreen',  'about']
 				
 				    });
 				});
@@ -128,7 +137,7 @@
         </div>
    
     </div>
-    <input type="submit" name="sub1" value="保存">
+    <input type="submit" name="sub" value="保存">
  </from>
 
 <#include "footer.ftl">

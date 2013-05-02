@@ -4,6 +4,11 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.safety.Whitelist;
+import org.jsoup.select.Elements;
 
 /**
  * 药品信息
@@ -102,13 +107,75 @@ public class Drug extends POJO
 
 	public String subTerm(int size)
 	{
-		String r=StringUtils.substring(term, 0, size);
+		//首先删除内容里面的图片
+//		Document doc= Jsoup.parse(term);
+//		Elements imgs = doc.select("img");
+//		for (Element img : imgs) {
+//			img.remove();
+//		}
+//		
+		String text= Jsoup.clean(term, Whitelist.basic());//过滤所有的html标签
+		
+		String r=StringUtils.substring(text, 0, size);
 		if (term.length()>size) 
 		{
 			r=r+"…";
 		}
 		return r;
 	}
+	
+	
+	/**
+	 * 药品类型转换
+	 * @return
+	 */
+	public String Ingredient()
+	{
+		String r;
+		switch (ingredient) {
+		case 0:
+			r="中药";
+			break;
+		case 1:
+			r="中成药";
+			break;
+		case 2:
+			r="西药";
+			break;
+		default:
+			r="其他";
+			break;
+		}
+		
+		return r;
+	}
+	
+	/**
+	 * 处方类型
+	 * @return
+	 */
+	public String Prescription()
+	{
+		String r;
+		switch (prescription) {
+		case 1:
+			r="处方药";
+			break;
+		case 0:
+			r="非处方的药";
+			break;
+		
+		default:
+			r="其他";
+			break;
+		}
+		
+		return r;
+	}
+	
+
+	
+	
 	
 	
 

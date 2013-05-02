@@ -2,7 +2,9 @@
 
 
   <div id="Message">
-<samp class="date">  <a href="${basePath}drug/list">药品分类</a>&raquo;<a href="#">感冒药</a> &raquo;<a href="#">${drug.name}</a>  </samp> 
+<samp class="date">  <a href="${basePath}drug/list">药品分类</a>&raquo;
+<a href="${basePath}drug/list/${drugclass.getId()}">${drugclass.title}</a> &raquo;
+${drug.name} </samp> 
 
 </div>
     
@@ -14,23 +16,23 @@
 	text-align:center;
 	margin-top:10px;
 	line-height:20px;
-	font-size:10pt;
-">中成药《${drug.name}》<div>
+	font-size:12pt;
+">${drug.Ingredient()}《<a href="${basePath}drug/show/${drug.getId()}">${drug.name}</a>》—<a href="${basePath}drug/list/${drugclass.getId()}">${drugclass.title}类</a><div>
 
   <div style="margin:10px 0;"></div>
-    <div class="easyui-tabs" style="width:920px;height:350px">  
-        <div title="药品词条" style="padding:10px"> 
+    <div class="easyui-tabs" style="width:920px;">  
+        <div title="基本信息" style="padding:10px"> 
         <div style="float: right;width:300px" >
-        	<img alt="" src="${basePath}common/avatar/${drug.image!!}" width="200"> 
+        	<img alt="" src="${drug.image!!}" width="200"> 
         </div>
              <table width="50%">
              <tr><td width="20%" >名称</td><td>${drug.name}</td></tr>
              <tr><td>别名</td><td>${drug.alias}</td></tr>
-             <tr><td>药品类型</td><td>${drug.ingredient}</td></tr>
-              <tr><td>处方类型</td><td>${drug.prescription}</td></tr>
-              <tr><td>产考价格</td><td>${drug.price}</td></tr>
-              <tr><td>基本描述</td><td>${drug.term} </td></tr>
-              <tr><td>生产厂家</td><td> </td></tr>
+             <tr><td>药品类型</td><td>${drug.Ingredient()}</td></tr>
+              <tr><td>处方类型</td><td>${drug.Prescription()}</td></tr>
+              <tr><td>产考价格</td><td>${drug.price}元</td></tr>
+              <tr><td>基本描述</td><td>${drug.subTerm(1024)} </td></tr>
+              <tr><td>生产厂家</td><td><a href="${factory.url!!}" target="_blank">${factory.name}</a></td></tr>
              </table>
              
         </div>  

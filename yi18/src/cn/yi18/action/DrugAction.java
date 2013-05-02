@@ -3,9 +3,11 @@ package cn.yi18.action;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -14,12 +16,17 @@ import java.util.Random;
 
 import javax.servlet.ServletException;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.lang3.time.DateFormatUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import cn.yi18.entity.DrugClass;
 import cn.yi18.entity.DrugInfo;
@@ -83,76 +90,147 @@ public class DrugAction extends BaseAction
 	/**
 	 * 添加药品信息
 	 * @throws FileUploadException
+	 * @throws InvocationTargetException 
+	 * @throws IllegalAccessException 
 	 */
-	public void add() throws FileUploadException
+	public void add() throws FileUploadException, IllegalAccessException, InvocationTargetException
 	{
 		if(request.isSubmit())
 		{
 			
 			Drug drug = new Drug(); //药品
 			List<Druginfo> druginfos = new ArrayList<Druginfo>();//药品信息
-			//最大文件大小
+			
+			Map<String, String[]> map = request.getParameterMap();
+			BeanUtils.populate(drug, map);
+			
+			//从词条中取得一张图片
+//			Document doc= Jsoup.parse(drug.getTerm());
+//			Elements imgs = doc.select("img");
+//			for(int i=0;i<imgs.size();i++){
+//				  Element img = imgs.get(i);
+//					String src = img.attr("src");
+//					
+//					//File file = new File(request.getSession().getServletContext().getRealPath("../"));
+//					drug.setImage(src);//
+//					break;
+//			}
+			
+			Enumeration<String> names = request.getParameterNames();
+			while (names.hasMoreElements()) {
+			    String name= names.nextElement();
+			    
+			    if(name.startsWith("editor"))//添加药品的内容
+				   {
+			    	 	Druginfo druginfo = new Druginfo();
+					   druginfo.setMessage(request.getParameter(name));   
+					   druginfo.setDirectory(Long.parseLong(name.split("_")[1]));
+					   druginfos.add(druginfo);
+			    	
+				   }
+			}
+			/*
+			 * 保存数据
+			 */
+			drugService.save(drug, druginfos);
+			root.put("message", "添加成功！等待审核！");
+			printFreemarker("default/message.ftl", root);
+			return;
+			
+		}else {
+			List<Factory> factorys = factoryService.getAll();//取得药品的生产厂家
+			List<Directory> list = directoryService.getDrug();//取得药品内容的目录
+			root.put("list", list);
+			root.put("factorys", factorys);
+			
+			root.put("title", "医药吧 | 添加药品信息");
+			printFreemarker("default/add_drug.ftl", root);
+			
+		}
+	}
+	
+	
+	/**
+	 * 更新药品信息
+	 * @throws FileUploadException
+	 * @throws InvocationTargetException 
+	 * @throws IllegalAccessException 
+	 */
+	public void update() throws FileUploadException, IllegalAccessException, InvocationTargetException
+	{
+		
+			
+//			Drug drug = new Drug(); //药品
+//			List<Druginfo> druginfos = new ArrayList<Druginfo>();//药品信息
+//			//最大文件大小
 //			long maxSize = 1000000;
 //			//定义允许上传的文件扩展名
 //			HashMap<String, String> extMap = new HashMap<String, String>();
 //			extMap.put("image", "gif,jpg,jpeg,png,bmp");
 //			
-//			String urlPath=request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/";
+//			//String urlPath=request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/";
 //			String readlityPath=request.getSession().getServletContext().getRealPath("/");
-//			String saveUrl=urlPath+"common/temp/";
-//			String savePath=readlityPath+"common/temp/";
-			FileItemFactory factory = new DiskFileItemFactory();
-			ServletFileUpload upload = new ServletFileUpload(factory);
-			upload.setHeaderEncoding("UTF-8");
-			List items = upload.parseRequest(request);
-			Iterator itr = items.iterator();
-			while (itr.hasNext()) {
-				FileItem item = (FileItem) itr.next();
-				if (item.isFormField()) {
-				    String name = item.getFieldName();
-				    String value = null;
-					try {
-						value = item.getString("UTF-8");
-					} catch (UnsupportedEncodingException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				   if(name.equals("name"))
-				   {
-					   drug.setName(value);
-				   }else if(name.equals("alias")){
-					   drug.setAlias(value);
-					
-				   }else if(name.equals("term")){
-					   drug.setTerm(value);
-					
-				   }else if(name.equals("prescription")){
-					   drug.setPrescription(Integer.parseInt(value));
-					
-				   }else if(name.equals("ingredient")){
-					   drug.setIngredient(Integer.parseInt(value));
-					
-				   
-				  }else if(name.equals("factory")){
-					   drug.setFactory(Long.parseLong(value));
-					
-				   }
-				   else if(name.equals("price")){
-					   drug.setPrice(Float.parseFloat(value));
-					
-				   }else if(name.startsWith("editor"))
-				   {
-					   Druginfo druginfo = new Druginfo();
-					   druginfo.setMessage(value);   
-					   druginfo.setDirectory(Long.parseLong(name.split("_")[1]));
-					   
-					   druginfos.add(druginfo);
-					
-				   }
-				   
-
-				   
-				}else{
+//			//String saveUrl=urlPath+"common/temp/";
+//			String savePath=readlityPath+"common/avatar/";
+//			FileItemFactory factory = new DiskFileItemFactory();
+//			ServletFileUpload upload = new ServletFileUpload(factory);
+//			upload.setHeaderEncoding("UTF-8");
+//			List items = upload.parseRequest(request);
+//			Iterator itr = items.iterator();
+//			while (itr.hasNext()) {
+//				FileItem item = (FileItem) itr.next();
+//				if (item.isFormField()) {
+//				    String name = item.getFieldName();
+//				    String value = null;
+//					try {
+//						value = item.getString("UTF-8");
+//					} catch (UnsupportedEncodingException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//					if(name.equals("id"))
+//					{
+//						   drug.setId(Long.parseLong(value));
+//					}else
+//				   if(name.equals("name"))
+//				   {
+//					   drug.setName(value);
+//				   }else if(name.equals("alias")){
+//					   drug.setAlias(value);
+//					
+//				   }else if(name.equals("term")){
+//					   drug.setTerm(value);
+//					
+//				   }else if(name.equals("prescription")){
+//					   drug.setPrescription(Integer.parseInt(value));
+//					
+//				   }else if(name.equals("ingredient")){
+//					   drug.setIngredient(Integer.parseInt(value));
+//					
+//				   
+//				  }else if(name.equals("factory")){
+//					   drug.setFactory(Long.parseLong(value));
+//					
+//				   }
+//				   else if(name.equals("price")){
+//					   drug.setPrice(Float.parseFloat(value));
+//					
+//				   } else if(name.equals("drugclass")){
+//					   drug.setDrugclass(Long.parseLong(value));
+//					
+//				   }else if(name.startsWith("editor"))
+//				   {
+//					   Druginfo druginfo = new Druginfo();
+//					   druginfo.setMessage(value);   
+//					   //druginfo.setDirectory(Long.parseLong(name.split("_")[1]));
+//					   druginfo.setId(Long.parseLong(name.split("_")[1]));
+//					   druginfos.add(druginfo);
+//					
+//				   }
+//				   
+//
+//				   
+//				}else{
 //					if(item.getSize() > maxSize){
 //						
 //						return;
@@ -166,7 +244,7 @@ public class DrugAction extends BaseAction
 //					}
 //
 //					String newFileName = DateFormatUtils.format(new Date(), "yyyyMMddHHmmss") + "_" + new Random().nextInt(1000) + "." + fileExt;
-//					drug.setImage(saveUrl+newFileName);
+//					drug.setImage(newFileName);
 //						File uploadedFile = new File(savePath, newFileName);
 //						try {
 //							item.write(uploadedFile);
@@ -174,139 +252,51 @@ public class DrugAction extends BaseAction
 //							// TODO Auto-generated catch block
 //							e.printStackTrace();
 //						}
-					
-					
-				}
-				
-				
-			}
-			/*
-			 * 保存数据
-			 */
-			drugService.save(drug, druginfos);
-			root.put("message", "添加成功！等待审核！");
-			printFreemarker("default/message.ftl", root);
-			return;
-			
-		}else {
-			List<Factory> factorys = factoryService.getAll();
-			List<Directory> list = directoryService.getDrug();
-			root.put("list", list);
-			root.put("factorys", factorys);
-			printFreemarker("default/add_drug.ftl", root);
-			
-		}
-	}
-	
-	
-	/**
-	 * 更新药品信息
-	 * @throws FileUploadException
-	 */
-	public void update() throws FileUploadException
-	{
-		
-			
-			Drug drug = new Drug(); //药品
-			List<Druginfo> druginfos = new ArrayList<Druginfo>();//药品信息
-			//最大文件大小
-			long maxSize = 1000000;
-			//定义允许上传的文件扩展名
-			HashMap<String, String> extMap = new HashMap<String, String>();
-			extMap.put("image", "gif,jpg,jpeg,png,bmp");
-			
-			//String urlPath=request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/";
-			String readlityPath=request.getSession().getServletContext().getRealPath("/");
-			//String saveUrl=urlPath+"common/temp/";
-			String savePath=readlityPath+"common/avatar/";
-			FileItemFactory factory = new DiskFileItemFactory();
-			ServletFileUpload upload = new ServletFileUpload(factory);
-			upload.setHeaderEncoding("UTF-8");
-			List items = upload.parseRequest(request);
-			Iterator itr = items.iterator();
-			while (itr.hasNext()) {
-				FileItem item = (FileItem) itr.next();
-				if (item.isFormField()) {
-				    String name = item.getFieldName();
-				    String value = null;
-					try {
-						value = item.getString("UTF-8");
-					} catch (UnsupportedEncodingException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					if(name.equals("id"))
-					{
-						   drug.setId(Long.parseLong(value));
-					}else
-				   if(name.equals("name"))
-				   {
-					   drug.setName(value);
-				   }else if(name.equals("alias")){
-					   drug.setAlias(value);
-					
-				   }else if(name.equals("term")){
-					   drug.setTerm(value);
-					
-				   }else if(name.equals("prescription")){
-					   drug.setPrescription(Integer.parseInt(value));
-					
-				   }else if(name.equals("ingredient")){
-					   drug.setIngredient(Integer.parseInt(value));
-					
-				   
-				  }else if(name.equals("factory")){
-					   drug.setFactory(Long.parseLong(value));
-					
-				   }
-				   else if(name.equals("price")){
-					   drug.setPrice(Float.parseFloat(value));
-					
-				   } else if(name.equals("drugclass")){
-					   drug.setDrugclass(Long.parseLong(value));
-					
-				   }else if(name.startsWith("editor"))
-				   {
-					   Druginfo druginfo = new Druginfo();
-					   druginfo.setMessage(value);   
-					   //druginfo.setDirectory(Long.parseLong(name.split("_")[1]));
-					   druginfo.setId(Long.parseLong(name.split("_")[1]));
-					   druginfos.add(druginfo);
-					
-				   }
-				   
-
-				   
-				}else{
-					if(item.getSize() > maxSize){
-						
-						return;
-					}
-					String fileName = item.getName();	
-					//检查扩展名
-					String fileExt = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
-					if(!Arrays.<String>asList(extMap.get("image").split(",")).contains(fileExt)){
-						
-						//return;
-					}
-
-					String newFileName = DateFormatUtils.format(new Date(), "yyyyMMddHHmmss") + "_" + new Random().nextInt(1000) + "." + fileExt;
-					drug.setImage(newFileName);
-						File uploadedFile = new File(savePath, newFileName);
-						try {
-							item.write(uploadedFile);
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+////					
 //					
-					
-				}
-				
-				
-			}
+//				}
+//				
+//				
+//			}
 			
 			
+		
+		Drug drug = new Drug(); //药品
+		List<Druginfo> druginfos = new ArrayList<Druginfo>();//药品信息
+		
+		Map<String, String[]> map = request.getParameterMap();
+		BeanUtils.populate(drug, map);
+		
+		//从词条中取得一张图片
+		Document doc= Jsoup.parse(drug.getTerm());
+		Elements imgs = doc.select("img");
+		for(int i=0;i<imgs.size();i++){
+			  Element img = imgs.get(i);
+				String src = img.attr("src");
+				
+				//File file = new File(request.getSession().getServletContext().getRealPath("../"));
+				drug.setImage(src);//
+				break;
+		}
+		
+		Enumeration<String> names = request.getParameterNames();
+		while (names.hasMoreElements()) {
+		    String name= names.nextElement();
+		    
+		    if(name.startsWith("editor"))//添加药品的内容
+			   {
+		    	 	Druginfo druginfo = new Druginfo();
+//				   druginfo.setMessage(request.getParameter(name));   
+//				   druginfo.setDirectory(Long.parseLong(name.split("_")[1]));
+//				   druginfos.add(druginfo);
+
+				   druginfo.setMessage(request.getParameter(name));   
+				   //druginfo.setDirectory(Long.parseLong(name.split("_")[1]));
+				   druginfo.setId(Long.parseLong(name.split("_")[1]));
+				   druginfos.add(druginfo);
+		    	
+			   }
+		}
 			
 			/*
 			 * 更新数据
@@ -335,11 +325,37 @@ public class DrugAction extends BaseAction
 			List<DrugInfo> list = drugInfoService.getDrugInfo(id);
 			root.put("drug", drug);
 			root.put("list", list);
+			root.put("drugclass", _Drugclass(drug.getDrugclass()));//取得药品的分类
+			root.put("factory", _Factory(drug.getFactory()));//取得药品的生产厂家
 			
-			printFreemarker("default/drug.ftl", root);
+			root.put("title", drug.getName()+","+drug.getAlias()+"_医药吧");
+			 root.put("keywords", drug.getName()+","+drug.getAlias()+",说明书,使用手册,基本简介,功能描述,医药吧,yi18");
+			 root.put("description", drug.subTerm(512));
+			 printFreemarker("default/drug.ftl", root);
 		}
 	}
 	
+	
+	/**
+	 * 取得药品的分类
+	 * @return
+	 */
+	private Drugclass _Drugclass(long drugclass) 
+	{
+		Drugclass bean = new Drugclass();
+		return bean.get(drugclass);
+		
+	}
+	/**
+	 * 取得药品的厂商
+	 * @return
+	 */
+	private Factory _Factory(long factory) 
+	{
+		Factory bean = new Factory();
+		return bean.get(factory);
+		
+	}
 	
 	private DirectoryService directoryService = new DirectoryService();
 	private DrugService drugService = new DrugService();

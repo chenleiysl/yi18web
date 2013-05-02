@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
+
 import cn.yi18.dao.DrugDao;
 import cn.yi18.enums.DrugEnum;
 import cn.yi18.lucene.DrugLucene;
@@ -14,8 +17,19 @@ import cn.yi18.pojo.Druginfo;
 import cn.yi18.pojo.POJO;
 import cn.yi18.util.PageUtil;
 
+/**
+ * 药品处理的service层数据操作
+ * @author 陈磊
+ *
+ */
 public class DrugService 
 {
+	
+	/**
+	 * 保存药品信息
+	 * @param drug 基本的药品信息
+	 * @param druginfos 药品内容摘要信息
+	 */
 	public void save(Drug drug,List<Druginfo> druginfos)
 	{
 		long id = drug.save();
@@ -37,7 +51,7 @@ public class DrugService
 	{
 		
 		
-		String content = "";
+		String content = "";//搜索存放数据
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("alias", drug.getAlias());
 		map.put("name", drug.getName());
@@ -49,14 +63,15 @@ public class DrugService
 		map.put("drugclass", drug.getDrugclass());
 		map.put("prescription", drug.getPrescription());
 		map.put("allow", DrugEnum.Check_Status.IsCheck.getValue());
-		drug.update(map , drug.getId());
-		content=content+drug.getTerm();
+		drug.update(map , drug.getId()); //更新药品基本信息
+		
+		content=content+Jsoup.clean(drug.getTerm(), Whitelist.basic());//过滤html
 		for (Druginfo druginfo : druginfos) {
 			Map<String, Object> vmap = new HashMap<String, Object>();
 			vmap.put("message", druginfo.getMessage());
 			druginfo.update(vmap, druginfo.getId());
 			
-			content=content+druginfo.getMessage();//
+			content=content+Jsoup.clean(druginfo.getMessage(), Whitelist.basic());//
 		}
 		// TODO Auto-generated method stub
 		

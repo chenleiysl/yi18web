@@ -20,7 +20,7 @@ public class DirectoryService
 		Directory bean = new Directory();
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("type", DirectoryEnum.Type.Drug.getValue());
-		return (List<Directory>) bean.getlist(map ); 
+		return (List<Directory>) bean.getlist(map ,"sequence"); 
 	}
 	
 	/**
@@ -32,14 +32,20 @@ public class DirectoryService
 		Directory bean = new Directory();
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("type", DirectoryEnum.Type.Symptom.getValue());
-		return (List<Directory>) bean.getlist(map ); 
+		return (List<Directory>) bean.getlist(map ,"sequence"); 
 	}
 	
+	/**
+	 * 病例
+	 * @return
+	 */
 	public List<Directory> getDisease()
 	{
 		Directory bean = new Directory();
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("type", DirectoryEnum.Type.Disease.getValue());
-		return (List<Directory>) bean.getlist(map ); 
+		return (List<Directory>) bean.getlist(map,"sequence" ); 
 	}
+	
+	
 }
