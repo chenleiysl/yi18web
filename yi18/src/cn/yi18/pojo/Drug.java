@@ -114,7 +114,26 @@ public class Drug extends POJO
 //			img.remove();
 //		}
 //		
-		String text= Jsoup.clean(term, Whitelist.basic());//过滤所有的html标签
+		//String text= Jsoup.clean(term, Whitelist.simpleText());//过滤所有的html标签
+		
+		String r=StringUtils.substring(term, 0, size);
+		if (term.length()>size) 
+		{
+			r=r+"…";
+		}
+		return r;
+	}
+	
+	public String subTermHtml(int size)
+	{
+		//首先删除内容里面的图片
+//		Document doc= Jsoup.parse(term);
+//		Elements imgs = doc.select("img");
+//		for (Element img : imgs) {
+//			img.remove();
+//		}
+//		
+		String text= Jsoup.clean(term, Whitelist.simpleText());//过滤所有的html标签
 		
 		String r=StringUtils.substring(text, 0, size);
 		if (term.length()>size) 

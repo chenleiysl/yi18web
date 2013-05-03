@@ -164,13 +164,13 @@ public class Base64Coder {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		String s= "topsec11" ;
+		String s= "topsec11+1" ;
 		System.out.println(decodeBase64(encodeBase64(s)));
 		System.out.println(encodeBase64(s));
-//		System.out.println(encodeUrlBase64(s));
-//		System.out.println(encodeUrlBase64Safe(s));
-//		System.out.println(decodeUrlBase64(encodeUrlBase64(s)));
-//		System.out.println(decodeUrlBase64Safe(encodeUrlBase64Safe(s)));
+		System.out.println(encodeUrlBase64(s));
+		System.out.println(encodeUrlBase64Safe(s));
+		System.out.println(decodeUrlBase64(encodeUrlBase64(s)));
+		System.out.println(decodeUrlBase64Safe(encodeUrlBase64Safe(s)));
 
 	}
 

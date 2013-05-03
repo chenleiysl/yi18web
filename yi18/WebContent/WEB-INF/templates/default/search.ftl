@@ -211,7 +211,7 @@ ${basePath}${item.url}
     <li class='page next'><a href="${basePath}search?keyword=${keyword}&page=${page.page+1}">&gt;</a></li> 
 			</#if>
 </#if> 
-      <span class="total">  为你找到 ${page.total?string(",##0")} 个结果   | 用时 ${page.time} s</span>
+      <span class="total">  为你找到 ${page.total?string(",##0")} 个结果   | 用时 ${page.time} ms</span>
 </ul>
 
 

@@ -18,6 +18,11 @@ public class SearchAction extends BaseAction
 		String keyword = request.getParameter("q");
 		int pagesize= request.getParameter("p")==null?1:Integer.parseInt(request.getParameter("p"));
 		
+		keyword= new String(keyword.getBytes("iso-8859-1"), "UTF-8");//主要是处理get方式编码问题
+		
+		
+		//System.out.println(keyword);
+		
 		SearchFiles searchFiles = new DrugLucene();
 		PageUtil page = searchFiles.query(keyword, pagesize, SIZE);
 		root.put("page", page);

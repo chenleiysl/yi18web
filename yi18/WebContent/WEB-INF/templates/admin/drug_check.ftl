@@ -22,7 +22,7 @@
 	                alias:'${drug.alias}',
 	                ingredient:${drug.ingredient},
 	                prescription:'${drug.prescription}',
-	                term:'${drug.term}',
+	               
 	                price:${drug.price},
 	                factory:${drug.factory}
 	                
@@ -77,7 +77,7 @@
                 </tr> 
                   <tr>  
                     <td>药品的词条:</td>  
-                    <td> <textarea  id="term" name="term" style="width:300px;"></textarea>  </td>  
+                    <td> <textarea  id="term" name="term" style="width:300px;">${drug.term}</textarea>  </td>  
                    <script>
 					var editor_term;
 					KindEditor.ready(function(K) {

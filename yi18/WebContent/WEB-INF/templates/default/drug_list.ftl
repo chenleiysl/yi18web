@@ -45,19 +45,17 @@
                 
                 <div class="LeftMenu"> 
                    <table class="Menu" width="100%">
+                   
                    <#list item.list as it>
                    
-	                  
-	                   
+     
 	                   <tr <#if it.getId()==id> class="Select"  </#if> ><td><a href="${basePath}drug/list/${it.getId()}">${it.title}  </a></td>
-	                	<td><span class="count">123</span></td>
+	                	<td><span class="count">${it.level}</span></td>
 	                	</tr>
 	                	
-	                	
-	                 
-                   
-                   
+	     
                 	</#list>
+                
                 	</table> 
                 	
                 </div>
@@ -88,7 +86,7 @@
 						</p>
 					</td>
 						<td width='100' valign='top' align='right'>
-						<a href="${basePath}drug/show/${item.getId()}" target="_blank"><img src="${basePath}common/avatar/${item.image}" width="100" /></a>
+						<a href="${basePath}drug/show/${item.getId()}" target="_blank"><img src="${item.image!!}" width="100" /></a>
 						
 						</td>
 						</tr>
@@ -127,9 +125,10 @@
 						</p>
 					</td>
 						<td width='100' valign='top' align='right'>
-						<a href="${basePath}drug/show/${item.getId()}" target="_blank"><img src="${basePath}common/avatar/${item.image}" width="100" /></a>
+						<a href="${basePath}drug/show/${item.getId()}" target="_blank"><img src="${item.image!!}" width="100" /></a>
 						
 						</td>
+						
 						</tr>
 						</table>
 				    

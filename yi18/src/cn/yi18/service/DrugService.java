@@ -58,20 +58,20 @@ public class DrugService
 		map.put("image", drug.getImage());
 		map.put("factory", drug.getFactory());
 		map.put("ingredient", drug.getIngredient());
-		map.put("term", drug.getTerm());
+		map.put("term", Jsoup.clean(drug.getTerm(),Whitelist.simpleText()));//过滤html
 		map.put("price", drug.getPrice());
 		map.put("drugclass", drug.getDrugclass());
 		map.put("prescription", drug.getPrescription());
 		map.put("allow", DrugEnum.Check_Status.IsCheck.getValue());
 		drug.update(map , drug.getId()); //更新药品基本信息
 		
-		content=content+Jsoup.clean(drug.getTerm(), Whitelist.basic());//过滤html
+		content=content+Jsoup.clean(drug.getTerm(), Whitelist.simpleText());
 		for (Druginfo druginfo : druginfos) {
 			Map<String, Object> vmap = new HashMap<String, Object>();
 			vmap.put("message", druginfo.getMessage());
 			druginfo.update(vmap, druginfo.getId());
 			
-			content=content+Jsoup.clean(druginfo.getMessage(), Whitelist.basic());//
+			content=content+Jsoup.clean(druginfo.getMessage(), Whitelist.simpleText());//
 		}
 		// TODO Auto-generated method stub
 		

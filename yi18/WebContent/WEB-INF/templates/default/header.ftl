@@ -36,8 +36,15 @@
    		<script>  
         function doSearch(value,name){  
         
-            window.location.href='${basePath}search?q='+value; 
-        }  
+            window.location.href='${basePath}search?q='+encodeURL(value); 
+        } 
+        
+        function encodeURL(value)
+        {
+          var encodeURL= encodeURIComponent(value+"");//修改特殊编码
+         // alert(encodeURL);
+          return encodeURL.replace("%20","+");//修改常见搜索空格变成+编码
+        } 
     	</script> 
     	<div id="mm" style="width:120px">  
         	<div data-options="name:'all'">药品</div>  

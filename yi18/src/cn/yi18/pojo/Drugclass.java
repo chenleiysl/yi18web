@@ -14,7 +14,7 @@ public class Drugclass extends POJO
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-protected String title; //标题
+	protected String title; //标题
   protected int level; //等级
   protected Long _parentId;//上级目录的id 默认是1
   protected Timestamp time = new Timestamp(new Date().getTime()); //时间
