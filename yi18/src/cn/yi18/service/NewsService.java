@@ -80,6 +80,10 @@ public class NewsService
 		return bean.totalCount(filter);
 	}
 	
+	/**
+	 * 取得默认新闻投递，默认是20条数据
+	 * @return
+	 */
 	public List<News> getNoCheck() 
 	{
 		News bean = new News();

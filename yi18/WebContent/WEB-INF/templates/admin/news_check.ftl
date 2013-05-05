@@ -17,7 +17,7 @@
      
            
                  
-                 <form id="ff" method="post" >    
+                 <form id="ff" method="post" action="${basePath}news/update">    
                  <input type="hidden" name="id" value="${news.getId()}">   
             <table>  
                 <tr>  
@@ -33,13 +33,14 @@
  
                  <tr>  
                     <td>内容:</td>  
-                    <td> <textarea id="editor_id" name="message" style="width:750px;height:450px;">
+                    <td> <textarea id="editor_id" name="message" style="width:700px;height:500px;">
 						${news.message!!}
 						</textarea>  
 						
 						<script>
 							var editor_id;
 							KindEditor.ready(function(K) {
+								uploadJson : '${basePath}common/kindeditor/jsp/upload_json.jsp',
 								editor_id = K.create('#editor_id', {
 								items : ['bold', 'italic', 'underline', 'strikethrough', 'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'formatblock', 'insertorderedlist', 'insertunorderedlist', '|','forecolor',
 										 'hilitecolor', 'fontname', 'fontsize', '|','link', 'unlink', 'emoticons',   'table', 'quote', '|', 'fullscreen', 'source', 'about']

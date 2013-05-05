@@ -7,6 +7,8 @@ import java.util.Locale;
 import org.apache.commons.lang3.StringUtils;
 import org.ocpsoft.prettytime.PrettyTime;
 
+import cn.yi18.util.JsoupUtil;
+
 /**
  * 综合资讯
  * @author 陈磊
@@ -59,8 +61,9 @@ public class News extends POJO
 	
 	public String subMessage(int size)
 	{
-		String r=StringUtils.substring(message, 0, size);
-		if (message.length()>size) 
+		String  content = JsoupUtil.Text(message);
+		String r=StringUtils.substring(content, 0, size);
+		if (content.length()>size) 
 		{
 			r=r+"…";
 		}

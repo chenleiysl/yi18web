@@ -87,6 +87,13 @@ public class LoreAction extends BaseAction
 		printFreemarker("default/lore.ftl", root);
 	}
 	
+    /**
+     * 
+     */
+    public void update() 
+	{
+		
+	}
 	private LoreService loreService = new LoreService();
 	
 	

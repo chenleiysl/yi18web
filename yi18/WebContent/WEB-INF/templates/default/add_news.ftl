@@ -8,7 +8,8 @@
 
 
 <div id="Message">
-<samp class="date">  <a href="#">药品信息</a>&raquo;<a href="#">添加药品</a>   </samp> <samp style="float: right;"> 共收录药品 <samp style="font-size: 12pt;color: red;font-weight: bolder;">17 </samp> 个     </samp> 
+<samp class="date">  <a href="${basePath}news/list">医药新闻</a>&raquo;<a href="${basePath}news/add">投递新闻</a>   </samp> 
+
 
 </div>
     
@@ -33,7 +34,7 @@
  
                  <tr>  
                     <td>内容:</td>  
-                    <td> <textarea id="editor_id" name="message" style="width:750px;height:450px;">
+                    <td> <textarea id="editor_id" name="message" style="width:700px;height:500px;">
 						
 						</textarea>  
 						

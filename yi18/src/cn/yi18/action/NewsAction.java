@@ -7,8 +7,13 @@ import java.util.Map;
 
 import org.apache.commons.beanutils.BeanUtils;
 
+import cn.yi18.enums.NewsEnum;
+import cn.yi18.lucene.IndexFiles;
+import cn.yi18.lucene.NewsLucene;
+import cn.yi18.lucene.PageInfo;
 import cn.yi18.pojo.News;
 import cn.yi18.service.NewsService;
+import cn.yi18.util.JsoupUtil;
 import cn.yi18.util.PageUtil;
 
 
@@ -20,6 +25,10 @@ import cn.yi18.util.PageUtil;
  */
 public class NewsAction extends BaseAction
 {
+	
+	/*
+	 * 添加新闻，综合资讯
+	 */
 	public void add() throws IllegalAccessException, InvocationTargetException
 	{
 		if (request.isSubmit()) 
@@ -68,6 +77,34 @@ public class NewsAction extends BaseAction
 		printFreemarker("default/news.ftl", root);
 	}
 	
+	/**
+	 * 更新综合信息
+	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException
+	 */
+	public void update() throws IllegalAccessException, InvocationTargetException {
+		News bean = new News();
+		Map map = request.getParameterMap();
+		BeanUtils.populate(bean, map);
+		
+		Map<String, Object> vmap = new HashMap<String, Object>();
+		vmap.put("title", bean.getTitle());
+		vmap.put("message", bean.getMessage());
+		vmap.put("author", bean.getAuthor());
+		vmap.put("allow", NewsEnum.Check_Status.IsCheck.getValue());
+		bean.update(vmap , bean.getId());
+		
+		IndexFiles indexFiles = new NewsLucene();
+		PageInfo pageInfo = new PageInfo();
+		pageInfo.setTitle( bean.getTitle());
+		pageInfo.setId(bean.getId());
+		pageInfo.setUrl("news/show/"+bean.getId());
+		String content = JsoupUtil.Text(bean.getMessage());
+		pageInfo.setContent(content);
+		indexFiles.create(pageInfo );
+		
+		sendRedirect(request.basePath()+"admin/news");
+	}
 	private NewsService newsService = new NewsService();
 	
 	

@@ -741,11 +741,15 @@ public class AdminAction extends BaseAction {
 		
 	}
 	
+	/**
+	 * 显示综合，主要是核对的新闻投递
+	 */
 	public void news()
 	{
 		root.put("list", newsService.getNoCheck());
 		printFreemarker("admin/news_check_list.ftl", root);
 	}
+	
 	
 	public void lore()
 	{
@@ -753,32 +757,36 @@ public class AdminAction extends BaseAction {
 		printFreemarker("admin/lore_check_list.ftl", root);
 	}
 	
-	
-	public void checknews() throws IllegalAccessException, InvocationTargetException 
+	/**
+	 * 核对显示的新闻
+	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException
+	 */
+	public void checknews() 
 	{
-		if (request.isSubmit())
-		{
-			News bean = new News();
-			Map map = request.getParameterMap();
-			BeanUtils.populate(bean, map);
-			
-			Map<String, Object> vmap = new HashMap<String, Object>();
-			vmap.put("title", bean.getTitle());
-			vmap.put("message", bean.getMessage());
-			vmap.put("author", bean.getAuthor());
-			vmap.put("allow", NewsEnum.Check_Status.IsCheck.getValue());
-			bean.update(vmap , bean.getId());
-			sendRedirect(request.basePath()+"admin/news");
-			
-		}else 
-		{
+//		if (request.isSubmit())
+//		{
+//			News bean = new News();
+//			Map map = request.getParameterMap();
+//			BeanUtils.populate(bean, map);
+//			
+//			Map<String, Object> vmap = new HashMap<String, Object>();
+//			vmap.put("title", bean.getTitle());
+//			vmap.put("message", bean.getMessage());
+//			vmap.put("author", bean.getAuthor());
+//			vmap.put("allow", NewsEnum.Check_Status.IsCheck.getValue());
+//			bean.update(vmap , bean.getId());
+//			sendRedirect(request.basePath()+"admin/news");
+//			
+//		}else 
+//		{
 		
 			String sid= request.getParams()[0];
 			News news = new News();
 			news = news.get(Long.parseLong(sid));
 			root.put("news", news);
 			printFreemarker("admin/news_check.ftl", root);
-		}
+//		}
 	}
 	
 	
