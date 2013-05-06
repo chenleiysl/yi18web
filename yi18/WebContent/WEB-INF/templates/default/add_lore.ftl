@@ -8,8 +8,10 @@
 
 
 <div id="Message">
-<samp class="date">  <a href="#">药品信息</a>&raquo;<a href="#">添加药品</a>   </samp> <samp style="float: right;"> 共收录药品 <samp style="font-size: 12pt;color: red;font-weight: bolder;">17 </samp> 个     </samp> 
-
+<samp class="date">  <a href="${basePath}lore/list ">健康知识</a>&raquo;<a href="${basePath}lore/add">添加健康知识</a>   </samp> 
+<!-- 
+<samp style="float: right;"> 共收录药品 <samp style="font-size: 12pt;color: red;font-weight: bolder;">17 </samp> 个     </samp> 
+-->
 </div>
     
      
@@ -33,7 +35,7 @@
  
                  <tr>  
                     <td>内容:</td>  
-                    <td> <textarea id="editor_id" name="message" style="width:750px;height:450px;">
+                    <td> <textarea id="editor_id" name="message" style="width:700px;height:480px;">
 						
 						</textarea>  
 						
@@ -43,6 +45,7 @@
 								
 								editor_id = K.create('#editor_id', {
 								uploadJson : '${basePath}common/kindeditor/jsp/upload_json.jsp',
+								urlType:'domain',
 								items : ['bold', 'italic', 'underline', 'strikethrough', 'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'formatblock', 'insertorderedlist', 'insertunorderedlist', '|','forecolor',
 										 'hilitecolor', 'fontname', 'fontsize', '|','link','image', 'unlink', 'emoticons',   'table', 'quote', '|', 'fullscreen', 'source', 'about']
 						

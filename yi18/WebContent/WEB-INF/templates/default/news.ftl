@@ -16,6 +16,11 @@
 
 </style>
     
+    
+     <div id="Message">
+<samp class="date">  <a href="${basePath}news/list ">综合新闻</a>&raquo;<a href="${basePath}news/show/${news.getId()}">${news.title}</a>   </samp> 
+
+</div>
  
  <div style="margin:10px 0;"></div>  
 
@@ -52,18 +57,18 @@
 
 
 	</div>
-	<div class='options'>
-			
-					</div>
+	
 	</div>
 </div>		
 </div>
-<div  >
 
+<div >
+<br>
+<br>
+ 
 ${news.message}
 		
 		</div>
-		
 		</div>
 		</div>
 		</div>

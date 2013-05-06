@@ -49,7 +49,10 @@
 
  </style>
 
-  
+   <div id="Message">
+<samp class="date">  <a href="${basePath}news/list ">综合新闻</a>   </samp> 
+
+</div>
   
      <div style="margin:10px 0;"></div>  
      

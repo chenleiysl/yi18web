@@ -50,6 +50,12 @@
  </style>
 
   
+   <div id="Message">
+<samp class="date">  <a href="${basePath}lore/list ">健康知识</a>&raquo;<a href="${basePath}lore/list/${loreclassid!!}">${loreclass!!}</a>  </samp> 
+<!-- 
+<samp style="float: right;"> 共收录药品 <samp style="font-size: 12pt;color: red;font-weight: bolder;">17 </samp> 个     </samp> 
+-->
+</div>
   
      <div style="margin:10px 0;"></div>  
      
@@ -83,7 +89,7 @@
     	<ul class='List'   >
     	<#list week as item>
 			<li>
-				<h3><a href="${basePath}news/show/${item.getId()}" target="_blank">${item.title}</a></h3>
+				<h3><a href="${basePath}lore/show/${item.getId()}" target="_blank">${item.title}</a></h3>
 				<span class='date'>发布于 ${item.time?string("yyyy-MM-dd")}</span>	
 				<span class='stat'><em> ${item.count}</em>浏览</span>			
 			</li>

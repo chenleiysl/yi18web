@@ -2,10 +2,13 @@ package cn.yi18.pojo;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import org.apache.commons.lang3.StringUtils;
 import org.ocpsoft.prettytime.PrettyTime;
+
+import cn.yi18.util.JsoupUtil;
 
 /**
  * 健康知识
@@ -66,8 +69,9 @@ public class Lore extends POJO
 	
 	public String subMessage(int size)
 	{
-		String r=StringUtils.substring(message, 0, size);
-		if (message.length()>size) 
+		String  content = JsoupUtil.Text(message);
+		String r=StringUtils.substring(content, 0, size);
+		if (content.length()>size) 
 		{
 			r=r+"…";
 		}
@@ -77,6 +81,23 @@ public class Lore extends POJO
 	public String prettyTime() {
 		PrettyTime p = new PrettyTime(new Locale("ZH_CN"));
         return p.format(new Date());
+	}
+	
+	/**
+	 * 取得内容中的图片
+	 * @return
+	 */
+	public String Pic() 
+	{
+		String r="";
+		List<String> list = JsoupUtil.Images(message);
+		for (String string : list) {
+			r=r+string+"||";
+			//r=r+string+"||";
+		}
+		
+		return StringUtils.removeEnd(r, "||");
+		
 	}
 	
 }

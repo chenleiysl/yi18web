@@ -794,18 +794,18 @@ public class AdminAction extends BaseAction {
 	{
 		if (request.isSubmit())
 		{
-			Lore bean = new Lore();
-			Map map = request.getParameterMap();
-			BeanUtils.populate(bean, map);
-			
-			Map<String, Object> vmap = new HashMap<String, Object>();
-			vmap.put("title", bean.getTitle());
-			vmap.put("loreclass", bean.getLoreclass());
-			vmap.put("message", bean.getMessage());
-			vmap.put("author", bean.getAuthor());
-			vmap.put("allow", NewsEnum.Check_Status.IsCheck.getValue());
-			bean.update(vmap , bean.getId());
-			sendRedirect(request.basePath()+"admin/lore");
+//			Lore bean = new Lore();
+//			Map map = request.getParameterMap();
+//			BeanUtils.populate(bean, map);
+//			
+//			Map<String, Object> vmap = new HashMap<String, Object>();
+//			vmap.put("title", bean.getTitle());
+//			vmap.put("loreclass", bean.getLoreclass());
+//			vmap.put("message", bean.getMessage());
+//			vmap.put("author", bean.getAuthor());
+//			vmap.put("allow", NewsEnum.Check_Status.IsCheck.getValue());
+//			bean.update(vmap , bean.getId());
+//			sendRedirect(request.basePath()+"admin/lore");
 			
 		}else 
 		{

@@ -44,6 +44,7 @@ public class NewsAction extends BaseAction
 		}
 		else 
 		{
+			root.put("title", "添加综合新闻|医药吧  ");
 			printFreemarker("default/add_news.ftl", root);
 			
 		}

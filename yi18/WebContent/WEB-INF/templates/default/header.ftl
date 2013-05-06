@@ -21,6 +21,7 @@
 	<div style="float: right;" id="userbar"><a href="${basePath}admin/login">登录</a>
 	&nbsp;|&nbsp;<a href="${basePath}drug/add">添加药品</a>
 	&nbsp;|&nbsp;<a href="${basePath}news/add">投递新闻</a>
+	&nbsp;|&nbsp;<a href="${basePath}lore/add">分享健康</a>
 	</div>
 	<a href="${basePath}" title="医药吧"><img alt="logo" src="${basePath}common/image/logo.png"></a>
 	<font color="green" size="6" style="font-weight: bold;">&nbsp;www.yi18.cn</font>
@@ -39,7 +40,7 @@
    		<script>  
         function doSearch(value,name){  
         
-            window.location.href='${basePath}search?q='+encodeURL(value); 
+            window.location.href='${basePath}search?type='+name+'&q='+encodeURL(value); 
         } 
         
         function encodeURL(value)
@@ -50,8 +51,10 @@
         } 
     	</script> 
     	<div id="mm" style="width:120px">  
-        	<div data-options="name:'all'">药品</div>  
+        	<div data-options="name:'drug'">药品</div>  
         	<div data-options="name:'pi'">病状</div>  
+        	<div data-options="name:'news'">综合新闻</div> 
+        	<div data-options="name:'lore'">健康知识</div>
     	</div> 
    		
    		</div>

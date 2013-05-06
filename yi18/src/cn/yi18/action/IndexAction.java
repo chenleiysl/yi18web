@@ -60,6 +60,7 @@ public class IndexAction extends BaseAction
 	 */
 	public void partner()
 	{
+		root.put("title", "合作伙伴|医药吧" );
 		printFreemarker("default/partner.ftl", root);
 	}
 	
