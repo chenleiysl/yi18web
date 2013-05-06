@@ -41,6 +41,7 @@ import cn.yi18.service.DrugClassService;
 import cn.yi18.service.DrugInfoService;
 import cn.yi18.service.DrugService;
 import cn.yi18.service.FactoryService;
+import cn.yi18.util.JsoupUtil;
 import cn.yi18.util.PageUtil;
 
 public class DrugAction extends BaseAction
@@ -268,16 +269,17 @@ public class DrugAction extends BaseAction
 		BeanUtils.populate(drug, map);
 		
 		//从词条中取得一张图片
-		Document doc= Jsoup.parse(drug.getTerm());
-		Elements imgs = doc.select("img");
-		for(int i=0;i<imgs.size();i++){
-			  Element img = imgs.get(i);
-				String src = img.attr("src");
-				
-				//File file = new File(request.getSession().getServletContext().getRealPath("../"));
-				drug.setImage(src);//
-				break;
-		}
+//		Document doc= Jsoup.parse(drug.getTerm());
+//		Elements imgs = doc.select("img");
+//		for(int i=0;i<imgs.size();i++){
+//			  Element img = imgs.get(i);
+//				String src = img.attr("src");
+//				
+//				//File file = new File(request.getSession().getServletContext().getRealPath("../"));
+//				drug.setImage(src);//
+//				break;
+//		}
+		drug.setImage(JsoupUtil.Image(drug.getTerm()));
 		
 		Enumeration<String> names = request.getParameterNames();
 		while (names.hasMoreElements()) {

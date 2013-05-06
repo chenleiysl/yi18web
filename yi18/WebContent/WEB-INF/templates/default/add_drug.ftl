@@ -64,7 +64,7 @@
 					KindEditor.ready(function(K) {
 				    editor_term = K.create('#term', {
 						uploadJson : '${basePath}common/kindeditor/jsp/upload_json.jsp',
-						fileManagerJson : '${basePath}common/kindeditor/jsp/file_manager_json.jsp',
+						urlType:'domain',
 						items : ['bold', 'italic', 'underline', 'strikethrough', 'removeformat', '|',   'insertorderedlist', 'insertunorderedlist','forecolor',
 								 'hilitecolor', 'fontname', 'fontsize', '|','image','link', 'unlink',  'table',  '|', 'fullscreen',  'about']
 				
@@ -123,7 +123,7 @@
 					KindEditor.ready(function(K) {
 				    editor_${item.getId()} = K.create('#editor_${item.getId()}', {
 						uploadJson : '${basePath}common/kindeditor/jsp/upload_json.jsp',
-						fileManagerJson : '${basePath}common/kindeditor/jsp/file_manager_json.jsp',
+						urlType:'domain',
 						items : ['bold', 'italic', 'underline', 'strikethrough', 'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'formatblock', 'insertorderedlist', 'insertunorderedlist', '|','forecolor',
 								 'hilitecolor', 'fontname', 'fontsize', '|','image','link', 'unlink', 'emoticons',   'table',  '|', 'fullscreen',  'about']
 				

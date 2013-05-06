@@ -40,8 +40,10 @@
 						<script>
 							var editor_id;
 							KindEditor.ready(function(K) {
-								uploadJson : '${basePath}common/kindeditor/jsp/upload_json.jsp',
+								
 								editor_id = K.create('#editor_id', {
+								uploadJson : '${basePath}common/kindeditor/jsp/upload_json.jsp',
+								urlType:'domain',
 								items : ['bold', 'italic', 'underline', 'strikethrough', 'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'formatblock', 'insertorderedlist', 'insertunorderedlist', '|','forecolor',
 										 'hilitecolor', 'fontname', 'fontsize', '|','link', 'unlink', 'emoticons',   'table', 'quote', '|', 'fullscreen', 'source', 'about']
 						

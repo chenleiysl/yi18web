@@ -74,7 +74,11 @@ public class NewsAction extends BaseAction
 		news.update(map , news.getId()); //更新阅读次数
 		
 		root.put("news", news);
+		root.put("title", news.getTitle()+"|综合信息_医药吧");
+		root.put("keywords", news.getTitle());
+		root.put("description",news.subMessage(80));
 		printFreemarker("default/news.ftl", root);
+		
 	}
 	
 	/**

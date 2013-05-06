@@ -2,6 +2,7 @@ package cn.yi18.pojo;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import org.apache.commons.lang3.StringUtils;
@@ -73,6 +74,24 @@ public class News extends POJO
 	public String prettyTime() {
 		PrettyTime p = new PrettyTime(new Locale("ZH_CN"));
         return p.format(time);
+	}
+	
+	
+	/**
+	 * 取得内容中的图片
+	 * @return
+	 */
+	public String Pic() 
+	{
+		String r="";
+		List<String> list = JsoupUtil.Images(message);
+		for (String string : list) {
+			r=r+string+"||";
+			//r=r+string+"||";
+		}
+		
+		return StringUtils.removeEnd(r, "||");
+		
 	}
 	
 }
