@@ -65,6 +65,7 @@ public class DrugAction extends BaseAction
 			root.put("news", news);
 			root.put("page", hots);
 			root.put("open", tree.get(tree.size()-1).getDrugclass().getId());
+			root.put("title", "药品知识|医药吧");
 			
 		}else 
 		{
@@ -80,6 +81,9 @@ public class DrugAction extends BaseAction
 			root.put("page", hots);
 			root.put("drugclass",drugclass);
 			root.put("open", drugclass.get_parentId());//打开的栏目
+			root.put("title", drugclass.getTitle()+"|药品知识_医药吧");
+			root.put("keywords", drugclass.getTitle());
+			root.put("description",drugclass.getTitle());
 		}
 		
 		
@@ -144,7 +148,7 @@ public class DrugAction extends BaseAction
 			root.put("list", list);
 			root.put("factorys", factorys);
 			
-			root.put("title", "医药吧 | 添加药品信息");
+			root.put("title", "添加药品信息|医药吧 ");
 			printFreemarker("default/add_drug.ftl", root);
 			
 		}

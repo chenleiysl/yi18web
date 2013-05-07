@@ -66,7 +66,7 @@
 						uploadJson : '${basePath}common/kindeditor/jsp/upload_json.jsp',
 						urlType:'domain',
 						items : ['bold', 'italic', 'underline', 'strikethrough', 'removeformat', '|',   'insertorderedlist', 'insertunorderedlist','forecolor',
-								 'hilitecolor', 'fontname', 'fontsize', '|','image','link', 'unlink',  'table',  '|', 'fullscreen',  'about']
+								 'hilitecolor', 'fontname', 'fontsize', '|','image','link', 'unlink',  'table',  '|', 'fullscreen', 'source',  'about']
 				
 				    });
 				});
@@ -125,7 +125,7 @@
 						uploadJson : '${basePath}common/kindeditor/jsp/upload_json.jsp',
 						urlType:'domain',
 						items : ['bold', 'italic', 'underline', 'strikethrough', 'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'formatblock', 'insertorderedlist', 'insertunorderedlist', '|','forecolor',
-								 'hilitecolor', 'fontname', 'fontsize', '|','image','link', 'unlink', 'emoticons',   'table',  '|', 'fullscreen',  'about']
+								 'hilitecolor', 'fontname', 'fontsize', '|','image','link', 'unlink', 'emoticons',   'table',  '|', 'fullscreen', 'source',  'about']
 				
 				    });
 				});

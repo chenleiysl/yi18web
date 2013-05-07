@@ -735,7 +735,15 @@ public class AdminAction extends BaseAction {
 				List<Diseaseclass> diseaseclasses = (List<Diseaseclass>) sbean.getlist(map );
 //				
 				root.put("diseaseclass", diseaseclasses);
-				printFreemarker("admin/diseaseclass_check.ftl", root);
+				
+				Place place = new Place(); //身体部位
+				List<Place> places = (List<Place>) place.list();
+				
+				Departments department = new Departments();//科室
+				List<Departments> departments = (List<Departments>) department.list();
+				root.put("places", places);
+				root.put("departments", departments);
+				printFreemarker("admin/disease_check.ftl", root);
 			}
 		
 		

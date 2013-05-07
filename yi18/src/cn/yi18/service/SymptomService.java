@@ -9,11 +9,16 @@ import cn.yi18.dao.SymptomDao;
 import cn.yi18.enums.DrugEnum;
 import cn.yi18.enums.SymptomEnum;
 import cn.yi18.jdbc.QueryHelper;
+import cn.yi18.lucene.DrugLucene;
+import cn.yi18.lucene.IndexFiles;
+import cn.yi18.lucene.PageInfo;
+import cn.yi18.lucene.SymptomLucene;
 import cn.yi18.pojo.Drug;
 import cn.yi18.pojo.Druginfo;
 import cn.yi18.pojo.POJO;
 import cn.yi18.pojo.Symptominfo;
 import cn.yi18.pojo.Symptoms;
+import cn.yi18.util.JsoupUtil;
 import cn.yi18.util.PageUtil;
 
 /**
@@ -36,19 +41,31 @@ public class SymptomService
 	public void upadte(Symptoms symptoms ,List<Symptominfo> list)
 	{
 		
+		String content = "";//搜索存放数据
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("allow", symptoms.getAllow());
 		map.put("name", symptoms.getName());
 		map.put("description", symptoms.getDescription());
 		map.put("symptomsclass", symptoms.getSymptomsclass());
 		symptoms.update(map , symptoms.getId());
+		content=content+symptoms.getDescription();
 		for (Symptominfo symptominfo : list) {
 			map.clear();
 			map.put("message", symptominfo.getMessage());
 			symptominfo.update(map, symptominfo.getId());
+			content=content+JsoupUtil.Text(symptominfo.getMessage());
 		}
+		
+		IndexFiles indexFiles = new SymptomLucene();
+		PageInfo pageInfo = new PageInfo();
+		pageInfo.setTitle( symptoms.getName());
+		pageInfo.setId(symptoms.getId());
+		pageInfo.setUrl("symptom/show/"+symptoms.getId());
+		pageInfo.setContent(content);
+		indexFiles.create(pageInfo );
 	}
 
+	
 	public List<Symptoms> getNew(int size) 
 	{
 		Symptoms bean = new Symptoms();

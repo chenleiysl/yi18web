@@ -18,7 +18,7 @@
 <div id = "Screen">
 
 	<div id="logo">
-	<div style="float: right;" id="userbar">欢迎  yi18 ！&nbsp;|&nbsp;<a href="${basePath}drug/add">添加药品</a></div>
+	<div style="float: right;" id="userbar">欢迎  yi18 ！&nbsp;</div>
 	
 	<a href="${basePath}" title="医药吧"><img alt="logo"  src="${basePath}common/image/logo.png"></a>
 	<font color="green" size="6" style="font-weight: bold;">&nbsp;www.yi18.cn</font>

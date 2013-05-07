@@ -47,7 +47,7 @@
 								uploadJson : '${basePath}common/kindeditor/jsp/upload_json.jsp',
 								urlType:'domain',
 								items : ['bold', 'italic', 'underline', 'strikethrough', 'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'formatblock', 'insertorderedlist', 'insertunorderedlist', '|','forecolor',
-										 'hilitecolor', 'fontname', 'fontsize', '|','link','image', 'unlink', 'emoticons',   'table', 'quote', '|', 'fullscreen', 'source', 'about']
+										 'hilitecolor', 'fontname', 'fontsize', '|','link','image', 'unlink', 'emoticons',   'table',  '|', 'fullscreen', 'source', 'about']
 						
 						    });
 						});

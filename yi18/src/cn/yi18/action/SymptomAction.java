@@ -95,7 +95,7 @@ public class SymptomAction extends BaseAction
 			
 			List<Directory> list = directoryService.getSymptom();
 			root.put("list", list);
-			
+			root.put("title", "新增病状信息 |医药吧 ");
 			printFreemarker("default/add_symptom.ftl", root);
 			
 		}
@@ -110,6 +110,8 @@ public class SymptomAction extends BaseAction
 	 */
 	public void update() throws FileUploadException, IllegalAccessException, InvocationTargetException
 	{
+		
+		
 		
 		Map<String, String[]> map = request.getParameterMap();
 		Symptoms bean = new Symptoms();
@@ -156,9 +158,14 @@ public class SymptomAction extends BaseAction
 			map.put("count", symptoms.getCount()+1);
 			bean.update(map , id);
 			List<SymptomInfo> list = symptomInfoService.getSymptomInfo(id);
+			Symptomclass symptomclass = new Symptomclass();
+			symptomclass=symptomclass.get(symptoms.getSymptomsclass());
+			root.put("symptomclass", symptomclass);
 			root.put("symptoms", symptoms);
 			root.put("list", list);
-			
+			root.put("title", symptoms.getName()+"|病状信息_医药吧");
+			root.put("keywords", symptoms.getName());
+			root.put("description",symptoms.subDescription(100));
 			printFreemarker("default/symptom.ftl", root);
 		}
 	}
@@ -185,7 +192,7 @@ public void list() throws ServletException, IOException {
 			root.put("news", news);
 			root.put("page", hots);
 			root.put("open", tree.get(0).getSymptomclass().getId());
-			
+			root.put("title", "病状知识|医药吧");
 		}else 
 		{
 			long id = Long.parseLong(params[0]);//药品分类的id
@@ -200,6 +207,9 @@ public void list() throws ServletException, IOException {
 			root.put("page", hots);
 			root.put("symptomclass",symptomclass);
 			root.put("open", symptomclass.get_parentId());//打开的栏目
+			root.put("title", symptomclass.getTitle()+"|病状知识_医药吧");
+			root.put("keywords", symptomclass.getTitle());
+			root.put("description",symptomclass.getTitle());
 		}
 		
 		

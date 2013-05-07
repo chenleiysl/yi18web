@@ -8,8 +8,10 @@
 
 
 <div id="Message">
-<samp class="date">  <a href="#">病状信息</a>&raquo;<a href="#">添加病状</a>   </samp> <samp style="float: right;"> 共收录病状 <samp style="font-size: 12pt;color: red;font-weight: bolder;">17 </samp> 个     </samp> 
-
+<samp class="date">  <a href="${basePath}symptom/list">病状信息</a>&raquo;<a href="${basePath}symptom/add">添加病状</a>   </samp> 
+<!--
+<samp style="float: right;"> 共收录病状 <samp style="font-size: 12pt;color: red;font-weight: bolder;">17 </samp> 个     </samp> 
+-->
 </div>
     
      
@@ -72,9 +74,10 @@
 					var editor_${item.getId()};
 					KindEditor.ready(function(K) {
 				    editor_${item.getId()} = K.create('#editor_${item.getId()}', {
-						
+						uploadJson : '${basePath}common/kindeditor/jsp/upload_json.jsp',
+						urlType:'domain',
 						items : ['bold', 'italic', 'underline', 'strikethrough', 'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'formatblock', 'insertorderedlist', 'insertunorderedlist', '|','forecolor',
-								 'hilitecolor', 'fontname', 'fontsize', '|','link', 'unlink', 'emoticons',   'table', 'quote', '|', 'fullscreen', 'source', 'about']
+								 'hilitecolor', 'fontname', 'fontsize', '|','link','image', 'unlink', 'emoticons',   'table', 'quote', '|', 'fullscreen', 'source', 'about']
 				
 				    });
 				});

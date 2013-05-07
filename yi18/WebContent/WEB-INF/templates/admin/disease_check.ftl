@@ -6,11 +6,12 @@
  
 
 
-
+<!--
 <div id="Message">
 <samp class="date">  <a href="#">疾病信息</a>&raquo;<a href="#">审核疾病</a>   </samp> <samp style="float: right;"> 共收录疾病 <samp style="font-size: 12pt;color: red;font-weight: bolder;">17 </samp> 个     </samp> 
 
 </div>
+-->
     
      <script>
      $(document).ready(function(){
@@ -39,24 +40,63 @@
                 <tr>  
                     <td>疾病名称:</td>  
                     <td><input class="easyui-validatebox" type="text" name="name" data-options="required:true" style="width: 300px"></input></td>  
-                	<td>* </td>
+                	
                 </tr>  
               
              
                   <tr>  
                     <td>疾病的简介:</td>  
                     <td> <textarea  name="description" style="width:400px;height:200px"></textarea>  </td>  
-                    <td> 疾病的简介，简要说明 </td>
+                   
                 </tr> 
+                  <tr>  
+                    <td>传 染 性:</td>  
+                    <td>
+					  <select  class="easyui-combobox" name="infectious" style="width:200px;" >  
+					    
+					
+					     <option value="0">不传染</option> 
+					      <option value="1">传染</option> 
+					    
+					</select>
+					    
+					</td>  
+                </tr>
                
                 <tr>  
                     <td>分类:</td>  
                     <td>
-					  <select id="cc" class="easyui-combobox" name="diseasesclass" style="width:200px;">  
-					    <option value="0">其它</option>  
+					  <select id="cc" class="easyui-combobox" name="diseaseclass" style="width:200px;">  
+					    
 					     <#list diseaseclass as item>
 					     <option value="${item.getId()}">${item.title}</option> 
 					     </#list>
+					    
+					</select>
+					    
+					</td>  
+                </tr> 
+                <tr>  
+                    <td>科室:</td>  
+                    <td>
+					  <select data-options="multiple:true, panelHeight:'auto'" class="easyui-combobox" name="departments" style="width:400px;" >  
+					    
+					    <#list departments as item>
+					     <option value="${item.getId()}">${item.name}</option> 
+					     </#list> 
+					    
+					</select>
+					    
+					</td>  
+                </tr> 
+                <tr>  
+                    <td>身体部位:</td>  
+                    <td>
+					  <select data-options="multiple:true, panelHeight:'auto'" class="easyui-combobox" name="places" style="width:400px;" >  
+					    
+					     <#list places as item>
+					     <option value="${item.getId()}">${item.name}</option> 
+					     </#list> 
 					    
 					</select>
 					    
@@ -75,9 +115,10 @@
 					var editor_${item.getId()};
 					KindEditor.ready(function(K) {
 				    editor_${item.getId()} = K.create('#editor_${item.getId()}', {
-						
+						uploadJson : '${basePath}common/kindeditor/jsp/upload_json.jsp',
+						urlType:'domain',
 						items : ['bold', 'italic', 'underline', 'strikethrough', 'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'formatblock', 'insertorderedlist', 'insertunorderedlist', '|','forecolor',
-								 'hilitecolor', 'fontname', 'fontsize', '|','link', 'unlink', 'emoticons', 'table', 'quote', '|', 'fullscreen', 'source', 'about']
+								 'hilitecolor', 'fontname', 'fontsize', '|','link', 'image','unlink', 'emoticons', 'table',  '|', 'fullscreen', 'source', 'about']
 				
 				    });
 				});

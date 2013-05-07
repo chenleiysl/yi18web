@@ -47,7 +47,7 @@
                    <table class="Menu" width="100%">
                    <#list item.list as it>
 	                   <tr <#if it.getId()==id> class="Select"  </#if> ><td><a href="${basePath}symptom/list/${it.getId()}">${it.title}  </a></td>
-	                	<td><span class="count">123</span></td>
+	                	<td><span class="count">${it.level}</span></td>
 	                	</tr>
                 	</#list>
                 	</table> 

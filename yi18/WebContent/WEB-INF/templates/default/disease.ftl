@@ -2,7 +2,7 @@
 
 
   <div id="Message">
-<samp class="date">  <a href="${basePath}drug/list">药品分类</a>&raquo;<a href="#">#</a> &raquo </samp> 
+<samp class="date">  <a href="${basePath}disease/list">药品分类</a>&raquo;<a href="${basePath}disease/list/${diseaseclass.getId()}">${diseaseclass.title}</a> &raquo ${disease.name}</samp> 
 
 </div>
     
@@ -14,8 +14,8 @@
 	text-align:center;
 	margin-top:10px;
 	line-height:20px;
-	font-size:10pt;
-">《${disease.name}》<div>
+	font-size:12pt;
+"><a href="${basePath}disease/list/${diseaseclass.getId()}">${diseaseclass.title}</a>-《<a href="${basePath}disease/show/${disease.getId()}">${disease.name}</a>》<div>
 
   <div style="margin:10px 0;"></div>
     <div  class="easyui-accordion" style="width:700px;">  
@@ -28,13 +28,23 @@
 		      <td>描述</td><td>${disease.description}</td>
 		     </tr>
 		      <tr>
-		      <td>科室</td><td></td>
+		      <td>科室</td><td>
+		      <#list departments as item>
+		      ${item.name};
+		      </#list>
+		      </td>
 		       </tr>
 		      <tr>
-		       <td>传染</td><td>${disease.infectious}</td>
+		       <td>传染性</td><td><#if disease.infectious==0 >
+		       不传染<#else>传染
+		       </#if>
+		       </td>
 		      </tr>
 		      <tr>
-		       <td>体现部位</td><td>血液</td>
+		       <td>体现部位</td><td>
+		       <#list places as item>
+		      ${item.name};
+		      </#list></td>
 		      </tr>
 		      </table>
 		        </div> 

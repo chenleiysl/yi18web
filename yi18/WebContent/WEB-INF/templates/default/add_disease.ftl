@@ -8,7 +8,8 @@
 
 
 <div id="Message">
-<samp class="date">  <a href="#">疾病信息</a>&raquo;<a href="#">添加疾病</a>   </samp> <samp style="float: right;"> 共收录疾病 <samp style="font-size: 12pt;color: red;font-weight: bolder;">17 </samp> 个     </samp> 
+<samp class="date">  <a href="${basePath}disease/list">疾病信息</a>&raquo;<a href="${basePath}disease/add">疾病发布</a>   </samp> 
+<!-- <samp style="float: right;"> 共收录疾病 <samp style="font-size: 12pt;color: red;font-weight: bolder;">17 </samp> 个     </samp> -->
 
 </div>
     
@@ -27,14 +28,14 @@
                 <tr>  
                     <td>疾病名称:</td>  
                     <td><input class="easyui-validatebox" type="text" name="name" data-options="required:true" style="width: 300px"></input></td>  
-                	<td>* </td>
+                	
                 </tr>  
               
              
                   <tr>  
                     <td>疾病的简介:</td>  
                     <td> <textarea  name="description" style="width:400px;height:200px"></textarea>  </td>  
-                    <td> 疾病的简介，简要说明 </td>
+                   
                 </tr> 
                
                
@@ -72,9 +73,10 @@
 					var editor_${item.getId()};
 					KindEditor.ready(function(K) {
 				    editor_${item.getId()} = K.create('#editor_${item.getId()}', {
-						
+						uploadJson : '${basePath}common/kindeditor/jsp/upload_json.jsp',
+						urlType:'domain',
 						items : ['bold', 'italic', 'underline', 'strikethrough', 'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'formatblock', 'insertorderedlist', 'insertunorderedlist', '|','forecolor',
-								 'hilitecolor', 'fontname', 'fontsize', '|','link', 'unlink', 'emoticons',   'table', 'quote', '|', 'fullscreen', 'source', 'about']
+								 'hilitecolor', 'fontname', 'fontsize', '|','link','image' ,'unlink', 'emoticons',   'table',  '|', 'fullscreen', 'source', 'about']
 				
 				    });
 				});

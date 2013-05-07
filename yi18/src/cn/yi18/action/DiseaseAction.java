@@ -99,13 +99,14 @@ public class DiseaseAction extends BaseAction
 		
 			
 			root.put("message", "添加成功！等待审核！");
+			
 			printFreemarker("default/message.ftl", root);
 			
 		}else {
 			
 			List<Directory> list = directoryService.getDisease();
 			root.put("list", list);
-			
+			root.put("title", "疾病发布|医药吧 ");
 			printFreemarker("default/add_disease.ftl", root);
 			
 		}
@@ -121,6 +122,8 @@ public class DiseaseAction extends BaseAction
 	public void update() throws FileUploadException, IllegalAccessException, InvocationTargetException
 	{
 		
+		String[] places=request.getParameterValues("places");//取得多个值
+		String[] departments=request.getParameterValues("departments");
 		Map<String, String[]> map = request.getParameterMap();
 		Disease bean = new Disease();
 		BeanUtils.populate(bean, map);
@@ -143,7 +146,7 @@ public class DiseaseAction extends BaseAction
 			   }
 		  
 		}
-		diseaseService.upadte(bean, list);
+		diseaseService.upadte(bean, list,places,departments);
 		sendRedirect(request.basePath()+"admin/disease");
 		return;
 			
@@ -169,6 +172,18 @@ public class DiseaseAction extends BaseAction
 			root.put("disease", disease);
 			root.put("list", list);
 			
+			root.put("title", disease.getName()+"|疾病信息_医药吧");
+			 root.put("keywords", disease.getName());
+			 root.put("description", disease.subDescription(100));
+			 
+			 Diseaseclass diseaseclass = new Diseaseclass();
+			 diseaseclass= diseaseclass.get(disease.getDiseaseclass());
+			 root.put("diseaseclass", diseaseclass);
+			 List<Departments> departments = diseaseService.getDepartments(disease.getId());
+			 List<Place> places = diseaseService.getPlace(disease.getId());
+			 root.put("departments", departments);
+			
+			 root.put("places", places);
 			printFreemarker("default/disease.ftl", root);
 		}
 	}

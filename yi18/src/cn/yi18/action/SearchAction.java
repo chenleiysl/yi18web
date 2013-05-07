@@ -4,11 +4,13 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 
+import cn.yi18.lucene.DiseaseLucene;
 import cn.yi18.lucene.DrugLucene;
 import cn.yi18.lucene.LoreLucene;
 import cn.yi18.lucene.NewsLucene;
 import cn.yi18.lucene.PageUtil;
 import cn.yi18.lucene.SearchFiles;
+import cn.yi18.lucene.SymptomLucene;
 
 public class SearchAction extends BaseAction 
 {
@@ -36,6 +38,13 @@ public class SearchAction extends BaseAction
 		else if(type.equals("lore"))
 		{
 			searchFiles=new LoreLucene();
+		}else if(type.equals("symptom"))
+		{
+			searchFiles=new SymptomLucene();
+		}
+		else if(type.equals("disease"))
+		{
+			searchFiles=new DiseaseLucene();
 		}
 		PageUtil page = searchFiles.query(keyword, pagesize, SIZE);
 		root.put("page", page);

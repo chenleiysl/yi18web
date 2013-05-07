@@ -2,7 +2,7 @@
 
 
   <div id="Message">
-<samp class="date">  <a href="${basePath}drug/list">药品分类</a>&raquo;<a href="#">感冒药</a> &raquo </samp> 
+<samp class="date">  <a href="${basePath}symptom/list">病状分类</a>&raquo;<a href="${basePath}symptom/list/${symptomclass.getId()}">${symptomclass.title}</a> &raquo${symptoms.name} </samp> 
 
 </div>
     
@@ -14,8 +14,8 @@
 	text-align:center;
 	margin-top:10px;
 	line-height:20px;
-	font-size:10pt;
-">《${symptoms.name}》<div>
+	font-size:12pt;
+"><a href="${basePath}symptom/list/${symptomclass.getId()}">${symptomclass.title}类</a>—《<a href="${basePath}symptom/show/${symptoms.getId()}">${symptoms.name}</a>》<div>
 
   <div style="margin:10px 0;"></div>
     <div class="easyui-tabs" style="width:920px;" data-options="tabPosition:'left'">  

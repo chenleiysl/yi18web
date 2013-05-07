@@ -15,6 +15,7 @@ import cn.yi18.lucene.PageInfo;
 import cn.yi18.pojo.Drug;
 import cn.yi18.pojo.Druginfo;
 import cn.yi18.pojo.POJO;
+import cn.yi18.util.JsoupUtil;
 import cn.yi18.util.PageUtil;
 
 /**
@@ -58,20 +59,20 @@ public class DrugService
 		map.put("image", drug.getImage());
 		map.put("factory", drug.getFactory());
 		map.put("ingredient", drug.getIngredient());
-		map.put("term", Jsoup.clean(drug.getTerm(),Whitelist.simpleText()));//过滤html
+		map.put("term", JsoupUtil.Text(drug.getTerm()));//过滤html
 		map.put("price", drug.getPrice());
 		map.put("drugclass", drug.getDrugclass());
 		map.put("prescription", drug.getPrescription());
 		map.put("allow", DrugEnum.Check_Status.IsCheck.getValue());
 		drug.update(map , drug.getId()); //更新药品基本信息
 		
-		content=content+Jsoup.clean(drug.getTerm(), Whitelist.simpleText());
+		content=content+JsoupUtil.Text(drug.getTerm());
 		for (Druginfo druginfo : druginfos) {
 			Map<String, Object> vmap = new HashMap<String, Object>();
 			vmap.put("message", druginfo.getMessage());
 			druginfo.update(vmap, druginfo.getId());
 			
-			content=content+Jsoup.clean(druginfo.getMessage(), Whitelist.simpleText());//
+			content=content+JsoupUtil.Text(druginfo.getMessage());//
 		}
 		// TODO Auto-generated method stub
 		
