@@ -143,6 +143,27 @@ public class DiseaseService
 		return diseaseDao.getPlace(id);
 	}
 	
+	
+	public PageUtil getPagePlace(int page, int size, long id) {
+		
+		int total = (int) diseaseDao.getPlaceCount(id);
+		return new PageUtil(diseaseDao.getHPlace(page, size,id), page, size, total );
+	}
+
+	public PageUtil getPageDepartments(int page, int size, long id) {
+		
+		int total = (int) diseaseDao.getDepartmentsCount(id);
+		return new PageUtil(diseaseDao.getHDepartments(page, size,id), page, size, total );
+	}
+	
+	public List<Disease> getNPlace(int page, int size, long id) {
+		return diseaseDao.getNPlace( page, size, id);
+	}
+	
+	public List<Disease> getNDepartments(int page, int size, long id) {
+		return diseaseDao.getNDepartments(page, size, id);
+	}
+	
 	private DiseaseDao diseaseDao = new DiseaseDao();
 	
 

@@ -30,7 +30,7 @@
 		      <tr>
 		      <td>科室</td><td>
 		      <#list departments as item>
-		      ${item.name};
+		     <a href="${basePath}disease/list/${item.getId()}/departments"> ${item.name}</a>;
 		      </#list>
 		      </td>
 		       </tr>
@@ -43,7 +43,7 @@
 		      <tr>
 		       <td>体现部位</td><td>
 		       <#list places as item>
-		      ${item.name};
+		     <a href="${basePath}disease/list/${item.getId()}/place"> ${item.name}</a>;
 		      </#list></td>
 		      </tr>
 		      </table>

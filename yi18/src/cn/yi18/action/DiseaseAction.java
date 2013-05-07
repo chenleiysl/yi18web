@@ -215,12 +215,13 @@ public class DiseaseAction extends BaseAction
 		{
 			List<Disease> news = diseaseService.getNew(SIZE);
 			PageUtil hots = diseaseService.getPageHot(page, SIZE);
-			root.put("id", 0);
+			//root.put("id", 0);
 			root.put("news", news);
 			root.put("page", hots);
 			//root.put("open", tree.get(0).getSymptomclass().getId());
+			root.put("title","常见疾病");
 			
-		}else 
+		}else if(params.length==1)
 		{
 			long id = Long.parseLong(params[0]);//药品分类的id
 			Diseaseclass bean = new Diseaseclass();
@@ -229,11 +230,33 @@ public class DiseaseAction extends BaseAction
 			
 			List<Disease> news = diseaseService.getNew(SIZE,id);
 			PageUtil hots = diseaseService.getPageHot(page, SIZE,id);
-			root.put("id", id);
+			//root.put("id", id);
 			root.put("news", news);
 			root.put("page", hots);
-			root.put("diseaseclass",diseaseclass);
+			root.put("title",diseaseclass.getTitle());
 			//root.put("open", symptomclass.get_parentId());//打开的栏目
+		}else if(params.length==2){
+			if(params[1].equals("place"))
+			{
+				long id = Long.parseLong(params[0]);//药品分类的id
+				List<Disease> news = diseaseService.getNPlace(1, 10, id);
+				PageUtil hots = diseaseService.getPagePlace(page, SIZE,id);
+				Place bean = new Place();
+				bean=bean.get(id);
+				root.put("title",bean.getName());
+				root.put("news", news);
+				root.put("page", hots);
+			}else if(params[1].equals("departments"))
+			{
+				long id = Long.parseLong(params[0]);//药品分类的id
+				List<Disease> news = diseaseService.getNDepartments(1, 10, id);
+				PageUtil hots = diseaseService.getPageDepartments(page, SIZE,id);
+				Departments bean = new Departments();
+				bean=bean.get(id);
+				root.put("title",bean.getName());
+				root.put("news", news);
+				root.put("page", hots);
+			}
 		}
 		
 		

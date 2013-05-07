@@ -32,12 +32,12 @@
     <div class="easyui-layout" style="width:980px;height:1800px;">  
     
      <div data-options="region:'west',split:true" title="疾病分类" style="width:180px;">  
-     		 <div style="padding:5px;border:1px solid #ddd">  
+     		 <div style="padding:20px;border:0px solid #ddd;">  
              <a href="#" class="easyui-menubutton" style="width: 150px" data-options="menu:'#mm1'">疾病分类</a>
              
              <a href="#" class="easyui-menubutton" style="width: 150px" data-options="menu:'#mm2'">就诊科室</a>
-             
-              <a href="#" class="easyui-menubutton" style="width: 150px" data-options="menu:'#mm2'">身体部位</a>
+            
+              <a href="#" class="easyui-menubutton" style="width: 150px" data-options="menu:'#mm3'">身体部位</a>
      		</div>
      </div>
      
@@ -50,7 +50,7 @@
             <span>${item.diseaseclass.title}</span>  
             <div style="width:150px;"> 
             <#list item.list as it> 
-                <div><a href="${basePath}disease/list/${it.getId()}"> ${it.title} </a></div>  
+                <div><a href="${basePath}disease/list/${it.getId()}" class="easyui-linkbutton" data-options="plain:true"> ${it.title} </a></div>  
                 </#list> 
             </div>  
         </div>  
@@ -64,7 +64,7 @@
      <#list departments as item>
           
 
-     <div><a href="${basePath}disease/list/1"> ${item.name} </a></div>  
+     <div><a href="${basePath}disease/list/${item.getId()}/departments"  class="easyui-linkbutton" data-options="plain:true"> ${item.name} </a></div>  
         
         </#list>
           
@@ -74,14 +74,14 @@
      
      <#list places as item>
           
-    	 <div><a href="${basePath}disease/list/1"> ${item.name} </a></div>  
+    	 <div><a href="${basePath}disease/list/${item.getId()}/place"  class="easyui-linkbutton" data-options="plain:true"> ${item.name} </a></div>  
         
     </#list>
           
 </div> 
      
      
-     <div data-options="region:'center',title:'疾病分类 &raquo;<#if diseaseclass??>${diseaseclass.title}<#else>常见疾病</#if>(${page.total}种) '" > 
+     <div data-options="region:'center',title:'疾病分类 &raquo;${title}(${page.total}种) '" > 
             <div class="easyui-tabs" data-options="fit:true,border:false,plain:true">  
                  <div title="常见疾病" data-options="" style="padding:10px">
                 	 <div class='ProjectList'>	

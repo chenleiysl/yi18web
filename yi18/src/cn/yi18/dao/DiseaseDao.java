@@ -37,7 +37,7 @@ public class DiseaseDao
 	
 	
 	/**
-	 * 取得身体部位
+	 * 取得科室
 	 * @param id
 	 * @return
 	 */
@@ -48,7 +48,11 @@ public class DiseaseDao
 		return QueryHelper.query(Departments.class, sql, id);
 		
 	}
-	
+	/**
+	 * 取得身体部位
+	 * @param id
+	 * @return
+	 */
 	public List<Place> getPlace(long id) {
 		String sql ="SELECT place.id,place.name "+
 				" FROM yi18_diseaseplace diseaseplace,yi18_place place"+
@@ -56,6 +60,83 @@ public class DiseaseDao
 		return QueryHelper.query(Place.class, sql, id);
 		
 	}
+	
+	/**
+	 * 
+	 * @param page
+	 * @param size
+	 * @param id
+	 * @return
+	 */
+	public List<Disease> getHDepartments(int page, int size, long id) {
+		String sql ="SELECT disease.id,disease.name,disease.description,disease.diseaseclass,disease.infectious,disease.count,disease.allow,disease.time "+
+				" FROM yi18_disease disease,yi18_diseasedepartments diseasedepartments "+
+				" WHERE disease.id=diseasedepartments.disease AND diseasedepartments.departments=? ORDER BY disease.count DESC";
+	
+		return QueryHelper.query_slice(Disease.class,sql, page,size,id);
+	}
+	
+	/**
+	 * 
+	 * @param page
+	 * @param size
+	 * @param id
+	 * @return
+	 */
+	public List<Disease> getNDepartments(int page, int size, long id) {
+		String sql ="SELECT disease.id,disease.name,disease.description,disease.diseaseclass,disease.infectious,disease.count,disease.allow,disease.time "+
+				" FROM yi18_disease disease,yi18_diseasedepartments diseasedepartments "+
+				" WHERE disease.id=diseasedepartments.disease AND diseasedepartments.departments=? ORDER BY disease.id DESC";
+			return QueryHelper.query_slice(Disease.class,sql, page,size,id);
+	}
+	public long getDepartmentsCount(long id) {
+		String sql ="SELECT COUNT(*) "+
+				" FROM yi18_disease disease,yi18_diseasedepartments diseasedepartments "+
+				" WHERE disease.id=diseasedepartments.disease AND diseasedepartments.departments=? ";
+			return QueryHelper.stat(sql, id);
+	}
+	
+	
+	/**
+	 * 
+	 * @param page
+	 * @param size
+	 * @param id
+	 * @return
+	 */
+	public List<Disease> getHPlace(int page, int size, long id) {
+		String sql ="SELECT disease.id,disease.name,disease.description,disease.diseaseclass,disease.infectious,disease.count,disease.allow,disease.time "+
+				" FROM yi18_disease disease,yi18_diseaseplace diseaseplace "+
+				" WHERE disease.id=diseaseplace.disease AND diseaseplace.place=? ORDER BY disease.count DESC";
+	
+		return QueryHelper.query_slice(Disease.class,sql, page,size,id);
+	}
+	
+	/**
+	 * 
+	 * @param page
+	 * @param size
+	 * @param id
+	 * @return
+	 */
+	public List<Disease> getNPlace(int page, int size, long id) {
+		String sql ="SELECT disease.id,disease.name,disease.description,disease.diseaseclass,disease.infectious,disease.count,disease.allow,disease.time "+
+				" FROM yi18_disease disease,yi18_diseaseplace diseaseplace "+
+				" WHERE disease.id=diseaseplace.disease AND diseaseplace.place=? ORDER BY disease.id DESC";
+		return QueryHelper.query_slice(Disease.class,sql, page,size,id);
+	}
+	public long getPlaceCount(long id) {
+		String sql ="SELECT COUNT(*) "+
+				" FROM yi18_disease disease,yi18_diseaseplace diseaseplace "+
+				" WHERE disease.id=diseaseplace.disease AND diseaseplace.place=?";
+		return QueryHelper.stat(sql, id);
+	}
+	
+	public static void main(String[] args) {
+		DiseaseDao dao = new DiseaseDao();
+		System.out.println(dao.getNPlace(1,4,3).size());
+	}
+	
 	
 
 }
