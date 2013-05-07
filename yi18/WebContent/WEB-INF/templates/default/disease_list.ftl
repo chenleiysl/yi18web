@@ -123,12 +123,12 @@
                 <ul class='List'>
 				           	<#list news as item>
                 	<li>
-				    <h3><a href="${basePath}symptom/show/${item.getId()}" target="_blank"><em>${item.name}</em></a></h3>    
+				    <h3><a href="${basePath}disease/show/${item.getId()}" target="_blank"><em>${item.name}</em></a></h3>    
 					
 					<table width='100%'><tr><td>
 						<p class='detail'>
 									${item.subDescription(200)}
-						    	<a href="${basePath}symptom/show/${item.getId()}" target="_blank" class='more'>更多${item.name}</a>
+						    	<a href="${basePath}disease/show/${item.getId()}" target="_blank" class='more'>更多${item.name}</a>
 						</p>
 					</td>
 						
