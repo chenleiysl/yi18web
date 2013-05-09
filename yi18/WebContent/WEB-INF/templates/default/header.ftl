@@ -18,7 +18,15 @@
 <div id = "Screen">
 
 	<div id="logo">
-	<div style="float: right;" id="userbar"><a href="${basePath}admin/login">登录</a>
+	
+	
+	<div style="float: right;" id="userbar">
+	<#if user??>
+	欢迎  <a href="${basePath}admin"> ${user.account} </a>！&nbsp;<a href="${basePath}/admin/exit/${session_id}?returnUrl=${url}">退出</a>
+	<#else>
+	<a href="${basePath}admin/login?returnUrl=${url}">登录</a>
+	</#if>
+	
 	&nbsp;|&nbsp;<a href="${basePath}drug/add">添加药品</a>
 	&nbsp;|&nbsp;<a href="${basePath}symptom/add">新增病状</a>
 	&nbsp;|&nbsp;<a href="${basePath}disease/add">疾病发布</a>
@@ -29,15 +37,8 @@
 	<font color="green" size="6" style="font-weight: bold;">&nbsp;www.yi18.cn</font>
 	
 	</div>
-   <div style="padding:10px;border:1px solid #ddd">  
-        <a href="${basePath}" class="easyui-linkbutton" data-options="plain:true">主页</a>  
-        <a href="${basePath}drug/list" class="easyui-linkbutton" data-options="plain:true">药品分类</a>  
-        <a href="${basePath}symptom/list" class="easyui-linkbutton" data-options="plain:true">病状查找</a>
-         <a href="${basePath}disease/list" class="easyui-linkbutton" data-options="plain:true">疾病中心</a> 
-         <a href="${basePath}lore/list" class="easyui-linkbutton" data-options="plain:true">健康知识</a>
-         <a href="${basePath}news/list" class="easyui-linkbutton" data-options="plain:true">医药新闻</a>    
-        <a href="${basePath}index/partner" class="easyui-linkbutton" data-options="plain:true">合作伙伴</a>
-        <div style="float: right;">
+   <div style="padding:10px;border:1px solid #ddd"> 
+    <div style="float: right;">
         <input class="easyui-searchbox" data-options="prompt:'请输入查询信息',menu:'#mm',searcher:doSearch" style="width:340px" value="${keyword!!}"></input> 
    		<script>  
         function doSearch(value,name){  
@@ -61,6 +62,15 @@
     	</div> 
    		
    		</div>
+    
+        <a href="${basePath}" class="easyui-linkbutton" data-options="plain:true">主页</a>  
+        <a href="${basePath}drug/list" class="easyui-linkbutton" data-options="plain:true">药品分类</a>  
+        <a href="${basePath}symptom/list" class="easyui-linkbutton" data-options="plain:true">病状查找</a>
+         <a href="${basePath}disease/list" class="easyui-linkbutton" data-options="plain:true">疾病中心</a> 
+         <a href="${basePath}lore/list" class="easyui-linkbutton" data-options="plain:true">健康知识</a>
+         <a href="${basePath}news/list" class="easyui-linkbutton" data-options="plain:true">医药新闻</a>    
+        <a href="${basePath}index/partner" class="easyui-linkbutton" data-options="plain:true">合作伙伴</a>
+       
     </div> 
    <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="98%" color=#5cc26f SIZE=1>
     

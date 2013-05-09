@@ -1,6 +1,8 @@
 package cn.yi18.http;
 
-import java.util.Enumeration;
+import cn.yi18.pojo.User;
+
+
 
 
 public interface HttpSession  {
@@ -10,15 +12,9 @@ public interface HttpSession  {
 	public 	void removeAttribute(String name);
 
 	public Object getAttribute(String name);
-
-	public String getId();
-
-	public Enumeration<?> getAttributeNames();
-
-	public void invalidate();
 	
-	public boolean isLogin();//用户是否登录
-	
-	
-	public void deleteUser();
+	public User getUser(String userid) ;
+	public void deleteUser(String userid) ;
+	public void setUser(User user);
+
 }

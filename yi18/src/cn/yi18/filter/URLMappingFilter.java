@@ -86,9 +86,12 @@ public class URLMappingFilter implements Filter {
 		String[] spart = StringUtils.split(vm, "/");
 		if(spart.length==2)
 			vm=vm+"/execute";//如果没有指定方法，默认调用execute方法
-	
+		
+		
+		
 		request.getRequestDispatcher(vm).forward(request, response);
 		//chain.doFilter(request, response);
+		
 	}
 
 	
@@ -109,5 +112,7 @@ public class URLMappingFilter implements Filter {
 		 log.info("正常启动Filter过滤器！");
 
 	}
+	
+	
 
 }

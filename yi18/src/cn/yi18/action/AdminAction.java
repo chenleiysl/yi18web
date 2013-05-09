@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 
 import org.apache.commons.beanutils.BeanUtils;
 
@@ -47,6 +48,8 @@ import cn.yi18.service.NewsService;
 import cn.yi18.service.PartnerService;
 import cn.yi18.service.SymptomInfoService;
 import cn.yi18.service.SymptomService;
+import cn.yi18.util.Base64Coder;
+import cn.yi18.util.DigestSHA;
 
 public class AdminAction extends BaseAction {
 
@@ -55,7 +58,10 @@ public class AdminAction extends BaseAction {
 	 * 默认admin页面
 	 */
 	@Override
-	public void execute() throws ServletException, IOException {
+	public void execute() throws ServletException, IOException
+	{
+		
+		
 		printFreemarker("admin/index.ftl", root);
 	}
 	
@@ -832,8 +838,11 @@ public class AdminAction extends BaseAction {
 	
 	public void login() throws IllegalAccessException, InvocationTargetException
 	{
+		
+		String returnUrl = Base64Coder.decodeBase64(request.getParameter("returnUrl"));
 		if (request.isSubmit())
 		{
+			
 			Map map = request.getParameterMap();
 			  User vuser = new User();
 			  BeanUtils.populate(vuser , map);
@@ -844,23 +853,59 @@ public class AdminAction extends BaseAction {
 			  User user = bean.get(vmap );
 			  if (user!=null)
 			  {
-				  //session.setUser(user);
-				  sendRedirect(request.basePath()+"admin");
+				  String hkey=DigestSHA.SHA224(user.getAccount()+user.getPassword());
+				  response.addAutoLoginCookie(1800, hkey);//30
+				  session.setUser(user);
+				  sendRedirect(returnUrl);
 				  return;
 			  }else {
 				
-			
+				 // root.put("returnUrl", returnUrl);
 				root.put("message", "你登录的账号或密码错误");
 				printFreemarker("default/login.ftl", root);
 				return;
 			  }
 			
 		}else {
+			//root.put("returnUrl", returnUrl);
 			printFreemarker("default/login.ftl", root);
 		}
 		
 	}
 	
+
+	public void exit()
+	{
+		
+		String returnUrl = Base64Coder.decodeBase64(request.getParameter("returnUrl"));
+		if(returnUrl==null) returnUrl=request.basePath();
+		String session_id= request.getParams()!=null?request.getParams()[0]:null;
+		User user = session.getUser(yi18_id); 
+		if (request.getSession().getId().equals(session_id))
+		{
+			//退出的session_id做比较，目的是为了防止用退出连接做攻击，实现每个用户的退出连接不同
+			session.deleteUser(yi18_id);
+			_removeAuto(user);
+		}
+		else
+		{
+			sendRedirect(returnUrl);
+		}
+		
+	//	userService.logout(user.getId());
+		
+		sendRedirect(request.basePath());
+		return;
+	
+	}
+	
+	  public void _removeAuto(User user) 
+	  {
+		  response.removeAutoLoginCookie();
+		  
+		
+		
+	  }
 	
 	private DirectoryService directoryService = new DirectoryService ();
 	private FactoryService factoryService = new FactoryService();

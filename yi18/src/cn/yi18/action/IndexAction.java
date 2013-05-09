@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 
+import cn.yi18.entity.Index;
 import cn.yi18.pojo.Disease;
 import cn.yi18.pojo.Drug;
 import cn.yi18.pojo.Lore;
@@ -26,19 +27,21 @@ public class IndexAction extends BaseAction
 		//User bean = new User();
 		// User user = bean.get(1);
 		
-		List<News> news = newsService.getNews(10);
-		root.put("news", news);//综合信息
-		List<Lore> week = loreService.getHot(1, 10, 7);//最近7天
-		List<Lore> month = loreService.getHot(1, 10, 30);//最近30天
-		 root.put("week", week);
-		 root.put("month", month);
-		 List<Disease> dnews = diseaseService.getNew(10);
-		 List<Symptoms> snews = symptomService.getNew(10);
-			
-			root.put("snews", snews);
-			root.put("dnews", dnews);
+//		List<News> news = newsService.getNews(10);
+//		root.put("news", news);//综合信息
+//		List<Lore> week = loreService.getHot(1, 10, 7);//最近7天
+//		List<Lore> month = loreService.getHot(1, 10, 30);//最近30天
+//		 root.put("week", week);
+//		 root.put("month", month);
+//		 List<Disease> dnews = diseaseService.getNew(10);
+//		 List<Symptoms> snews = symptomService.getNew(10);
+//			
+//			root.put("snews", snews);
+//			root.put("dnews", dnews);
+			root.put("index", _getIndex());
 		printFreemarker("default/index.ftl", root);
 		//printHtml("欢迎来到医药吧，我们将于2013年6月正式推出，敬请期待！");
+		
 		
 	}
 	
@@ -64,6 +67,17 @@ public class IndexAction extends BaseAction
 		printFreemarker("default/partner.ftl", root);
 	}
 	
+	
+	private Index _getIndex()
+	{
+		Index index = new Index();
+		index.setDnews(diseaseService.getNew(10));
+		index.setSnews(symptomService.getNew(10));
+		index.setMonth(loreService.getHot(1, 10, 30));
+		index.setWeek(loreService.getHot(1, 10, 7));
+		index.setNews(newsService.getNews(10));
+		return index;
+	}
 	
 	private NewsService newsService = new NewsService();
 	private LoreService loreService = new LoreService();

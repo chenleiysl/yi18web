@@ -21,7 +21,7 @@
   	color:#A00;
 }
 .List{font-size: 10pt}
- .List li {background:url('${basePath}common/image/a2.gif') no-repeat left center;padding-left:16px;overflow:hidden;height: 28px;}
+ .List li {background:url('${basePath}common/image/a2.gif') no-repeat left center;padding-left:16px;overflow:hidden;height: 28px;list-style-type:none}
  .List h3 {
     font-size: 10pt;
     float: left;

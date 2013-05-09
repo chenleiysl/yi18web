@@ -10,6 +10,7 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 
@@ -17,10 +18,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
+import cn.yi18.enums.CookieEnum;
 import cn.yi18.http.*;
 import cn.yi18.jdbc.DBManager;
 import cn.yi18.pojo.Links;
+import cn.yi18.pojo.User;
 import cn.yi18.service.LinksService;
+import cn.yi18.util.Base64Coder;
 
 
 import freemarker.template.Configuration;
@@ -45,6 +49,7 @@ public  abstract class BaseAction
 	protected HttpSession session;
 	protected Configuration cfg; 
 	protected Map<String, Object> root = new HashMap<String, Object>();
+	protected String yi18_id=null;
 	
 	/**
 	 * 初始化
@@ -56,11 +61,15 @@ public  abstract class BaseAction
 		this.response = response;
 		//this.context = request.getServletContext(); 3.0
 		this.context = request.getSession().getServletContext();
-		this.session = new SessionContext(request);
+		this.session = new SessionContext();
+		yi18_id=_GetCookieID(request);
 		cfg = new Configuration();
+		
 		cfg.setServletContextForTemplateLoading(
 		   request.getSession().getServletContext(), "WEB-INF/templates");
 		cfg.setDefaultEncoding("UTF-8");
+		
+		
 	}
 	
 	/**
@@ -205,11 +214,12 @@ public  abstract class BaseAction
  protected void printFreemarker(String ftl,Map<String,Object> root)
   {
 	 
-	HttpSession session = new SessionContext( request);
+	//HttpSession session = new SessionContext( request);
 	 root.put("basePath", request.basePath());
-	 root.put("url", request.getRequestURL()); 
-	 root.put("session_id", session.getId()); 
-	 root.put("isLogin", session.isLogin());
+	 root.put("url", Base64Coder.encodeUrlBase64(request.getRequestURL().toString())); 
+	 root.put("session_id", request.getSession().getId()); 
+	 root.put("user", session.getUser(yi18_id));
+	
 	 root.put("links", _getLinks());
 	
 	 //设置默认信息
@@ -222,6 +232,7 @@ public  abstract class BaseAction
 		t.setEncoding("UTF-8");
 		response.setContentType("text/html; charset=" + t.getEncoding());
 		Writer out = response.getWriter();
+		
 	   try {
 		t.process(root, out);
 	} catch (TemplateException e) {
@@ -232,6 +243,7 @@ public  abstract class BaseAction
 		log.error("通过Freemarker文件{}错误",ftl);
 		e.printStackTrace();
 	}finally{
+		
 		DBManager.closeConnection(); //释放数据库连接到连接池中
 	}
       
@@ -244,6 +256,21 @@ public  abstract class BaseAction
 	 return linksService.getAll();
 	
  }
-	
+
+ public String _GetCookieID( HttpRequest request) {
+	 Cookie[] cookies = request.getCookies();//这样便可以获取一个cookie数组
+	 
+	 if(cookies==null)
+		 return null;
+	 
+	 for(Cookie cookie : cookies){
+		 if(cookie.getName().equals(CookieEnum.yi18_id.toString()))
+		 {
+			 return cookie.getValue();
+		 }
+	   
+	 }
+	return null;
+}
 
 }

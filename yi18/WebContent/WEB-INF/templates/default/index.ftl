@@ -19,12 +19,12 @@
   	color:#A00;
 }
 .List{font-size: 10pt}
- .List li {background:url('http://localhost:8080/yi18/common/image/a2.gif') no-repeat left center;padding-left:16px;overflow:hidden;height: 28px;}
+ .List li {background:url('${basePath}common/image/a2.gif') no-repeat left center;padding-left:16px;overflow:hidden;height: 24px;list-style-type:none}
  .List h3 {
     font-size: 10pt;
     float: left;
     font-weight: normal;
-    width: 300px;
+    width: 280px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -58,8 +58,8 @@
         <a href="${basePath}news/list" class="icon-redo" ></a> 
         </div>
       <div id="p" class="easyui-panel" title="最新综合信息" style="width:700px;height:350px;padding:10px;" data-options="tools:'#nn'">  
-       <ul class='List'   >
-       <#list news as item>
+       <ul class='List'>
+       <#list index.news as item>
 			<li>
 				<h3><a href="${basePath}news/show/${item.getId()}" target="_blank">${item.title}</a></h3>
 				<span class='date'>发布于 ${item.time?string("yyyy-MM-dd")}</span>	
@@ -83,7 +83,7 @@
       <div id="p" class="easyui-panel" title="健康知识" style="width:998;height:300px;padding:10px;" data-options="tools:'#ll'">  
       <div style="width: 490px;float: right;">
        <ul class='List'   >
-			<#list month as item>
+			<#list index.month as item>
 			<li>
 				<h3><a href="${basePath}lore/show/${item.getId()}" target="_blank">${item.title}</a></h3>
 				<span class='date'>发布于${item.time?string("yyyy-MM-dd")}</span>	
@@ -94,7 +94,7 @@
       </div>
         <div style="width: 490px;">
        <ul class='List'   >
-			<#list week as item>
+			<#list index.week as item>
 			<li>
 				<h3><a href="${basePath}lore/show/${item.getId()}" target="_blank">${item.title}</a></h3>
 				<span class='date'>发布于${item.time?string("yyyy-MM-dd")}</span>	
@@ -113,9 +113,9 @@
        <div id="ss">  
         <a href="${basePath}symptom/list" class="icon-redo" ></a> 
         </div>
-     <div id="p1" class="easyui-panel" title="病状" style="width:498px;height:350px;padding:10px;" data-options="tools:'#ss'">  
+     <div id="p1" class="easyui-panel" title="病状" style="width:496px;height:350px;padding:10px;" data-options="tools:'#ss'">  
         <ul class='List'   >
-			<#list snews as item>
+			<#list index.snews as item>
 			<li>
 				<h3><a href="${basePath}symptom/show/${item.getId()}" target="_blank">${item.name}</a></h3>
 				<span class='date'>发布于${item.time?string("yyyy-MM-dd")}</span>	
@@ -129,9 +129,9 @@
      <div id="dd">  
         <a href="${basePath}disease/list" class="icon-redo" ></a> 
         </div>
-      <div id="p3" class="easyui-panel" title="疾病" style="width:498px;height:350px;padding:10px;" data-options="tools:'#dd'">  
+      <div id="p3" class="easyui-panel" title="疾病" style="width:496px;height:350px;padding:10px;" data-options="tools:'#dd'">  
          <ul class='List'   >
-			<#list dnews as item>
+			<#list index.dnews as item>
 			<li>
 				<h3><a href="${basePath}disease/show/${item.getId()}" target="_blank">${item.name}</a></h3>
 				<span class='date'>发布于${item.time?string("yyyy-MM-dd")}</span>	

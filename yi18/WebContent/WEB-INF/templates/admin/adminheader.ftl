@@ -18,7 +18,7 @@
 <div id = "Screen">
 
 	<div id="logo">
-	<div style="float: right;" id="userbar">欢迎  yi18 ！&nbsp;</div>
+	<div style="float: right;" id="userbar">欢迎  ${user.account} ！&nbsp;<a href="${basePath}admin/exit/${session_id}?returnUrl=${url}">退出</a></div>
 	
 	<a href="${basePath}" title="医药吧"><img alt="logo"  src="${basePath}common/image/logo.png"></a>
 	<font color="green" size="6" style="font-weight: bold;">&nbsp;www.yi18.cn</font>

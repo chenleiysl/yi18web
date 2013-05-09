@@ -4,6 +4,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
+import cn.yi18.enums.CookieEnum;
+
 
 
 public class ResponseContext extends HttpServletResponseWrapper implements HttpResponse {
@@ -17,6 +19,21 @@ public class ResponseContext extends HttpServletResponseWrapper implements HttpR
 	public void addAutoLoginCookie(String hkey) 
 	{
 		int maxAge = 3600 * 24 * 365;
+		Cookie cookie = new Cookie(CookieEnum.yi18_id.toString(), hkey);
+		cookie.setMaxAge(maxAge);
+		cookie.setPath("/");
+		this.addCookie(cookie);
+	
+		
+	}
+	
+	public void addAutoLoginCookie(int time,String hkey) 
+	{
+		int maxAge = time;
+		Cookie cookie = new Cookie(CookieEnum.yi18_id.toString(), hkey);
+		cookie.setMaxAge(maxAge);
+		cookie.setPath("/");
+		this.addCookie(cookie);
 	
 		
 	}
@@ -24,8 +41,13 @@ public class ResponseContext extends HttpServletResponseWrapper implements HttpR
 	@Override
 	public void removeAutoLoginCookie() {
 		
-
+		Cookie cookie = new Cookie(CookieEnum.yi18_id.toString(), null);
+		cookie.setMaxAge(0);
+		//cookie.setPath("/");
+		this.addCookie(cookie);
 	}
+
+	
 
 
 }

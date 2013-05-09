@@ -15,7 +15,7 @@
 		 <div align="center" > <span style="font-size: 12;font-weight: bold;color: red;">${message!""}</span> <br> </div>
 		 
 		<form action="" method="post">
-	
+			
 			<table width='100%' cellspacing='0' cellpadding='0' border='0'>
 			<tr>
 			<th nowrap width="180px">账号：</th>
