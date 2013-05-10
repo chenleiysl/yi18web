@@ -16,6 +16,7 @@ import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheException;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
+import net.sf.ehcache.config.CacheConfiguration;
 
 
 
@@ -53,7 +54,11 @@ public class EhCacheEngine
 	  * 关闭
 	  */
 	public static void stop() {
-		manager.shutdown();
+		
+		if (manager != null) {
+			manager.shutdown();
+			 manager = null;
+		}
 	}
 
 //	public static void add(Serializable key, Object value) {
@@ -96,7 +101,7 @@ public class EhCacheEngine
 			Cache cache = manager.getCache(fullyQualifiedName);
 			Element element = cache.get(key);
 			if (element != null) {
-				return element.getValue();
+				return element.getObjectValue();
 			} 
 			
 			return null;
@@ -199,6 +204,7 @@ public class EhCacheEngine
 	{
 		if (fullyQualifiedName!=null&&key!=null)
 		{
+			
 			if (manager.cacheExists(fullyQualifiedName)) 
 			{
 				return true;
@@ -208,5 +214,6 @@ public class EhCacheEngine
 	}
 	
 	
+
 
 }

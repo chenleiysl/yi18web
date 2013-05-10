@@ -20,29 +20,66 @@ memoryStoreEvictionPolicy：缓存满了之后的淘汰算法。LRU和FIFO算法
   
 
     <defaultCache
-           maxEntriesLocalHeap="0"
+           maxEntriesLocalHeap="100"
            eternal="false"
            overflowToDisk="true"
-           timeToIdleSeconds="1200"
-           timeToLiveSeconds="1200">
+           timeToIdleSeconds="120"
+           timeToLiveSeconds="120">
     </defaultCache>
 
  
-    <cache name="sampleCache2"
+    
+  	<cache name="Indexs"
            maxEntriesLocalHeap="1000"
-           eternal="true"
-           overflowToDisk="false"
-           memoryStoreEvictionPolicy="FIFO"
-            />
-
-       
-       <!--访问日志缓存 -->
-       <cache name="visitlog"
-           maxEntriesLocalHeap="1000"
-           eternal="true"
+           eternal="false"
            overflowToDisk="true"
-           memoryStoreEvictionPolicy="FIFO"
-            />
+           timeToIdleSeconds="120"
+           timeToLiveSeconds="120"
+       />
+       
+       <cache name="Links"
+           maxEntriesLocalHeap="1000"
+           eternal="false"
+           overflowToDisk="true"
+           timeToIdleSeconds="120"
+           timeToLiveSeconds="120"
+       />
+        <cache name="Drugs"
+           maxEntriesLocalHeap="1000"
+           eternal="false"
+           overflowToDisk="true"
+           timeToIdleSeconds="120"
+           timeToLiveSeconds="120"
+       />
+       <cache name="Symptoms"
+           maxEntriesLocalHeap="1000"
+           eternal="false"
+           overflowToDisk="true"
+           timeToIdleSeconds="120"
+           timeToLiveSeconds="120"
+       />
+         <cache name="News"
+           maxEntriesLocalHeap="1000"
+           eternal="false"
+           overflowToDisk="true"
+           timeToIdleSeconds="120"
+           timeToLiveSeconds="120"
+       />
+        <cache name="Lores"
+           maxEntriesLocalHeap="1000"
+           eternal="false"
+           overflowToDisk="true"
+           timeToIdleSeconds="120"
+           timeToLiveSeconds="120"
+       />
+        <cache name="Diseases"
+           maxEntriesLocalHeap="1000"
+           eternal="false"
+           overflowToDisk="true"
+           timeToIdleSeconds="120"
+           timeToLiveSeconds="120"
+       />
+    
         <!-- 主要记录session 把原来的session存入二级缓存总 --> 
        <cache name="session"
            maxEntriesLocalHeap="1000"

@@ -1,5 +1,6 @@
 package cn.yi18.service;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +8,7 @@ import java.util.Map;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 
+import cn.yi18.cache.EhCacheEngine;
 import cn.yi18.dao.DrugDao;
 import cn.yi18.enums.DrugEnum;
 import cn.yi18.lucene.DrugLucene;
@@ -93,9 +95,18 @@ public class DrugService
 	 */
 	public List<Drug> getNew(int size)
 	{
-		Drug bean = new Drug();
-		String filter = " allow = "+DrugEnum.Check_Status.IsCheck.getValue();
-		return (List<Drug>) bean.filter(filter , 1, size);
+		String fullyQualifiedName = "Drugs";
+		Serializable key="new_"+size;
+		List<Drug> list = (List<Drug>) EhCacheEngine.get(fullyQualifiedName, key);
+		if(list==null)
+		{
+			Drug bean = new Drug();
+			String filter = " allow = "+DrugEnum.Check_Status.IsCheck.getValue();
+			list= (List<Drug>) bean.filter(filter , 1, size);
+			EhCacheEngine.add(fullyQualifiedName, key, list);
+		}
+		
+		return list;
 	}
 	
 	/**
@@ -104,21 +115,53 @@ public class DrugService
 	 * @param size
 	 * @return
 	 */
-	public List<Drug> getHot(int page,int size) {
-		return  drugDao.getHot(page, size);
+	public List<Drug> getHot(int page,int size) 
+	{
+		String fullyQualifiedName = "Drugs";
+		Serializable key="hot_"+page+"and"+size;
+		List<Drug> list = (List<Drug>) EhCacheEngine.get(fullyQualifiedName, key);
+		if(list==null)
+		{
+			list= drugDao.getHot(page, size);
+			EhCacheEngine.add(fullyQualifiedName, key, list);
+		}
+		
+		return list;
+		
 	}
 
 	public List<Drug> getNew(int size, long id) {
 		
-		Drug bean = new Drug();
-		String filter = " allow = "+DrugEnum.Check_Status.IsCheck.getValue()+" AND drugclass="+id;
-		return (List<Drug>) bean.filter(filter , 1, size);
+		String fullyQualifiedName = "Drugs";
+		Serializable key="new_"+size+"and"+id;
+		List<Drug> list = (List<Drug>) EhCacheEngine.get(fullyQualifiedName, key);
+		if(list==null)
+		{
+			Drug bean = new Drug();
+			String filter = " allow = "+DrugEnum.Check_Status.IsCheck.getValue()+" AND drugclass="+id;
+			
+			list= (List<Drug>) bean.filter(filter , 1, size);
+			EhCacheEngine.add(fullyQualifiedName, key, list);
+		}
+		
+		return list;
+		//return (List<Drug>) bean.filter(filter , 1, size);
 	}
 
 	public List<Drug> getHot(int page, int size, long id) 
 	{
 		
-		return drugDao.getHot(page, size,id);
+		String fullyQualifiedName = "Drugs";
+		Serializable key="Hot_"+page+"and"+size+"and"+id;
+		List<Drug> list = (List<Drug>) EhCacheEngine.get(fullyQualifiedName, key);
+		if(list==null)
+		{
+			list= drugDao.getHot(page, size,id);
+			EhCacheEngine.add(fullyQualifiedName, key, list);
+		}
+		
+		return list;
+		//return drugDao.getHot(page, size,id);
 	}
 	
 	
@@ -130,21 +173,38 @@ public class DrugService
 	 * @return
 	 */
 	public PageUtil getPageHot(int page, int size) {
-		Drug bean = new Drug();
-		String filter =  " allow = "+DrugEnum.Check_Status.IsCheck.getValue();
-		int total = bean.totalCount(filter);//取得总数
-		List<Drug> list = getHot(page, size);
-		PageUtil pageUtil = new PageUtil(list , page, size, total);
+		
+		String fullyQualifiedName = "Drugs";
+		Serializable key="PageHot_"+page+"and"+size;
+		PageUtil pageUtil = (PageUtil) EhCacheEngine.get(fullyQualifiedName, key);
+		if(pageUtil==null)
+		{
+			Drug bean = new Drug();
+			String filter =  " allow = "+DrugEnum.Check_Status.IsCheck.getValue();
+			int total = bean.totalCount(filter);//取得总数
+			List<Drug> list = getHot(page, size);
+			pageUtil = new PageUtil(list , page, size, total);
+			EhCacheEngine.add(fullyQualifiedName, key, pageUtil);
+			 
+		}
 		return pageUtil;
 		
 	}
 	
 	public PageUtil getPageHot(int page, int size, long id) {
-		Drug bean = new Drug();
-		String filter = " allow = "+DrugEnum.Check_Status.IsCheck.getValue()+" AND drugclass="+id;
-		int total = bean.totalCount(filter);//取得总数
-		List<Drug> list = getHot(page, size,id);
-		PageUtil pageUtil = new PageUtil(list , page, size, total);
+		
+		String fullyQualifiedName = "Drugs";
+		Serializable key="PageHot_"+page+"and"+size+"and"+id;
+		PageUtil pageUtil = (PageUtil) EhCacheEngine.get(fullyQualifiedName, key);
+		if(pageUtil==null)
+		{
+			Drug bean = new Drug();
+			String filter = " allow = "+DrugEnum.Check_Status.IsCheck.getValue()+" AND drugclass="+id;
+			int total = bean.totalCount(filter);//取得总数
+			List<Drug> list = getHot(page, size,id);
+			pageUtil = new PageUtil(list , page, size, total);
+			EhCacheEngine.add(fullyQualifiedName, key, pageUtil);
+		}
 		return pageUtil;
 		
 	}

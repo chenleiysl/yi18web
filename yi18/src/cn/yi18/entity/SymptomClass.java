@@ -1,5 +1,6 @@
 package cn.yi18.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 import cn.yi18.pojo.Symptomclass;
@@ -11,7 +12,7 @@ import cn.yi18.pojo.Symptomclass;
  * @author 陈磊
  *
  */
-public class SymptomClass {
+public class SymptomClass implements Serializable{
 
 	private Symptomclass symptomclass;
 	private List<Symptomclass> list;

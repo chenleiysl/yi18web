@@ -1,10 +1,15 @@
 package cn.yi18.action;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 
 import javax.servlet.ServletException;
 
+import net.sf.ehcache.Cache;
+import net.sf.ehcache.config.CacheConfiguration;
+
+import cn.yi18.cache.EhCacheEngine;
 import cn.yi18.entity.Index;
 import cn.yi18.pojo.Disease;
 import cn.yi18.pojo.Drug;
@@ -68,14 +73,30 @@ public class IndexAction extends BaseAction
 	}
 	
 	
+	/**
+	 * 取得首页的数据，主要是做二级缓存，缓存时间2分钟
+	 * @return
+	 */
 	private Index _getIndex()
 	{
-		Index index = new Index();
-		index.setDnews(diseaseService.getNew(10));
-		index.setSnews(symptomService.getNew(10));
-		index.setMonth(loreService.getHot(1, 10, 30));
-		index.setWeek(loreService.getHot(1, 10, 7));
-		index.setNews(newsService.getNews(10));
+		//Index index = new Index();
+		
+		
+		String fullyQualifiedName="Indexs";
+		Serializable key = "index";
+		Index index=(Index) EhCacheEngine.get(fullyQualifiedName, key);
+		if(index==null)
+		{
+			index = new Index();
+			index.setDnews(diseaseService.getNew(10));
+			index.setSnews(symptomService.getNew(10));
+			index.setMonth(loreService.getHot(1, 10, 30));
+			index.setWeek(loreService.getHot(1, 10, 7));
+			index.setNews(newsService.getNews(10));
+			
+			EhCacheEngine.add(fullyQualifiedName, key, index);
+		}
+		
 		return index;
 	}
 	

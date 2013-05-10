@@ -1,5 +1,6 @@
 package cn.yi18.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 import cn.yi18.pojo.Diseaseclass;
@@ -12,7 +13,7 @@ import cn.yi18.pojo.Symptomclass;
  * @author 陈磊
  *
  */
-public class DiseaseClass {
+public class DiseaseClass implements Serializable{
 
 	private Diseaseclass diseaseclass;
 	private List<Diseaseclass> list;

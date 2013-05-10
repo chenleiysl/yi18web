@@ -1,6 +1,7 @@
 package cn.yi18.action;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.io.Writer;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -14,10 +15,13 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 
+import net.sf.ehcache.Ehcache;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
+import cn.yi18.cache.EhCacheEngine;
 import cn.yi18.enums.CookieEnum;
 import cn.yi18.http.*;
 import cn.yi18.jdbc.DBManager;
@@ -250,9 +254,14 @@ public  abstract class BaseAction
   }
  
  
+ /**
+  * 取得友情链接，同时也对友情链接做缓存
+  * @return
+  */
  private List<Links> _getLinks() 
  {
-	 LinksService linksService = new LinksService();
+	
+	LinksService linksService = new LinksService();
 	 return linksService.getAll();
 	
  }

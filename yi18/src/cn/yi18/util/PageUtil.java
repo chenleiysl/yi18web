@@ -1,5 +1,6 @@
 package cn.yi18.util;
 
+import java.io.Serializable;
 import java.util.List;
 
 import cn.yi18.pojo.POJO;
@@ -8,7 +9,7 @@ import cn.yi18.pojo.POJO;
 
 
 
-public class PageUtil 
+public class PageUtil implements Serializable
 {
 	 private List<? extends POJO> list;
 	 private int page;

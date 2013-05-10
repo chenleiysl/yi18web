@@ -1,9 +1,11 @@
 package cn.yi18.service;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.yi18.cache.EhCacheEngine;
 import cn.yi18.dao.NewsDao;
 import cn.yi18.enums.NewsEnum;
 import cn.yi18.jdbc.QueryHelper;
@@ -21,7 +23,14 @@ public class NewsService
 	 */
 	public List<News> getHot(int page ,int size)
 	{
-		return newsDao.getHot(page, size);
+		String fullyQualifiedName = "News";
+		Serializable key="hot_"+page+"and"+size;
+		List<News> list = (List<News>) EhCacheEngine.get(fullyQualifiedName, key);
+		if (list==null) {
+			list=newsDao.getHot(page, size);
+			EhCacheEngine.add(fullyQualifiedName, key, list);
+		}
+		return list;
 	}
 	
 	/**
@@ -33,7 +42,15 @@ public class NewsService
 	 */
 	public List<News> getHot(int page ,int size,int datecount)
 	{
-		return newsDao.getHot(page, size,datecount);
+		String fullyQualifiedName = "News";
+		Serializable key="hot_"+page+"and"+size+"and"+datecount;
+		List<News> list = (List<News>) EhCacheEngine.get(fullyQualifiedName, key);
+		if(list ==null)
+		{
+			list = newsDao.getHot(page, size,datecount);
+			EhCacheEngine.add(fullyQualifiedName, key, list);
+		}
+		return list;
 	}
 	
 	
@@ -45,10 +62,18 @@ public class NewsService
 	 */
 	public PageUtil getNews(int page,int size)
 	{
-		News bean = new News();
-		String filter=" allow = "+NewsEnum.Check_Status.IsCheck.getValue();
-		List<News> list =(List<News>) bean.filter(filter, page, size) ;
-		PageUtil pageUtil = new PageUtil(list , page, size, _getTotalCount());
+		String fullyQualifiedName = "News";
+		Serializable key="pagenew_"+page+"and"+size;
+		PageUtil pageUtil = (PageUtil) EhCacheEngine.get(fullyQualifiedName, key);
+		if(pageUtil==null)
+		{
+			News bean = new News();
+			String filter=" allow = "+NewsEnum.Check_Status.IsCheck.getValue();
+			List<News> list =(List<News>) bean.filter(filter, page, size) ;
+			pageUtil = new PageUtil(list , page, size, _getTotalCount());
+			EhCacheEngine.add(fullyQualifiedName, key, pageUtil);
+		}
+		
 		
 		return pageUtil;
 	}
@@ -61,10 +86,17 @@ public class NewsService
 	 */
 	public List<News> getNews(int size) 
 	{
-		News bean = new News();
+		String fullyQualifiedName = "News";
+		Serializable key="new_"+size;
+		List<News> list = (List<News>) EhCacheEngine.get(fullyQualifiedName, key);
+		{
+			News bean = new News();
 		
-		String filter=" allow = "+NewsEnum.Check_Status.IsCheck.getValue();
-		return (List<News>) bean.filter(filter ,1, size) ;
+			String filter=" allow = "+NewsEnum.Check_Status.IsCheck.getValue();
+			list =(List<News>) bean.filter(filter ,1, size) ;
+			EhCacheEngine.add(fullyQualifiedName, key, list);
+		}
+		return list;
 		
 	}
 	

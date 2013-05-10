@@ -18,6 +18,8 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import cn.yi18.cache.EhCacheEngine;
+
 
 
 /**
@@ -120,6 +122,7 @@ public class DBManager
 		        }
 		   conns.set(null);
 	
+		   //EhCacheEngine.stop();//再关闭二级缓存
 	}
 
 	/**

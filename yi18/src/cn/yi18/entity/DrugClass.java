@@ -1,5 +1,6 @@
 package cn.yi18.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 import cn.yi18.pojo.Drugclass;
@@ -9,7 +10,7 @@ import cn.yi18.pojo.Drugclass;
  * @author 陈磊
  *
  */
-public class DrugClass {
+public class DrugClass  implements Serializable{
 
 	private Drugclass drugclass;
 	private List<Drugclass> list;

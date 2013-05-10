@@ -1,9 +1,11 @@
 package cn.yi18.service;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.yi18.cache.EhCacheEngine;
 import cn.yi18.dao.DiseaseDao;
 import cn.yi18.dao.DrugDao;
 import cn.yi18.dao.SymptomDao;
@@ -95,73 +97,180 @@ public class DiseaseService
 
 	public List<Disease> getNew(int size) 
 	{
-		Disease bean = new Disease();
-		String filter = " allow =  "+DiseaseEnum.Check_Status.IsCheck.getValue();
-		return (List<Disease>) bean.filter(filter , 1, size);
+		String fullyQualifiedName = "Diseases";
+		Serializable key="new_"+size;
+		List<Disease> list = (List<Disease>) EhCacheEngine.get(fullyQualifiedName, key);
+		if(list==null)
+		{
+			Disease bean = new Disease();
+			String filter = " allow =  "+DiseaseEnum.Check_Status.IsCheck.getValue();
+			list= (List<Disease>) bean.filter(filter , 1, size);
+			EhCacheEngine.add(fullyQualifiedName, key, list);
+		}
+		return list;
+		
 	}
 
 	
 	public List<Disease> getHot(int page,int size) 
 	{
-		DiseaseDao diseaseDao = new DiseaseDao();
-		return  diseaseDao.getHot(page, size);
+		String fullyQualifiedName = "Diseases";
+		Serializable key="hot_"+page+"and"+size;
+		List<Disease> list = (List<Disease>) EhCacheEngine.get(fullyQualifiedName, key);
+		if(list==null)
+		{
+			DiseaseDao diseaseDao = new DiseaseDao();
+			list=  diseaseDao.getHot(page, size);
+			EhCacheEngine.add(fullyQualifiedName, key, list);
+		}
+		return list;
+		
 	}
 	
 	public List<Disease> getHot(int page,int size,long id) 
 	{
-		DiseaseDao diseaseDao = new DiseaseDao();
-		return  diseaseDao.getHot(page, size,id);
+		String fullyQualifiedName = "Diseases";
+		Serializable key="hot_"+page+"and"+size+"and"+id;
+		List<Disease> list = (List<Disease>) EhCacheEngine.get(fullyQualifiedName, key);
+		if(list==null)
+		{
+			DiseaseDao diseaseDao = new DiseaseDao();
+			list=  diseaseDao.getHot(page, size,id);
+			EhCacheEngine.add(fullyQualifiedName, key, list);
+		}
+		return list;
 	}
 	
 	public PageUtil getPageHot(int page, int size) 
 	{
-		Disease bean = new Disease();
-		String filter =  " allow = "+DiseaseEnum.Check_Status.IsCheck.getValue();
-		int total = bean.totalCount(filter);//取得总数
-		return new PageUtil(getHot(page, size), page, size, total);
+		String fullyQualifiedName = "Diseases";
+		Serializable key="pagehot_"+page+"and"+size;
+		PageUtil pageUtil = (PageUtil) EhCacheEngine.get(fullyQualifiedName, key);
+		if(pageUtil==null)
+		{
+			Disease bean = new Disease();
+			String filter =  " allow = "+DiseaseEnum.Check_Status.IsCheck.getValue();
+			int total = bean.totalCount(filter);//取得总数
+			pageUtil= new PageUtil(getHot(page, size), page, size, total);
+			EhCacheEngine.add(fullyQualifiedName, key, pageUtil);
+		}
+		
+		return pageUtil;
 	}
 
 	public List<Disease> getNew(int size, long id) {
 		
-		Disease bean = new Disease();
-		String filter = " allow =  "+DiseaseEnum.Check_Status.IsCheck.getValue() +" AND diseaseclass="+id;
-		return (List<Disease>) bean.filter(filter , 1, size);
+		String fullyQualifiedName = "Diseases";
+		Serializable key="new_"+size+"and"+id;
+		List<Disease> list = (List<Disease>) EhCacheEngine.get(fullyQualifiedName, key);
+		if(list==null)
+		{
+			Disease bean = new Disease();
+			String filter = " allow =  "+DiseaseEnum.Check_Status.IsCheck.getValue() +" AND diseaseclass="+id;
+			list= (List<Disease>) bean.filter(filter , 1, size);
+			EhCacheEngine.add(fullyQualifiedName, key, list);
+		}
+		return list;
 	}
 
-	public PageUtil getPageHot(int page, int size, long id) {
-		Disease bean = new Disease();
-		String filter =  " allow = "+DiseaseEnum.Check_Status.IsCheck.getValue()+" AND diseaseclass="+id;
-		int total = bean.totalCount(filter);//取得总数
-		return new PageUtil(getHot(page, size,id), page, size, total);
+	public PageUtil getPageHot(int page, int size, long id)
+	{
+		String fullyQualifiedName = "Diseases";
+		Serializable key="pagehot_"+page+"and"+size+"and"+id;
+		PageUtil pageUtil = (PageUtil) EhCacheEngine.get(fullyQualifiedName, key);
+		if(pageUtil==null)
+		{
+			Disease bean = new Disease();
+			String filter =  " allow = "+DiseaseEnum.Check_Status.IsCheck.getValue()+" AND diseaseclass="+id;
+			int total = bean.totalCount(filter);//取得总数
+			pageUtil= new PageUtil(getHot(page, size,id), page, size, total);
+			EhCacheEngine.add(fullyQualifiedName, key, pageUtil);
+		}
+		
+		return pageUtil;
 	}
 
 	
-	public List<Departments> getDepartments(long id) {
-		return diseaseDao.getDepartments(id);
+	public List<Departments> getDepartments(long id) 
+	{
+		String fullyQualifiedName = "Diseases";
+		Serializable key="Departments_"+id;
+		List<Departments> list = (List<Departments>) EhCacheEngine.get(fullyQualifiedName, key);
+		if (list==null)
+		{
+			list=diseaseDao.getDepartments(id);
+			EhCacheEngine.add(fullyQualifiedName, key, list);
+		}
+		return list;
 	}
 	public List<Place> getPlace(long id) {
-		return diseaseDao.getPlace(id);
+		String fullyQualifiedName = "Diseases";
+		Serializable key="Place_"+id;
+		List<Place> list = (List<Place>) EhCacheEngine.get(fullyQualifiedName, key);
+		if(list==null)
+		{
+			list= diseaseDao.getPlace(id);
+			EhCacheEngine.add(fullyQualifiedName, key, list);
+		}
+		return list;
+		
 	}
 	
 	
 	public PageUtil getPagePlace(int page, int size, long id) {
 		
-		int total = (int) diseaseDao.getPlaceCount(id);
-		return new PageUtil(diseaseDao.getHPlace(page, size,id), page, size, total );
+		String fullyQualifiedName = "Diseases";
+		Serializable key="pageplace_"+page+"and"+size+"and"+id;
+		PageUtil pageUtil = (PageUtil) EhCacheEngine.get(fullyQualifiedName, key);
+		if(pageUtil==null)
+		{
+			int total = (int) diseaseDao.getPlaceCount(id);
+			pageUtil= new PageUtil(diseaseDao.getHPlace(page, size,id), page, size, total );
+			EhCacheEngine.add(fullyQualifiedName, key, pageUtil);
+		}
+		
+		return pageUtil;
 	}
 
 	public PageUtil getPageDepartments(int page, int size, long id) {
 		
-		int total = (int) diseaseDao.getDepartmentsCount(id);
-		return new PageUtil(diseaseDao.getHDepartments(page, size,id), page, size, total );
+		String fullyQualifiedName = "Diseases";
+		Serializable key="pageDepartments_"+page+"and"+size+"and"+id;
+		PageUtil pageUtil = (PageUtil) EhCacheEngine.get(fullyQualifiedName, key);
+		if(pageUtil==null)
+		{
+			int total = (int) diseaseDao.getDepartmentsCount(id);
+			pageUtil= new PageUtil(diseaseDao.getHDepartments(page, size,id), page, size, total );
+			EhCacheEngine.add(fullyQualifiedName, key, pageUtil);
+		}
+		
+		return pageUtil;
 	}
 	
 	public List<Disease> getNPlace(int page, int size, long id) {
-		return diseaseDao.getNPlace( page, size, id);
+		
+		String fullyQualifiedName = "Diseases";
+		Serializable key="NPlace_"+page+"and"+size+"and"+id;
+		List<Disease> list = (List<Disease>) EhCacheEngine.get(fullyQualifiedName, key);
+		if(list==null)
+		{
+			list= diseaseDao.getNPlace( page, size, id);
+			EhCacheEngine.add(fullyQualifiedName, key, list);
+		}
+		return list;
+		
 	}
 	
 	public List<Disease> getNDepartments(int page, int size, long id) {
-		return diseaseDao.getNDepartments(page, size, id);
+		String fullyQualifiedName = "Diseases";
+		Serializable key="NDepartments_"+page+"and"+size+"and"+id;
+		List<Disease> list = (List<Disease>) EhCacheEngine.get(fullyQualifiedName, key);
+		if(list==null)
+		{
+			list= diseaseDao.getNDepartments(page, size, id);
+			EhCacheEngine.add(fullyQualifiedName, key, list);
+		}
+		return list;
 	}
 	
 	private DiseaseDao diseaseDao = new DiseaseDao();

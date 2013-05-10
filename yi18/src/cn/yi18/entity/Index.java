@@ -1,5 +1,6 @@
 package cn.yi18.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 import cn.yi18.pojo.Disease;
@@ -7,7 +8,7 @@ import cn.yi18.pojo.Lore;
 import cn.yi18.pojo.News;
 import cn.yi18.pojo.Symptoms;
 
-public class Index
+public class Index implements Serializable
 {
 	private List<News> news;//综合新闻
 	private List<Lore> week;//本周健康知识

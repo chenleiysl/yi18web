@@ -1,9 +1,11 @@
 package cn.yi18.service;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.yi18.cache.EhCacheEngine;
 import cn.yi18.dao.DrugDao;
 import cn.yi18.dao.SymptomDao;
 import cn.yi18.enums.DrugEnum;
@@ -68,44 +70,96 @@ public class SymptomService
 	
 	public List<Symptoms> getNew(int size) 
 	{
-		Symptoms bean = new Symptoms();
-		String filter = " allow =  "+SymptomEnum.Check_Status.IsCheck.getValue();
-		return (List<Symptoms>) bean.filter(filter , 1, size);
+		String fullyQualifiedName = "Symptoms";
+		Serializable key="new_"+size;
+		List<Symptoms> list = (List<Symptoms>) EhCacheEngine.get(fullyQualifiedName, key);
+		if(list==null)
+		{
+			Symptoms bean = new Symptoms();
+			String filter = " allow =  "+SymptomEnum.Check_Status.IsCheck.getValue();
+			list= (List<Symptoms>) bean.filter(filter , 1, size);
+			EhCacheEngine.add(fullyQualifiedName, key, list);
+		}
+		
+		return list;
 	}
 
 	
 	public List<Symptoms> getHot(int page,int size) 
 	{
-		SymptomDao symptomDao = new SymptomDao();
-		return  symptomDao.getHot(page, size);
+		String fullyQualifiedName = "Symptoms";
+		Serializable key="hot_"+page+"and"+size;
+		List<Symptoms> list = (List<Symptoms>) EhCacheEngine.get(fullyQualifiedName, key);
+		if(list==null)
+		{
+			SymptomDao symptomDao = new SymptomDao();
+			list=  symptomDao.getHot(page, size);
+			EhCacheEngine.add(fullyQualifiedName, key, list);
+		}
+		
+		return  list;
 	}
 	
 	public List<Symptoms> getHot(int page,int size,long id) 
 	{
-		SymptomDao symptomDao = new SymptomDao();
-		return  symptomDao.getHot(page, size,id);
+		String fullyQualifiedName = "Symptoms";
+		Serializable key="hot_"+page+"and"+size+"and"+id;
+		List<Symptoms> list = (List<Symptoms>) EhCacheEngine.get(fullyQualifiedName, key);
+		if(list==null)
+		{
+			SymptomDao symptomDao = new SymptomDao();
+			list= symptomDao.getHot(page, size,id);
+			EhCacheEngine.add(fullyQualifiedName, key, list);
+		}
+		
+		return  list;
 	}
 	
 	public PageUtil getPageHot(int page, int size) 
 	{
-		Symptoms bean = new Symptoms();
-		String filter =  " allow = "+SymptomEnum.Check_Status.IsCheck.getValue();
-		int total = bean.totalCount(filter);//取得总数
-		return new PageUtil(getHot(page, size), page, size, total);
+		String fullyQualifiedName = "Symptoms";
+		Serializable key="pagehot_"+page+"and"+size;
+		PageUtil pageUtil = (PageUtil) EhCacheEngine.get(fullyQualifiedName, key);
+		if(pageUtil==null)
+		{
+			Symptoms bean = new Symptoms();
+			String filter =  " allow = "+SymptomEnum.Check_Status.IsCheck.getValue();
+			int total = bean.totalCount(filter);//取得总数
+			pageUtil= new PageUtil(getHot(page, size), page, size, total);
+			EhCacheEngine.add(fullyQualifiedName, key, pageUtil);
+		}
+		
+		return pageUtil;
 	}
 
 	public List<Symptoms> getNew(int size, long id) {
 		
-		Symptoms bean = new Symptoms();
-		String filter = " allow =  "+SymptomEnum.Check_Status.IsCheck.getValue() +" AND symptomsclass="+id;
-		return (List<Symptoms>) bean.filter(filter , 1, size);
+		String fullyQualifiedName = "Symptoms";
+		Serializable key="new_"+size+"and"+id;
+		List<Symptoms> list = (List<Symptoms>) EhCacheEngine.get(fullyQualifiedName, key);
+		if(list==null)
+		{
+			Symptoms bean = new Symptoms();
+			String filter = " allow =  "+SymptomEnum.Check_Status.IsCheck.getValue() +" AND symptomsclass="+id;
+			list=(List<Symptoms>) bean.filter(filter , 1, size);
+			EhCacheEngine.add(fullyQualifiedName, key, list);
+		}
+		return list;
 	}
 
 	public PageUtil getPageHot(int page, int size, long id) {
-		Symptoms bean = new Symptoms();
-		String filter =  " allow = "+SymptomEnum.Check_Status.IsCheck.getValue()+" AND symptomsclass="+id;
-		int total = bean.totalCount(filter);//取得总数
-		return new PageUtil(getHot(page, size,id), page, size, total);
+		String fullyQualifiedName = "Symptoms";
+		Serializable key="pagehot_"+page+"and"+size+"and"+id;
+		PageUtil pageUtil = (PageUtil) EhCacheEngine.get(fullyQualifiedName, key);
+		if(pageUtil==null)
+		{
+			Symptoms bean = new Symptoms();
+			String filter =  " allow = "+SymptomEnum.Check_Status.IsCheck.getValue()+" AND symptomsclass="+id;
+			int total = bean.totalCount(filter);//取得总数
+			pageUtil= new PageUtil(getHot(page, size,id), page, size, total);
+			EhCacheEngine.add(fullyQualifiedName, key, pageUtil);
+		}
+		return pageUtil;
 	}
 	
 
