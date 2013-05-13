@@ -23,7 +23,7 @@ public class NewsService
 	 */
 	public List<News> getHot(int page ,int size)
 	{
-		String fullyQualifiedName = "News";
+		String fullyQualifiedName = "Newses";
 		Serializable key="hot_"+page+"and"+size;
 		List<News> list = (List<News>) EhCacheEngine.get(fullyQualifiedName, key);
 		if (list==null) {
@@ -42,7 +42,7 @@ public class NewsService
 	 */
 	public List<News> getHot(int page ,int size,int datecount)
 	{
-		String fullyQualifiedName = "News";
+		String fullyQualifiedName = "Newses";
 		Serializable key="hot_"+page+"and"+size+"and"+datecount;
 		List<News> list = (List<News>) EhCacheEngine.get(fullyQualifiedName, key);
 		if(list ==null)
@@ -62,7 +62,7 @@ public class NewsService
 	 */
 	public PageUtil getNews(int page,int size)
 	{
-		String fullyQualifiedName = "News";
+		String fullyQualifiedName = "Newses";
 		Serializable key="pagenew_"+page+"and"+size;
 		PageUtil pageUtil = (PageUtil) EhCacheEngine.get(fullyQualifiedName, key);
 		if(pageUtil==null)
@@ -86,7 +86,7 @@ public class NewsService
 	 */
 	public List<News> getNews(int size) 
 	{
-		String fullyQualifiedName = "News";
+		String fullyQualifiedName = "Newses";
 		Serializable key="new_"+size;
 		List<News> list = (List<News>) EhCacheEngine.get(fullyQualifiedName, key);
 		{

@@ -70,4 +70,10 @@ public class Disease extends POJO
 		}
 		return r;
 	}
+	
+	@Override
+	protected boolean isObjectCachedByID() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 }

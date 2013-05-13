@@ -70,7 +70,7 @@ public class SymptomService
 	
 	public List<Symptoms> getNew(int size) 
 	{
-		String fullyQualifiedName = "Symptoms";
+		String fullyQualifiedName = "Symptomses";
 		Serializable key="new_"+size;
 		List<Symptoms> list = (List<Symptoms>) EhCacheEngine.get(fullyQualifiedName, key);
 		if(list==null)
@@ -87,7 +87,7 @@ public class SymptomService
 	
 	public List<Symptoms> getHot(int page,int size) 
 	{
-		String fullyQualifiedName = "Symptoms";
+		String fullyQualifiedName = "Symptomses";
 		Serializable key="hot_"+page+"and"+size;
 		List<Symptoms> list = (List<Symptoms>) EhCacheEngine.get(fullyQualifiedName, key);
 		if(list==null)
@@ -102,7 +102,7 @@ public class SymptomService
 	
 	public List<Symptoms> getHot(int page,int size,long id) 
 	{
-		String fullyQualifiedName = "Symptoms";
+		String fullyQualifiedName = "Symptomses";
 		Serializable key="hot_"+page+"and"+size+"and"+id;
 		List<Symptoms> list = (List<Symptoms>) EhCacheEngine.get(fullyQualifiedName, key);
 		if(list==null)
@@ -117,7 +117,7 @@ public class SymptomService
 	
 	public PageUtil getPageHot(int page, int size) 
 	{
-		String fullyQualifiedName = "Symptoms";
+		String fullyQualifiedName = "Symptomses";
 		Serializable key="pagehot_"+page+"and"+size;
 		PageUtil pageUtil = (PageUtil) EhCacheEngine.get(fullyQualifiedName, key);
 		if(pageUtil==null)
@@ -134,7 +134,7 @@ public class SymptomService
 
 	public List<Symptoms> getNew(int size, long id) {
 		
-		String fullyQualifiedName = "Symptoms";
+		String fullyQualifiedName = "Symptomses";
 		Serializable key="new_"+size+"and"+id;
 		List<Symptoms> list = (List<Symptoms>) EhCacheEngine.get(fullyQualifiedName, key);
 		if(list==null)
@@ -148,7 +148,7 @@ public class SymptomService
 	}
 
 	public PageUtil getPageHot(int page, int size, long id) {
-		String fullyQualifiedName = "Symptoms";
+		String fullyQualifiedName = "Symptomses";
 		Serializable key="pagehot_"+page+"and"+size+"and"+id;
 		PageUtil pageUtil = (PageUtil) EhCacheEngine.get(fullyQualifiedName, key);
 		if(pageUtil==null)

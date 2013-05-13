@@ -16,5 +16,10 @@ public class Departments extends POJO
 	public void setName(String name) {
 		this.name = name;
 	}
+	@Override
+	protected boolean isObjectCachedByID() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 	
 }

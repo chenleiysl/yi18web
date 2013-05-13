@@ -94,4 +94,10 @@ public class News extends POJO
 		
 	}
 	
+	@Override
+	protected boolean isObjectCachedByID() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+	
 }

@@ -22,5 +22,10 @@ public class Loreclass extends POJO
 		this.description = description;
 	}
 	
+	@Override
+	protected boolean isObjectCachedByID() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 	
 }

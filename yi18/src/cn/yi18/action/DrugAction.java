@@ -28,6 +28,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import cn.yi18.cache.VisitLogEhCache;
 import cn.yi18.entity.DrugClass;
 import cn.yi18.entity.DrugInfo;
 import cn.yi18.pojo.Directory;
@@ -325,9 +326,10 @@ public class DrugAction extends BaseAction
 			Long id = Long.parseLong(params[0]);
 			Drug bean = new Drug();
 			Drug drug = bean.get(id);
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("count", drug.getCount()+1);
-			bean.update(map , id);
+//			Map<String, Object> map = new HashMap<String, Object>();
+//			map.put("count", drug.getCount()+1);
+//			bean.update(map , id);
+			VisitLogEhCache.Add(drug.getId(), "yi18_drug");//更新阅读数
 			List<DrugInfo> list = drugInfoService.getDrugInfo(id);
 			root.put("drug", drug);
 			root.put("list", list);

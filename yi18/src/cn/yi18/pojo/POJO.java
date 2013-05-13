@@ -163,7 +163,11 @@ public class POJO implements Serializable
 		  }
 		  sql=sql+"  WHERE id = ?";
 		
-	 Object[] params = ArrayUtils.add(map.values().toArray(), id);
+		  Object[] params = ArrayUtils.add(map.values().toArray(), id);
+		  
+		  if(this.isObjectCachedByID())
+			  EhCacheEngine.remove(cacheRegion());//清空该缓存 清空全部
+			
 		return QueryHelper.update(sql, params);
 		
 	}
@@ -298,7 +302,7 @@ public class POJO implements Serializable
  
  
  protected boolean isAutoLoadUser() { return false; }
-	protected long getAutoLoadUser() { return 0L; }
+//	protected long getAutoLoadUser() { return 0L; }
  
  /**
 	 * 插入对象

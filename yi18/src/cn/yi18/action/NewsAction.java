@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.apache.commons.beanutils.BeanUtils;
 
+import cn.yi18.cache.VisitLogEhCache;
 import cn.yi18.enums.NewsEnum;
 import cn.yi18.lucene.IndexFiles;
 import cn.yi18.lucene.NewsLucene;
@@ -70,10 +71,10 @@ public class NewsAction extends BaseAction
 		News news = new News();
 		news = news.get(Long.parseLong(sid));
 		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("count", news.getCount()+1);
-		news.update(map , news.getId()); //更新阅读次数
-		
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("count", news.getCount()+1);
+//		news.update(map , news.getId()); //更新阅读次数
+		VisitLogEhCache.Add(news.getId(), "yi18_news");//更新阅读数
 		root.put("news", news);
 		root.put("title", news.getTitle()+"|综合信息_医药吧");
 		root.put("keywords", news.getTitle());

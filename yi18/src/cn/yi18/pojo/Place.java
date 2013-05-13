@@ -17,4 +17,10 @@ public class Place extends POJO
 		this.name = name;
 	}
 	
+	@Override
+	protected boolean isObjectCachedByID() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+	
 }

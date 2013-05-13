@@ -173,14 +173,22 @@ public class EhCacheEngine
 	}
 
 	/**
-	 * 移除cache
+	 * 移除cache的所以key的值
 	 * @param fullyQualifiedName
 	 * @param key
 	 */
 	public  static void remove(String fullyQualifiedName) {
-		if (_cacheExists(fullyQualifiedName)) 
-		{
-			manager.removeCache(fullyQualifiedName);
+//		if (_cacheExists(fullyQualifiedName)) 
+//		{
+//			manager.removeCache(fullyQualifiedName);
+//		}
+		
+		if (_cacheExists(fullyQualifiedName)) {
+			Cache cache = manager.getCache(fullyQualifiedName);
+			if (cache != null) 
+			{
+				cache.removeAll();
+			}
 		}
 	}
 	
@@ -200,6 +208,12 @@ public class EhCacheEngine
 		}
 		return false;
 	}
+	/**
+	 * 是否存在cache 和key
+	 * @param fullyQualifiedName
+	 * @param key
+	 * @return
+	 */
 	public  static boolean _cacheExists(String fullyQualifiedName,Serializable key) 
 	{
 		if (fullyQualifiedName!=null&&key!=null)

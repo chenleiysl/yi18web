@@ -103,6 +103,11 @@ public class Symptoms extends POJO
 		return r;
 	}
 	
+	@Override
+	protected boolean isObjectCachedByID() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 	
 
 }

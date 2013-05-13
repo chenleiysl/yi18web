@@ -25,6 +25,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.lang3.time.DateFormatUtils;
 
+import cn.yi18.cache.VisitLogEhCache;
 import cn.yi18.entity.DiseaseClass;
 import cn.yi18.entity.DiseaseInfo;
 import cn.yi18.entity.DrugClass;
@@ -165,9 +166,11 @@ public class DiseaseAction extends BaseAction
 			Long id = Long.parseLong(params[0]);
 			Disease bean = new Disease();
 			Disease disease = bean.get(id);
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("count", disease.getCount()+1);
-			bean.update(map , id);
+//			Map<String, Object> map = new HashMap<String, Object>();
+//			map.put("count", disease.getCount()+1);
+//			bean.update(map , id);
+			
+			VisitLogEhCache.Add(disease.getId(), "yi18_disease");//更新阅读数
 			List<DiseaseInfo> list = diseaseInfoService.getDiseaseInfo(id);
 			root.put("disease", disease);
 			root.put("list", list);

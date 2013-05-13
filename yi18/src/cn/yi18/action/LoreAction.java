@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.apache.commons.beanutils.BeanUtils;
 
+import cn.yi18.cache.VisitLogEhCache;
 import cn.yi18.enums.NewsEnum;
 import cn.yi18.lucene.IndexFiles;
 import cn.yi18.lucene.LoreLucene;
@@ -93,15 +94,17 @@ public class LoreAction extends BaseAction
 		String sid= request.getParams()[0];
 		Lore lore = new Lore();
 		lore = lore.get(Long.parseLong(sid));
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("count", lore.getCount()+1);
-		lore.update(map , lore.getId()); //更新阅读次数
-		
+//		
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("count", lore.getCount()+1);
+//		lore.update(map , lore.getId()); //更新阅读次数
+//		
+		VisitLogEhCache.Add(lore .getId(), "yi18_lore");//更新阅读数
 		Loreclass loreclass= new Loreclass();
 		loreclass=loreclass.get(lore.getLoreclass());
 		root.put("lore", lore);
 		root.put("loreclass", loreclass);
+		
 		root.put("title", lore.getTitle()+"|综合信息_医药吧");
 		root.put("keywords", lore.getTitle());
 		root.put("description",lore.subMessage(80));

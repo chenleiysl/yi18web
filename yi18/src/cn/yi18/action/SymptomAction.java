@@ -25,6 +25,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.lang3.time.DateFormatUtils;
 
+import cn.yi18.cache.VisitLogEhCache;
 import cn.yi18.entity.DrugClass;
 import cn.yi18.entity.DrugInfo;
 import cn.yi18.entity.SymptomClass;
@@ -154,9 +155,10 @@ public class SymptomAction extends BaseAction
 			Long id = Long.parseLong(params[0]);
 			Symptoms bean = new Symptoms();
 			Symptoms symptoms = bean.get(id);
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("count", symptoms.getCount()+1);
-			bean.update(map , id);
+//			Map<String, Object> map = new HashMap<String, Object>();
+//			map.put("count", symptoms.getCount()+1);
+//			bean.update(map , id);
+			VisitLogEhCache.Add(symptoms.getId(), "yi18_symptoms");//更新阅读数
 			List<SymptomInfo> list = symptomInfoService.getSymptomInfo(id);
 			Symptomclass symptomclass = new Symptomclass();
 			symptomclass=symptomclass.get(symptoms.getSymptomsclass());
