@@ -9,32 +9,34 @@ import com.google.gson.JsonParser;
 
 public class MysqlInfo
 {
-	private String name;
-	private String user;
-	private String username;
-	private String host;
-	private String hostname;
-	private String port;
-	private String password;
+	private String name="test";
+	private String user="root";
+	private String username="";
+	private String host="127.0.0.1";
+	private String hostname="127.0.0.1";
+	private String port="3306";
+	private String password="";
 	
 	public MysqlInfo() {
 		
 		String json = System.getenv("VCAP_SERVICES");
-		JsonParser jsonParser = new JsonParser();
-		JsonElement jsonElement =jsonParser.parse(json);
-		JsonObject jsonObject = jsonElement.getAsJsonObject();
-		JsonArray jsonArray = jsonObject.getAsJsonArray("mysql-5.1");
-		JsonObject jsonO = jsonArray.get(0).getAsJsonObject().getAsJsonObject("credentials");
-		//Gson gson = new Gson();
-		//Mysql mysql = gson.fromJson(jsonO, Mysql.class);
-		this.name = jsonO.get("name").toString().replace("\"","");
-		this.user = jsonO.get("user").toString().replace("\"","");
-		this.username = jsonO.get("username").toString().replace("\"","");
-		this.host = jsonO.get("host").toString().replace("\"","");
-		this.hostname = jsonO.get("hostname").toString().replace("\"","");
-		this.port = jsonO.get("port").toString().replace("\"","");
-		this.password = jsonO.get("password").toString().replace("\"","");
-		
+		if(json!=null)
+		{
+			JsonParser jsonParser = new JsonParser();
+			JsonElement jsonElement =jsonParser.parse(json);
+			JsonObject jsonObject = jsonElement.getAsJsonObject();
+			JsonArray jsonArray = jsonObject.getAsJsonArray("mysql-5.1");
+			JsonObject jsonO = jsonArray.get(0).getAsJsonObject().getAsJsonObject("credentials");
+			//Gson gson = new Gson();
+			//Mysql mysql = gson.fromJson(jsonO, Mysql.class);
+			this.name = jsonO.get("name").toString().replace("\"","");
+			this.user = jsonO.get("user").toString().replace("\"","");
+			this.username = jsonO.get("username").toString().replace("\"","");
+			this.host = jsonO.get("host").toString().replace("\"","");
+			this.hostname = jsonO.get("hostname").toString().replace("\"","");
+			this.port = jsonO.get("port").toString().replace("\"","");
+			this.password = jsonO.get("password").toString().replace("\"","");
+		}
 		
 
 	}

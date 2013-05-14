@@ -1,14 +1,6 @@
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
-CREATE SCHEMA IF NOT EXISTS `yi18` DEFAULT CHARACTER SET utf8 ;
-USE `yi18` ;
-
--- -----------------------------------------------------
--- Table `yi18`.`yi18_departments`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_departments` (
+DROP TABLE IF EXISTS `yi18_departments`;
+CREATE  TABLE IF NOT EXISTS `yi18_departments` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(64) NULL DEFAULT NULL ,
   PRIMARY KEY (`id`) ,
@@ -18,11 +10,8 @@ AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8
 COMMENT = '科室,主要拥有疾病的分类';
 
-
--- -----------------------------------------------------
--- Table `yi18`.`yi18_directory`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_directory` (
+DROP TABLE IF EXISTS `yi18_directory`;
+CREATE  TABLE IF NOT EXISTS `yi18_directory` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '目录的id编号' ,
   `title` VARCHAR(64) NOT NULL COMMENT '目录的标题' ,
   `issearch` SMALLINT(6) NULL DEFAULT '1' COMMENT '是否允许搜索检索，1：允许 0：不允许。也就是标记是否该目录下的内容允许通过搜索找到' ,
@@ -36,11 +25,8 @@ AUTO_INCREMENT = 8
 DEFAULT CHARACTER SET = utf8
 COMMENT = '药品内容的目录';
 
-
--- -----------------------------------------------------
--- Table `yi18`.`yi18_disease`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_disease` (
+DROP TABLE IF EXISTS `yi18_disease`;
+CREATE  TABLE IF NOT EXISTS `yi18_disease` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(64) NOT NULL COMMENT '疾病名称' ,
   `description` VARCHAR(1024) NULL DEFAULT NULL COMMENT '疾病描述 ' ,
@@ -55,11 +41,8 @@ AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8
 COMMENT = '疾病信息表';
 
-
--- -----------------------------------------------------
--- Table `yi18`.`yi18_diseaseclass`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_diseaseclass` (
+DROP TABLE IF EXISTS `yi18_diseaseclass`;
+CREATE  TABLE IF NOT EXISTS `yi18_diseaseclass` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '疾病分类的Id编号' ,
   `title` VARCHAR(64) NOT NULL COMMENT '疾病分类的标题' ,
   `level` SMALLINT(6) NOT NULL DEFAULT '1' COMMENT '分类的级别，0：root，1,2等' ,
@@ -73,10 +56,8 @@ DEFAULT CHARACTER SET = utf8
 COMMENT = '疾病分类，主要用于疾病的标准分类';
 
 
--- -----------------------------------------------------
--- Table `yi18`.`yi18_diseasedepartments`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_diseasedepartments` (
+DROP TABLE IF EXISTS `yi18_diseasedepartments`;
+CREATE  TABLE IF NOT EXISTS `yi18_diseasedepartments` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT ,
   `disease` BIGINT(20) NULL DEFAULT NULL COMMENT '疾病的id' ,
   `departments` BIGINT(20) NULL DEFAULT NULL COMMENT '科室的id' ,
@@ -85,11 +66,8 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = '疾病对应科室，一个科室对应多个疾病，一个疾病对应多个科室。';
 
-
--- -----------------------------------------------------
--- Table `yi18`.`yi18_diseaseinfo`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_diseaseinfo` (
+DROP TABLE IF EXISTS `yi18_diseaseinfo`;
+CREATE  TABLE IF NOT EXISTS `yi18_diseaseinfo` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '疾病信息的id编号' ,
   `disease` BIGINT(20) NOT NULL COMMENT '疾病的编号' ,
   `directory` BIGINT(20) NULL DEFAULT NULL COMMENT '疾病词条' ,
@@ -100,11 +78,8 @@ AUTO_INCREMENT = 5
 DEFAULT CHARACTER SET = utf8
 COMMENT = '疾病的基本信息';
 
-
--- -----------------------------------------------------
--- Table `yi18`.`yi18_diseaseplace`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_diseaseplace` (
+DROP TABLE IF EXISTS `yi18_diseaseplace`;
+CREATE  TABLE IF NOT EXISTS `yi18_diseaseplace` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT ,
   `disease` BIGINT(20) NULL DEFAULT NULL COMMENT '疾病的id' ,
   `place` BIGINT(20) NULL DEFAULT NULL COMMENT '身体部位的id' ,
@@ -113,14 +88,11 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = '主要用于疾病和身体部位的对应，一个疾病对应多个身体部位，一个身体部位对应对个疾病';
 
-
--- -----------------------------------------------------
--- Table `yi18`.`yi18_drug`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_drug` (
+DROP TABLE IF EXISTS `yi18_drug`;
+CREATE  TABLE IF NOT EXISTS `yi18_drug` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '药品的id编号' ,
   `name` VARCHAR(64) NOT NULL COMMENT '药品名称' ,
-  `alias` VARCHAR(128) NULL DEFAULT NULL COMMENT '药品的别名，对应名称的其他名称，中间可以用 /;等分开' ,
+  `alias` VARCHAR(128) NULL DEFAULT NULL COMMENT '药品的别名，对应名称的其他名称，中间可以用  /等分开' ,
   `term` VARCHAR(1024) NULL DEFAULT NULL COMMENT '药品的词条，也就是该药品的基本信息。' ,
   `image` VARCHAR(128) NULL DEFAULT NULL COMMENT '药品的一个基本图片' ,
   `prescription` SMALLINT(6) NULL DEFAULT '0' COMMENT '药品的处方类型，1：处方药，0：非处方的药' ,
@@ -137,11 +109,8 @@ AUTO_INCREMENT = 15
 DEFAULT CHARACTER SET = utf8
 COMMENT = '药品库，主要包括药品的名称，描述，摘要，生产厂商等';
 
-
--- -----------------------------------------------------
--- Table `yi18`.`yi18_drugclass`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_drugclass` (
+DROP TABLE IF EXISTS `yi18_drugclass`;
+CREATE  TABLE IF NOT EXISTS `yi18_drugclass` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '药品分类的Id编号' ,
   `title` VARCHAR(64) NOT NULL COMMENT '药品分类的标题' ,
   `level` SMALLINT(6) NOT NULL DEFAULT '1' COMMENT '分类的级别，0：root，1,2等' ,
@@ -154,11 +123,8 @@ AUTO_INCREMENT = 9
 DEFAULT CHARACTER SET = utf8
 COMMENT = '药品分类，主要用于药品分类';
 
-
--- -----------------------------------------------------
--- Table `yi18`.`yi18_druginfo`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_druginfo` (
+DROP TABLE IF EXISTS `yi18_druginfo`;
+CREATE  TABLE IF NOT EXISTS `yi18_druginfo` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '药品信息的id编号' ,
   `drug` BIGINT(20) NOT NULL COMMENT '药品的编号' ,
   `directory` BIGINT(20) NULL DEFAULT NULL ,
@@ -170,10 +136,8 @@ DEFAULT CHARACTER SET = utf8
 COMMENT = '药品的基本信息';
 
 
--- -----------------------------------------------------
--- Table `yi18`.`yi18_factory`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_factory` (
+DROP TABLE IF EXISTS `yi18_factory`;
+CREATE  TABLE IF NOT EXISTS `yi18_factory` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '厂家的标号ID' ,
   `name` VARCHAR(64) NOT NULL COMMENT '生产厂家的的名称' ,
   `description` VARCHAR(1024) NULL DEFAULT NULL COMMENT '厂家的基本描述，' ,
@@ -186,11 +150,8 @@ AUTO_INCREMENT = 3
 DEFAULT CHARACTER SET = utf8
 COMMENT = '药品的专门的生产厂家';
 
-
--- -----------------------------------------------------
--- Table `yi18`.`yi18_links`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_links` (
+DROP TABLE IF EXISTS `yi18_links`;
+CREATE  TABLE IF NOT EXISTS `yi18_links` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '友情链接的id编号' ,
   `title` VARCHAR(64) NOT NULL COMMENT '友情链接的标题' ,
   `url` VARCHAR(128) NOT NULL COMMENT '友情链接的URL链接' ,
@@ -202,11 +163,8 @@ AUTO_INCREMENT = 8
 DEFAULT CHARACTER SET = utf8
 COMMENT = '网站的友情链接';
 
-
--- -----------------------------------------------------
--- Table `yi18`.`yi18_login`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_login` (
+DROP TABLE IF EXISTS `yi18_login`;
+CREATE  TABLE IF NOT EXISTS `yi18_login` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT ,
   `user` BIGINT(20) NOT NULL COMMENT '用户id' ,
   `session` VARCHAR(100) NOT NULL COMMENT '记录session中的id' ,
@@ -221,11 +179,8 @@ AUTO_INCREMENT = 6
 DEFAULT CHARACTER SET = utf8
 COMMENT = '记录用户的登录状态，如记住登录状态等功能，同时也实现登录记录';
 
-
--- -----------------------------------------------------
--- Table `yi18`.`yi18_lore`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_lore` (
+DROP TABLE IF EXISTS `yi18_lore`;
+CREATE  TABLE IF NOT EXISTS `yi18_lore` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT 'id编号' ,
   `title` VARCHAR(128) NOT NULL COMMENT '标题' ,
   `author` VARCHAR(64) NULL DEFAULT NULL COMMENT '作者' ,
@@ -240,11 +195,8 @@ AUTO_INCREMENT = 10
 DEFAULT CHARACTER SET = utf8
 COMMENT = '健康知识';
 
-
--- -----------------------------------------------------
--- Table `yi18`.`yi18_loreclass`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_loreclass` (
+DROP TABLE IF EXISTS `yi18_loreclass`;
+CREATE  TABLE IF NOT EXISTS `yi18_loreclass` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(64) NULL DEFAULT NULL COMMENT '名称' ,
   `description` VARCHAR(1024) NULL DEFAULT NULL COMMENT '描述' ,
@@ -255,10 +207,8 @@ DEFAULT CHARACTER SET = utf8
 COMMENT = '健康知识分类';
 
 
--- -----------------------------------------------------
--- Table `yi18`.`yi18_news`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_news` (
+DROP TABLE IF EXISTS `yi18_news`;
+CREATE  TABLE IF NOT EXISTS `yi18_news` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT 'id编号' ,
   `title` VARCHAR(128) NOT NULL COMMENT '标题' ,
   `author` VARCHAR(64) NULL DEFAULT NULL COMMENT '作者' ,
@@ -272,11 +222,8 @@ AUTO_INCREMENT = 8
 DEFAULT CHARACTER SET = utf8
 COMMENT = '综合的新闻信息';
 
-
--- -----------------------------------------------------
--- Table `yi18`.`yi18_partner`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_partner` (
+DROP TABLE IF EXISTS `yi18_partner`;
+CREATE  TABLE IF NOT EXISTS `yi18_partner` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '合作伙伴的id编号' ,
   `title` VARCHAR(64) NOT NULL COMMENT '合作伙伴的标题' ,
   `logo` VARCHAR(128) NULL DEFAULT NULL COMMENT 'LOGO标志的地址' ,
@@ -289,11 +236,8 @@ AUTO_INCREMENT = 3
 DEFAULT CHARACTER SET = utf8
 COMMENT = '合作伙伴';
 
-
--- -----------------------------------------------------
--- Table `yi18`.`yi18_place`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_place` (
+DROP TABLE IF EXISTS `yi18_place`;
+CREATE  TABLE IF NOT EXISTS `yi18_place` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(64) NULL DEFAULT NULL COMMENT '名称' ,
   PRIMARY KEY (`id`) )
@@ -302,11 +246,8 @@ AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8
 COMMENT = '人的身体部分，主要是疾病的发病部分';
 
-
--- -----------------------------------------------------
--- Table `yi18`.`yi18_searchlog`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_searchlog` (
+DROP TABLE IF EXISTS `yi18_searchlog`;
+CREATE  TABLE IF NOT EXISTS `yi18_searchlog` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '搜索信息存储的记录' ,
   `keyword` VARCHAR(64) NOT NULL COMMENT '搜索的关键字' ,
   `searchcount` INT(11) NOT NULL COMMENT '搜索的次数' ,
@@ -317,11 +258,8 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = '用于信息搜索的记录信息';
 
-
--- -----------------------------------------------------
--- Table `yi18`.`yi18_symptomclass`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_symptomclass` (
+DROP TABLE IF EXISTS `yi18_symptomclass`;
+CREATE  TABLE IF NOT EXISTS `yi18_symptomclass` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '病状分类的Id编号' ,
   `title` VARCHAR(64) NOT NULL COMMENT '病状分类的标题' ,
   `level` SMALLINT(6) NOT NULL DEFAULT '1' COMMENT '分类的级别，0：root，1,2等' ,
@@ -334,11 +272,8 @@ AUTO_INCREMENT = 17
 DEFAULT CHARACTER SET = utf8
 COMMENT = '病状分类，主要用于药品分类';
 
-
--- -----------------------------------------------------
--- Table `yi18`.`yi18_symptominfo`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_symptominfo` (
+DROP TABLE IF EXISTS `yi18_symptominfo`;
+CREATE  TABLE IF NOT EXISTS `yi18_symptominfo` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '病状信息的id编号' ,
   `symptoms` BIGINT(20) NOT NULL COMMENT '病状的编号' ,
   `directory` BIGINT(20) NULL DEFAULT NULL COMMENT '病状的内容目录' ,
@@ -350,10 +285,8 @@ DEFAULT CHARACTER SET = utf8
 COMMENT = '病状的基本信息';
 
 
--- -----------------------------------------------------
--- Table `yi18`.`yi18_symptoms`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_symptoms` (
+DROP TABLE IF EXISTS `yi18_symptoms`;
+CREATE  TABLE IF NOT EXISTS `yi18_symptoms` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(64) NOT NULL COMMENT '病状名称' ,
   `description` VARCHAR(1024) NULL DEFAULT NULL COMMENT '基本描述' ,
@@ -368,10 +301,8 @@ DEFAULT CHARACTER SET = utf8
 COMMENT = '病状信息';
 
 
--- -----------------------------------------------------
--- Table `yi18`.`yi18_user`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_user` (
+DROP TABLE IF EXISTS `yi18_user`;
+CREATE  TABLE IF NOT EXISTS `yi18_user` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT ,
   `account` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL COMMENT '登录帐号' ,
   `password` VARCHAR(32) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL COMMENT '密码' ,
@@ -382,7 +313,7 @@ CREATE  TABLE IF NOT EXISTS `yi18`.`yi18_user` (
   `phone` VARCHAR(20) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NULL DEFAULT NULL COMMENT '联系电话 手机，电话等' ,
   `qq` VARCHAR(20) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NULL DEFAULT NULL COMMENT 'QQ号' ,
   `url` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NULL DEFAULT NULL COMMENT '个人主页网址' ,
-  `sex` INT(1) NOT NULL DEFAULT '1' COMMENT '性别，1：男 ;0：女' ,
+  `sex` INT(1) NOT NULL DEFAULT '1' COMMENT '性别，1：男  0：女' ,
   `birth` TIMESTAMP NULL DEFAULT NULL COMMENT '出生年月' ,
   `area` VARCHAR(20) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NULL DEFAULT NULL COMMENT '地址如 四川省-成都市' ,
   `signature` VARCHAR(140) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NULL DEFAULT NULL COMMENT '个性签名' ,
@@ -400,10 +331,3 @@ AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_bin
 COMMENT = '用户表，实现记录用户信息，登录验证。';
-
-USE `yi18` ;
-
-
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

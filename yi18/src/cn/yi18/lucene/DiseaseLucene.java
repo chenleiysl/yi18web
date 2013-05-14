@@ -1,9 +1,11 @@
 package cn.yi18.lucene;
 
+import org.apache.commons.lang3.SystemUtils;
+
 public class DiseaseLucene extends LuceneManage implements IndexFiles,SearchFiles
 {
 
-	private static String path = "/lucene/disease";//药品存放路径
+	private static String path = SystemUtils.USER_DIR+"/lucene/disease";//药品存放路径
 	public DiseaseLucene() {
 		super(path);
 	}

@@ -107,7 +107,7 @@ public class POJO implements Serializable
 		else
 			setId(_insertObject(this));
 		if(this.isObjectCachedByID())
-			EhCacheEngine.remove(cacheRegion(), OBJ_COUNT_CACHE_KEY);
+			EhCacheEngine.remove(cacheRegion());
 		return getId();
 	}
 	
@@ -119,13 +119,13 @@ public class POJO implements Serializable
 	public boolean delete() {
 		boolean dr = evict(QueryHelper.update("DELETE FROM " + tableName() + " WHERE id=?", getId()) == 1);
 		if(dr)
-			EhCacheEngine.remove(cacheRegion(), OBJ_COUNT_CACHE_KEY);	
+			EhCacheEngine.remove(cacheRegion());	
 		return dr;
 	}
 	public boolean delete(long id) {
 		boolean dr = evict(QueryHelper.update("DELETE FROM " + tableName() + " WHERE id=?", id) == 1);
 		if(dr)
-			EhCacheEngine.remove(cacheRegion(), OBJ_COUNT_CACHE_KEY);	
+			EhCacheEngine.remove(cacheRegion());	
 		return dr;
 	}
 	/**

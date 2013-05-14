@@ -162,12 +162,10 @@ position:absolute;
 
 
 <tr>
-<td class="content">&nbsp;&nbsp;&nbsp;&nbsp;
-<#if item.content?length &gt; 200>
-${item.content?substring(0, 400)}<samp class="url">……</samp>
-<#else>
+<td class="content">
+
 ${item.content}
-</#if>
+
 </td>
 </tr>
 

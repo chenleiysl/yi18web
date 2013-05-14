@@ -9,7 +9,7 @@ public class LinksDao
 {
 	public List<Links> getAll() 
 	{
-		String sql ="SELECT * FROM yi18.yi18_links ORDER BY sequence ASC";
+		String sql ="SELECT * FROM yi18_links ORDER BY sequence ASC";
 		return QueryHelper.query(Links.class, sql);
 	}
 }

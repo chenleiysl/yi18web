@@ -58,6 +58,27 @@ memoryStoreEvictionPolicy：缓存满了之后的淘汰算法。LRU和FIFO算法
            timeToIdleSeconds="120"
            timeToLiveSeconds="120"
        />
+       <cache name="Drug"
+           maxEntriesLocalHeap="1000"
+           eternal="false"
+           overflowToDisk="true"
+           timeToIdleSeconds="120"
+           timeToLiveSeconds="120"
+       />
+       <cache name="Drugclass"
+           maxEntriesLocalHeap="1000"
+           eternal="false"
+           overflowToDisk="true"
+           timeToIdleSeconds="120"
+           timeToLiveSeconds="120"
+       />
+        <cache name="Factory"
+           maxEntriesLocalHeap="1000"
+           eternal="false"
+           overflowToDisk="true"
+           timeToIdleSeconds="120"
+           timeToLiveSeconds="120"
+       />
         <cache name="Symptomses"
            maxEntriesLocalHeap="1000"
            eternal="false"

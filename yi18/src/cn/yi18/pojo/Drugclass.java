@@ -52,6 +52,11 @@ public void setState(String state) {
 		this.time = time;
 	}
   
+	@Override
+		protected boolean isObjectCachedByID() {
+			// TODO Auto-generated method stub
+			return true;
+		}
   
   
 }

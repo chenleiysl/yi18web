@@ -193,7 +193,11 @@ public class Drug extends POJO
 	}
 	
 
-	
+	@Override
+	protected boolean isObjectCachedByID() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 	
 	
 	
