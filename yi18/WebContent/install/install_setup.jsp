@@ -13,6 +13,9 @@
 <body>
 
 <%
+
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 String dbHost = request.getParameter("dbHost")==null ? "localhost":request.getParameter("dbHost");
 String dbPort = request.getParameter("dbPort")==null ? "3306":request.getParameter("dbPort");
 String dbName = request.getParameter("dbName")==null ? "yi18":request.getParameter("dbName");
@@ -59,7 +62,7 @@ DBManager.closeConnection();//释放数据库连接到连接池中
 	</tr>
 	<tr>
 		<td height="280" align="left" bgcolor="#F0F8FD"
-			style="padding: 10px; line-height: 1.7em;">恭喜您，系统已经安装成功！<br />
+			style="padding: 10px; line-height: 1.7em;">恭喜您，系统已经安装成功！<a href="<%=basePath%>">返回首页</a><br />
 		
 		管理员<%=userName %>，密码<%=password %>。</td>
 	</tr>

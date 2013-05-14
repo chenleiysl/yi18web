@@ -61,42 +61,45 @@ public class DBManager
 						dbProperties = new PropertiesConfiguration(propertiesfile);
 				
 			}
-			Properties cp_props = new Properties();//使用cp_props做临时的配置文件的存储
-			Iterator<String> iterable = dbProperties.getKeys();//取得配置文件中的key
-			//遍历赋值  dbProperties ——》cp_props
-			while (iterable.hasNext()) 
+			
+				Properties cp_props = new Properties();//使用cp_props做临时的配置文件的存储
+				
+				Iterator<String> iterable = dbProperties.getKeys();//取得配置文件中的key
+				//遍历赋值  dbProperties ——》cp_props
+				while (iterable.hasNext()) 
+					{
+							String skey=iterable.next();
+							if(skey.startsWith("jdbc."))//只赋值jdbc. 开始的
+							{
+								   String name = skey.substring(5);
+								   cp_props.put(name, dbProperties.getProperty(skey));	
+								   if("show_sql".equalsIgnoreCase(name))
+								       {
+								     show_sql = "true".equalsIgnoreCase((String) dbProperties.getProperty(skey));
+								        }	
+							 }
+					}
+				
+				//从配置文件中对取使用的链接池
+				 Class.forName(cp_props.getProperty("driverClass"));//加载驱动，由于在web发布时不能自动加载
+				dataSource = (DataSource)Class.forName(cp_props.getProperty("datasource")).newInstance();
+				if(dataSource.getClass().getName().indexOf("c3p0")>0)
 				{
-						String skey=iterable.next();
-						if(skey.startsWith("jdbc."))//只赋值jdbc. 开始的
-						{
-							   String name = skey.substring(5);
-							   cp_props.put(name, dbProperties.getProperty(skey));	
-							   if("show_sql".equalsIgnoreCase(name))
-							       {
-							     show_sql = "true".equalsIgnoreCase((String) dbProperties.getProperty(skey));
-							        }	
-						 }
-				}
+				                //Disable JMX in C3P0
+						System.setProperty("com.mchange.v2.c3p0.management.ManagementCoordinator",
+						"com.mchange.v2.c3p0.management.NullManagementCoordinator");	
+						
+				  }
 			
-			//从配置文件中对取使用的链接池
-			 Class.forName(cp_props.getProperty("driverClass"));//加载驱动，由于在web发布时不能自动加载
-			dataSource = (DataSource)Class.forName(cp_props.getProperty("datasource")).newInstance();
-			if(dataSource.getClass().getName().indexOf("c3p0")>0)
-			{
-			                //Disable JMX in C3P0
-					System.setProperty("com.mchange.v2.c3p0.management.ManagementCoordinator",
-					"com.mchange.v2.c3p0.management.NullManagementCoordinator");	
-					
-			  }
-		
-				log.info("使用  DataSource : " + dataSource.getClass().getName());
-			 BeanUtils.populate(dataSource, cp_props);//把配置文件的值封装到dataSource
+					log.info("使用  DataSource : " + dataSource.getClass().getName());
+				 BeanUtils.populate(dataSource, cp_props);//把配置文件的值封装到dataSource
+				
+				 Connection conn = getConnection();//测试链接
+				 DatabaseMetaData mdm = conn.getMetaData();
+				 log.info("Connected to " + mdm.getDatabaseProductName() +
+				                              " " + mdm.getDatabaseProductVersion());
+				 closeConnection();//关闭链接
 			
-			 Connection conn = getConnection();//测试链接
-			 DatabaseMetaData mdm = conn.getMetaData();
-			 log.info("Connected to " + mdm.getDatabaseProductName() +
-			                              " " + mdm.getDatabaseProductVersion());
-			 closeConnection();//关闭链接
 
 		} catch (Exception  e) 
 		{

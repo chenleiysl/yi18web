@@ -1,20 +1,12 @@
 package cn.yi18.jdbc;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
+import java.io.File;
+import java.io.IOException;
+
+
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -24,6 +16,21 @@ import org.apache.commons.lang3.StringUtils;
 
 public class Install_Mysql  {
 
+	private boolean install = false;
+	PropertiesConfiguration  dbProperties = null;
+	public Install_Mysql() {
+		
+		try {
+			this.dbProperties = new PropertiesConfiguration("jdbc.properties");
+			 this.install = dbProperties.getBoolean("install");
+		} catch (ConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	//那么这个文件会自动在下面几个地方被搜寻：当前目录 、用户主目录 、classpath
+		
+		
+		
+	}
 //	public boolean createDb(String dbHost, String dbPort, String dbName,
 //			String dbUser, String dbPassword) {
 //		// TODO Auto-generated method stub
@@ -59,12 +66,14 @@ public class Install_Mysql  {
 
 	public boolean initAdmin(String initList) {
 		// TODO Auto-generated method stub
+		if (install) return true;
+		
 		QueryHelper.update(initList);
 		return true;
 	}
 
 	public boolean initTable( String sqlfile) {
-		
+		if (install) return true;
 		try {
 			String str = FileUtils.readFileToString(new File(sqlfile));
 			String[] sqllist = StringUtils.split(str, ";");
@@ -96,19 +105,35 @@ public class Install_Mysql  {
 			String dbUser, String dbPassword, String minPool, String maxPool,
 			String jdbcPath) {
 		// TODO Auto-generated method stub
+		if (install) return true;
+		dbProperties.setProperty("install", true);
+		dbProperties.setProperty("jdbc.jdbcUrl", "jdbc:mysql://"+dbHost+":"+dbPort+"/"+dbName+"?characterEncoding=utf8");
+		dbProperties.setProperty("jdbc.user", dbUser);
+		dbProperties.setProperty("jdbc.password", dbPassword);
+		dbProperties.setProperty("jdbc.maxPoolSize", maxPool);
+		dbProperties.setProperty("jdbc.minPoolSize", minPool);
 		try {
-			String s = FileUtils.readFileToString(new File(jdbcPath));
-			//s = s.replaceFirst("DB_CLASSNAME", "com.mysql.jdbc.Driver");
-			s = s.replaceFirst("DB_URL", "jdbc:mysql://"+dbHost+":"+dbPort+"/"+dbName+"?characterEncoding=utf8");
-			s = s.replaceFirst("DB_USER", dbUser);
-			s = s.replaceFirst("DB_PASSWORD", dbPassword);
-			s = s.replaceFirst("DB_MINPOOL", minPool);
-			s = s.replaceFirst("DB_MAXPOOL", maxPool);
-			FileUtils.writeStringToFile(new File(jdbcPath), s);
-		} catch (IOException e) {
+			dbProperties.save();
+		} catch (ConfigurationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		//dbProperties.load();
+		
+		//		try {
+//			
+//			String s = FileUtils.readFileToString(new File(jdbcPath));
+//			s = s.replaceFirst("install=false", "install=true");
+//			s = s.replaceFirst("DB_URL", "jdbc:mysql://"+dbHost+":"+dbPort+"/"+dbName+"?characterEncoding=utf8");
+//			s = s.replaceFirst("DB_USER", dbUser);
+//			s = s.replaceFirst("DB_PASSWORD", dbPassword);
+//			s = s.replaceFirst("DB_MINPOOL", minPool);
+//			s = s.replaceFirst("DB_MAXPOOL", maxPool);
+//			FileUtils.writeStringToFile(new File(jdbcPath), s);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 		return true;
 	}

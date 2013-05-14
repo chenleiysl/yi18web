@@ -14,6 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.commons.configuration.reloading.FileChangedReloadingStrategy;
 import org.apache.commons.lang3.StringUtils;
 
 import org.slf4j.Logger;
@@ -60,6 +63,7 @@ public class ServletAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final static Logger log= LoggerFactory.getLogger(ServletAction.class);
 	private static String packages ;//action的路径包
+	private boolean install = false;
 	/**
 	 * 初始化,主要是完成module的内存加载<br>
 	 * 从配置文件中读取module对于类
@@ -68,7 +72,15 @@ public class ServletAction extends HttpServlet {
 	public void init(ServletConfig config) throws ServletException {
 		
 		packages= config.getInitParameter("package");
-		
+		try {
+		 PropertiesConfiguration dbProperties = new PropertiesConfiguration("jdbc.properties");
+		 dbProperties.setReloadingStrategy(new FileChangedReloadingStrategy());
+		 this.install  = dbProperties.getBoolean("install");
+		} catch (ConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
 		super.init();
 	}
 	
@@ -76,8 +88,19 @@ public class ServletAction extends HttpServlet {
   @Override
   protected void service(HttpServletRequest req, HttpServletResponse resp)
 		throws ServletException, IOException {
+	  
+	 
+	 
+	  
 	  HttpRequest request=new RequestContext(req);
 	  HttpResponse response = new ResponseContext(resp);
+	  
+	  if (!install) {//没有安装转移到安装页面	
+		  String url = request.basePath()+"install/index.html";
+		  response.sendRedirect(url );
+		  return;
+	  }
+	  
 	 String module= request.getModule();//取得调用类
 	 String action= request.getAction();  //取得调方法
 	 BaseAction baseAction = _retrieveModule(module); //初始调用类
