@@ -18,6 +18,8 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.alibaba.druid.pool.DruidDataSource;
+
 import cn.yi18.cache.EhCacheEngine;
 
 
@@ -81,15 +83,16 @@ public class DBManager
 					}
 				
 				//从配置文件中对取使用的链接池
-				 Class.forName(cp_props.getProperty("driverClass"));//加载驱动，由于在web发布时不能自动加载
+			//	 Class.forName(cp_props.getProperty("driverClassName"));//加载驱动，由于在web发布时不能自动加载
 				dataSource = (DataSource)Class.forName(cp_props.getProperty("datasource")).newInstance();
-				if(dataSource.getClass().getName().indexOf("c3p0")>0)
-				{
-				                //Disable JMX in C3P0
-						System.setProperty("com.mchange.v2.c3p0.management.ManagementCoordinator",
-						"com.mchange.v2.c3p0.management.NullManagementCoordinator");	
-						
-				  }
+				 
+				 //				if(dataSource.getClass().getName().indexOf("c3p0")>0)
+//				{
+//				                //Disable JMX in C3P0
+//						System.setProperty("com.mchange.v2.c3p0.management.ManagementCoordinator",
+//						"com.mchange.v2.c3p0.management.NullManagementCoordinator");	
+//						
+//				  }
 			
 					log.info("使用  DataSource : " + dataSource.getClass().getName());
 				 BeanUtils.populate(dataSource, cp_props);//把配置文件的值封装到dataSource

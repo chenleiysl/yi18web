@@ -107,11 +107,11 @@ public class Install_Mysql  {
 		// TODO Auto-generated method stub
 		if (install) return true;
 		dbProperties.setProperty("install", true);
-		dbProperties.setProperty("jdbc.jdbcUrl", "jdbc:mysql://"+dbHost+":"+dbPort+"/"+dbName+"?characterEncoding=utf8");
-		dbProperties.setProperty("jdbc.user", dbUser);
+		dbProperties.setProperty("jdbc.url", "jdbc:mysql://"+dbHost+":"+dbPort+"/"+dbName+"?characterEncoding=utf8");
+		dbProperties.setProperty("jdbc.username", dbUser);
 		dbProperties.setProperty("jdbc.password", dbPassword);
-		dbProperties.setProperty("jdbc.maxPoolSize", maxPool);
-		dbProperties.setProperty("jdbc.minPoolSize", minPool);
+		dbProperties.setProperty("jdbc.maxActive", maxPool);
+		dbProperties.setProperty("jdbc.minIdle", minPool);
 		try {
 			dbProperties.save();
 		} catch (ConfigurationException e) {

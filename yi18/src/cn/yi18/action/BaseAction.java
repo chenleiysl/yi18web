@@ -140,8 +140,6 @@ public  abstract class BaseAction
 		} catch (IOException e) {
 			log.error("访问的URL{}不存在！\n"+e,url);
 			e.printStackTrace();
-		}finally{
-			DBManager.closeConnection(); //释放数据库连接到连接池中
 		}
 		return;
 	}
@@ -167,8 +165,6 @@ public  abstract class BaseAction
 		catch (IOException e){
 			
 			e.printStackTrace();
-		}finally{
-			DBManager.closeConnection(); //释放数据库连接到连接池中
 		}
 		return;
 	}
@@ -187,8 +183,6 @@ public  abstract class BaseAction
 			log.error("显示text/html{}报错\n"+e,html);
 			e.printStackTrace();
 			
-		}finally{
-			DBManager.closeConnection(); //释放数据库连接到连接池中
 		}
 		return;
 	}
@@ -204,8 +198,6 @@ public  abstract class BaseAction
 		} catch (IOException e) {
 			log.error("返回application/json{}报错\n"+e,json);
 			e.printStackTrace();
-		}finally{
-			DBManager.closeConnection(); //释放数据库连接到连接池中
 		}
 		return;
 	}
@@ -246,9 +238,6 @@ public  abstract class BaseAction
 	} catch (IOException  e) {
 		log.error("通过Freemarker文件{}错误",ftl);
 		e.printStackTrace();
-	}finally{
-		
-		DBManager.closeConnection(); //释放数据库连接到连接池中
 	}
       
   }

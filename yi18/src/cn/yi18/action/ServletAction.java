@@ -26,6 +26,7 @@ import cn.yi18.http.HttpRequest;
 import cn.yi18.http.HttpResponse;
 import cn.yi18.http.RequestContext;
 import cn.yi18.http.ResponseContext;
+import cn.yi18.jdbc.DBManager;
 
 
 
@@ -63,7 +64,7 @@ public class ServletAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final static Logger log= LoggerFactory.getLogger(ServletAction.class);
 	private static String packages ;//action的路径包
-	private boolean install = false;
+	
 	/**
 	 * 初始化,主要是完成module的内存加载<br>
 	 * 从配置文件中读取module对于类
@@ -72,14 +73,7 @@ public class ServletAction extends HttpServlet {
 	public void init(ServletConfig config) throws ServletException {
 		
 		packages= config.getInitParameter("package");
-		try {
-		 PropertiesConfiguration dbProperties = new PropertiesConfiguration("jdbc.properties");
-		 dbProperties.setReloadingStrategy(new FileChangedReloadingStrategy());
-		 this.install  = dbProperties.getBoolean("install");
-		} catch (ConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		 
 		super.init();
 	}
@@ -94,8 +88,9 @@ public class ServletAction extends HttpServlet {
 	  
 	  HttpRequest request=new RequestContext(req);
 	  HttpResponse response = new ResponseContext(resp);
-	  
-	  if (!install) {//没有安装转移到安装页面	
+	
+		
+	 if (!_isIstall()) {//没有安装转移到安装页面	
 		  String url = request.basePath()+"install/index.html";
 		  response.sendRedirect(url );
 		  return;
@@ -121,6 +116,8 @@ public class ServletAction extends HttpServlet {
 	{
 		baseAction.execute(); //默认执行
 	}
+
+	DBManager.closeConnection(); //释放数据库连接到连接池中
 	
   }
   
@@ -170,6 +167,24 @@ public class ServletAction extends HttpServlet {
   }
   
  
+  
+  /**
+   * 判断是否安装 安装返回true 没有安装返回 false
+   * @return
+   */
+  private boolean _isIstall()
+  {
+	  boolean install = false;
+	  try {
+		 PropertiesConfiguration dbProperties = new PropertiesConfiguration("jdbc.properties");
+		 dbProperties.setReloadingStrategy(new FileChangedReloadingStrategy());
+		 install  = dbProperties.getBoolean("install");
+		} catch (ConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	  return install;
+  }
 
   
 
