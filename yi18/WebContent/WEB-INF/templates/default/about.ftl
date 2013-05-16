@@ -34,17 +34,17 @@
 		<p>
 			医药吧 www.yi18.cn 成立于2013年3月，是一个个人工作室开发医药辅助网站。我们传播医药技术，推广医药产品，为广大群众提供一个交流、展示、查询的医药性综合平台。
 		</p>
-		<p>经过不断的改进，目前医药吧已经形成了由<a href='#'>药品信息</a>、<a href='#'>病状信息</a>、<a href=''>健康资讯</a>和<a href='#'>咨询</a>等几大频道内容。</p>
+		<p>经过不断的改进，目前医药吧已经形成了由<a href='${basePath}drug/list'>药品信息</a>、<a href='${basePath}symptom/list'>病状信息</a>、<a href='${basePath}disease/list'>疾病信息</a>、<a href='${basePath}lore/list'>健康知识</a>和<a href='${basePath}news/list'>综合咨询</a>等几大频道内容。</p>
 		<p>除了网站访问，我们也提供的移动（手机）终端的服务，你也可以通过免费下载得到我们指尖上的服务</p>
 		<h2>常见问题：</h2>
 		<p>
 			<ol>
 				<li>是不是所有药品都能查询
-					<p>由于该网站是个人工作室所完成，算不是一个商业的网站，所以精力有限不能一一提交所以的药品信息。但随着网站的不断改进和升级，我们的目标就打造一个最大的药品信息查询平台。你也可以通过<a href="#">添加药品</a>来添加药品，我们的强大也需要你的支持。</p>
+					<p>由于该网站是个人工作室所完成，算不是一个商业的网站，所以精力有限不能一一提交所以的药品信息。但随着网站的不断改进和升级，我们的目标就打造一个最大的药品信息查询平台。你也可以通过<a href="${basePath}drug/add">添加药品</a>来添加药品，我们的强大也需要你的支持。</p>
 				</li>
 				
 				<li>找不到我要的相关病状，我应该怎么办？
-					<p>由于人手的问题，我们也不能添加所以的病状。如果没有找到相关的信息，你也可以通过<a href='#'>留言</a>来告诉我们相关信息，我们将不断完善。</p>
+					<p>由于人手的问题，我们也不能添加所以的病状。如果没有找到相关的信息，你也可以通过<a href='http://yiyaoba.aws.af.cm/words'>留言</a>来告诉我们相关信息，我们将不断完善。</p>
 				</li>
 				
 				<li>该网站的盈利模式？
@@ -73,9 +73,11 @@
 	<div class="Links">
     	<h3>常用链接</h3>
 		<ul style='line-height:26px;margin-left:10px;'>
-			<li><a href="">常见药品</a></li>
-			<li><a href="">常见症状</a></li>
-			<li><a href="">医药资讯</a></li>
+			<li><a href="${basePath}drug/list">常见药品</a></li>
+			<li><a href="${basePath}symptom/list">常见症状</a></li>
+			<li><a href="${basePath}disease/list">常见疾病</a></li>
+			<li><a href="${basePath}lore/list">健康知识</a></li>
+			<li><a href="${basePath}news/list">综合资讯</a></li>
 			
 		</ul>
 	</div>

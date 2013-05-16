@@ -6,31 +6,39 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import cn.yi18.cache.VisitLogEhCache;
 import cn.yi18.enums.NewsEnum;
 import cn.yi18.lucene.IndexFiles;
 import cn.yi18.lucene.LoreLucene;
-import cn.yi18.lucene.NewsLucene;
+
 import cn.yi18.lucene.PageInfo;
 import cn.yi18.pojo.Lore;
 import cn.yi18.pojo.Loreclass;
-import cn.yi18.pojo.News;
-import cn.yi18.pojo.POJO;
+
 import cn.yi18.service.LoreService;
-import cn.yi18.service.NewsService;
+
 import cn.yi18.util.JsoupUtil;
 import cn.yi18.util.PageUtil;
 
 
 
 /**
- * 
- * @author 陈磊，综合资讯
+ * 健康知识
+ * @author 陈磊
  *
  */
 public class LoreAction extends BaseAction
 {
+	private static final Logger log= LoggerFactory.getLogger(LoreAction.class);
+	
+	/**
+	 * 添加健康知识
+	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException
+	 */
 	public void add() throws IllegalAccessException, InvocationTargetException
 	{
 		if (request.isSubmit()) 
@@ -42,6 +50,7 @@ public class LoreAction extends BaseAction
 			
 			//sendRedirect(request.basePath()+"news/list");
 			root.put("message", "添加成功！等待审核！");
+			log.debug("添加健康知识");
 			printFreemarker("default/message.ftl", root);
 		}
 		else 
@@ -53,6 +62,9 @@ public class LoreAction extends BaseAction
 		
 	}
 	
+	/**
+	 * 显示
+	 */
 	public void list() {
 		
 		int page= request.getParameter("p")==null?1:Integer.parseInt(request.getParameter("p"));
@@ -65,6 +77,7 @@ public class LoreAction extends BaseAction
 		 root.put("week", week);
 		 root.put("month", month);
 		 root.put("page", news);
+		 root.put("title", "热门知识|健康知识_医药吧");
 		}else {
 			String sid= request.getParams()[0];
 			Long id= Long.parseLong(sid);
@@ -84,28 +97,33 @@ public class LoreAction extends BaseAction
 			root.put("description",loreclass.getDescription());
 		}
 		 Loreclass bean = new Loreclass();
-		 List< Loreclass> list = (List<Loreclass>) bean.list();
+		 @SuppressWarnings("unchecked")
+		List< Loreclass> list = (List<Loreclass>) bean.list();
 		 root.put("list", list);
 		printFreemarker("default/lore_list.ftl", root);
 	}
 	
+	
+	/**
+	 * 显示健康知识
+	 */
 	public void show()
 	{
 		String sid= request.getParams()[0];
 		Lore lore = new Lore();
 		lore = lore.get(Long.parseLong(sid));
-//		
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		map.put("count", lore.getCount()+1);
-//		lore.update(map , lore.getId()); //更新阅读次数
-//		
+		if(lore==null){
+			run_404();
+			return;
+		}//如果不存在就返回404页面
+	
 		VisitLogEhCache.Add(lore .getId(), "yi18_lore");//更新阅读数
 		Loreclass loreclass= new Loreclass();
 		loreclass=loreclass.get(lore.getLoreclass());
 		root.put("lore", lore);
 		root.put("loreclass", loreclass);
 		
-		root.put("title", lore.getTitle()+"|综合信息_医药吧");
+		root.put("title", lore.getTitle()+"|健康知识_医药吧");
 		root.put("keywords", lore.getTitle());
 		root.put("description",lore.subMessage(80));
 		printFreemarker("default/lore.ftl", root);
@@ -120,7 +138,7 @@ public class LoreAction extends BaseAction
     public void update() throws IllegalAccessException, InvocationTargetException 
 	{
     	Lore bean = new Lore();
-		Map map = request.getParameterMap();
+		Map<?, ?> map = request.getParameterMap();
 		BeanUtils.populate(bean, map);
 		
 		Map<String, Object> vmap = new HashMap<String, Object>();

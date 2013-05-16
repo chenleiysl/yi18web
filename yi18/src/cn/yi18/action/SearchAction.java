@@ -25,8 +25,6 @@ public class SearchAction extends BaseAction
 		keyword= new String(keyword.getBytes("iso-8859-1"), "UTF-8");//主要是处理get方式编码问题
 		String type = request.getParameter("type");
 		
-		//System.out.println(keyword);
-		
 		SearchFiles searchFiles = null;
 		if(type.equals("drug"))
 		{
@@ -49,6 +47,7 @@ public class SearchAction extends BaseAction
 		PageUtil page = searchFiles.query(keyword, pagesize, SIZE);
 		root.put("page", page);
 		root.put("keyword", keyword);
+		root.put("type", type);
 		printFreemarker("default/search.ftl", root);
 	}
 }

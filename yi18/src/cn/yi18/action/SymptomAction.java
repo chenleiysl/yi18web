@@ -1,49 +1,37 @@
 package cn.yi18.action;
 
-import java.io.File;
+
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
+
 import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Iterator;
+
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+
 
 import javax.servlet.ServletException;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemFactory;
+
 import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.commons.lang3.time.DateFormatUtils;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import cn.yi18.cache.VisitLogEhCache;
-import cn.yi18.entity.DrugClass;
-import cn.yi18.entity.DrugInfo;
+
 import cn.yi18.entity.SymptomClass;
 import cn.yi18.entity.SymptomInfo;
 import cn.yi18.pojo.Directory;
-import cn.yi18.pojo.Drug;
-import cn.yi18.pojo.Drugclass;
-import cn.yi18.pojo.Druginfo;
-import cn.yi18.pojo.Factory;
-import cn.yi18.pojo.POJO;
+
 import cn.yi18.pojo.Symptomclass;
 import cn.yi18.pojo.Symptominfo;
 import cn.yi18.pojo.Symptoms;
 import cn.yi18.service.DirectoryService;
-import cn.yi18.service.DrugClassService;
-import cn.yi18.service.DrugInfoService;
-import cn.yi18.service.DrugService;
-import cn.yi18.service.FactoryService;
+
 import cn.yi18.service.SymptomClassService;
 import cn.yi18.service.SymptomInfoService;
 import cn.yi18.service.SymptomService;
@@ -53,7 +41,8 @@ public class SymptomAction extends BaseAction
 {
 	private final int SIZE=10;
 	
-	
+	private static final Logger log= LoggerFactory.getLogger(SymptomAction.class);
+
 	
 	
 	/**
@@ -88,7 +77,7 @@ public class SymptomAction extends BaseAction
 			  
 			}
 		
-			
+			log.debug("添加病状");
 			root.put("message", "添加成功！等待审核！");
 			printFreemarker("default/message.ftl", root);
 			
@@ -96,7 +85,7 @@ public class SymptomAction extends BaseAction
 			
 			List<Directory> list = directoryService.getSymptom();
 			root.put("list", list);
-			root.put("title", "新增病状信息 |医药吧 ");
+			root.put("title", "新增病状信息 |病状信息_医药吧 ");
 			printFreemarker("default/add_symptom.ftl", root);
 			
 		}
@@ -155,6 +144,13 @@ public class SymptomAction extends BaseAction
 			Long id = Long.parseLong(params[0]);
 			Symptoms bean = new Symptoms();
 			Symptoms symptoms = bean.get(id);
+			if(symptoms==null){
+				run_404();//如果不存在就返回404页面
+				return;
+			}
+			
+			
+			
 //			Map<String, Object> map = new HashMap<String, Object>();
 //			map.put("count", symptoms.getCount()+1);
 //			bean.update(map , id);
@@ -173,13 +169,13 @@ public class SymptomAction extends BaseAction
 	}
 
 	
-public void list() throws ServletException, IOException {
+	/**
+	 * 显示病状列表
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	public void list() throws ServletException, IOException {
 		
-	
-	 DrugService drugService = new DrugService();
-	
-	 
-	
 		int page= request.getParameter("p")==null?1:Integer.parseInt(request.getParameter("p"));
 		// 取得页面，如果没有默认为1
 		List<SymptomClass> tree = symptomClassService.getTree();
@@ -194,7 +190,7 @@ public void list() throws ServletException, IOException {
 			root.put("news", news);
 			root.put("page", hots);
 			root.put("open", tree.get(0).getSymptomclass().getId());
-			root.put("title", "病状知识|医药吧");
+			root.put("title", "病状知识|病状信息_医药吧");
 		}else 
 		{
 			long id = Long.parseLong(params[0]);//药品分类的id
@@ -209,7 +205,7 @@ public void list() throws ServletException, IOException {
 			root.put("page", hots);
 			root.put("symptomclass",symptomclass);
 			root.put("open", symptomclass.get_parentId());//打开的栏目
-			root.put("title", symptomclass.getTitle()+"|病状知识_医药吧");
+			root.put("title", symptomclass.getTitle()+"|病状信息_医药吧");
 			root.put("keywords", symptomclass.getTitle());
 			root.put("description",symptomclass.getTitle());
 		}

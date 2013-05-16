@@ -53,12 +53,14 @@
           return encodeURL.replace("%20","+");//修改常见搜索空格变成+编码
         } 
     	</script> 
+    	
+    	
     	<div id="mm" style="width:120px">  
-        	<div data-options="name:'drug'">药品</div>  
-        	<div data-options="name:'symptom'">病状</div>  
-        	<div data-options="name:'disease'">疾病</div>  
-        	<div data-options="name:'news'">综合新闻</div> 
-        	<div data-options="name:'lore'">健康知识</div>
+        	<div data-options="name:'drug' <#if type??><#if type=="drug">,selected:true </#if></#if>">药品</div>  
+        	<div data-options="name:'symptom' <#if type??><#if type=="symptom">,selected:true </#if></#if>">病状</div>  
+        	<div data-options="name:'disease' <#if type??><#if type=="disease">,selected:true </#if></#if>">疾病</div>  
+        	<div data-options="name:'news' <#if type??><#if type=="news">,selected:true </#if></#if>">综合新闻</div> 
+        	<div data-options="name:'lore' <#if type??><#if type=="lore">,selected:true </#if></#if>">健康知识</div>
     	</div> 
    		
    		</div>

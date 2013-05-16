@@ -173,6 +173,14 @@ memoryStoreEvictionPolicy：缓存满了之后的淘汰算法。LRU和FIFO算法
            timeToIdleSeconds="120"
            timeToLiveSeconds="120"
        />
+       
+       <cache name="Partner"
+           maxEntriesLocalHeap="1000"
+           eternal="false"
+           overflowToDisk="true"
+           timeToIdleSeconds="120"
+           timeToLiveSeconds="120"
+       />
     
         <!-- 主要记录session 把原来的session存入二级缓存总 --> 
        <cache name="session"

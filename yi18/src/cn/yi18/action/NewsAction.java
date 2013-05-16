@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import cn.yi18.cache.VisitLogEhCache;
 import cn.yi18.enums.NewsEnum;
@@ -26,7 +28,7 @@ import cn.yi18.util.PageUtil;
  */
 public class NewsAction extends BaseAction
 {
-	
+	private static final Logger log= LoggerFactory.getLogger(NewsAction.class);
 	/*
 	 * 添加新闻，综合资讯
 	 */
@@ -41,6 +43,7 @@ public class NewsAction extends BaseAction
 			
 			//sendRedirect(request.basePath()+"news/list");
 			root.put("message", "添加成功！等待审核！");
+			log.debug("添加综合信息");
 			printFreemarker("default/message.ftl", root);
 		}
 		else 
@@ -52,6 +55,9 @@ public class NewsAction extends BaseAction
 		
 	}
 	
+	/**
+	 * 显示综合信息列表
+	 */
 	public void list() {
 		int page= request.getParameter("p")==null?1:Integer.parseInt(request.getParameter("p"));
 		// 取得页面，如果没有默认为1
@@ -62,6 +68,7 @@ public class NewsAction extends BaseAction
 		 root.put("week", week);
 		 root.put("month", month);
 		 root.put("page", news);
+		 root.put("title", "热门综合信息|综合信息_医药吧");
 		printFreemarker("default/news_list.ftl", root);
 	}
 	
@@ -70,7 +77,10 @@ public class NewsAction extends BaseAction
 		String sid= request.getParams()[0];
 		News news = new News();
 		news = news.get(Long.parseLong(sid));
-		
+		if(news==null){
+			run_404();
+			return;
+		}//如果不存在就返回404页面
 //		Map<String, Object> map = new HashMap<String, Object>();
 //		map.put("count", news.getCount()+1);
 //		news.update(map , news.getId()); //更新阅读次数
@@ -90,7 +100,7 @@ public class NewsAction extends BaseAction
 	 */
 	public void update() throws IllegalAccessException, InvocationTargetException {
 		News bean = new News();
-		Map map = request.getParameterMap();
+		Map<?,?> map = request.getParameterMap();
 		BeanUtils.populate(bean, map);
 		
 		Map<String, Object> vmap = new HashMap<String, Object>();

@@ -1,32 +1,25 @@
 package cn.yi18.action;
 
-import java.io.File;
+
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
+
 import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Iterator;
+
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+
 
 import javax.servlet.ServletException;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemFactory;
+
 import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.commons.lang3.time.DateFormatUtils;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import cn.yi18.cache.VisitLogEhCache;
 import cn.yi18.entity.DrugClass;
@@ -36,7 +29,7 @@ import cn.yi18.pojo.Drug;
 import cn.yi18.pojo.Drugclass;
 import cn.yi18.pojo.Druginfo;
 import cn.yi18.pojo.Factory;
-import cn.yi18.pojo.POJO;
+
 import cn.yi18.service.DirectoryService;
 import cn.yi18.service.DrugClassService;
 import cn.yi18.service.DrugInfoService;
@@ -45,11 +38,21 @@ import cn.yi18.service.FactoryService;
 import cn.yi18.util.JsoupUtil;
 import cn.yi18.util.PageUtil;
 
+/**
+ * 疾病
+ * @author 陈磊
+ *
+ */
 public class DrugAction extends BaseAction
 {
 	private final int SIZE=10;
+	private static final Logger log= LoggerFactory.getLogger(DrugAction.class);
 	
-	
+	/**
+	 * 显示疾病信息
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	public void list() throws ServletException, IOException {
 		
 		int page= request.getParameter("p")==null?1:Integer.parseInt(request.getParameter("p"));
@@ -66,7 +69,7 @@ public class DrugAction extends BaseAction
 			root.put("news", news);
 			root.put("page", hots);
 			root.put("open", tree.get(tree.size()-1).getDrugclass().getId());
-			root.put("title", "药品知识|医药吧");
+			root.put("title", "常见药品|药品信息_医药吧");
 			
 		}else 
 		{
@@ -82,7 +85,7 @@ public class DrugAction extends BaseAction
 			root.put("page", hots);
 			root.put("drugclass",drugclass);
 			root.put("open", drugclass.get_parentId());//打开的栏目
-			root.put("title", drugclass.getTitle()+"|药品知识_医药吧");
+			root.put("title", drugclass.getTitle()+"|药品信息_医药吧");
 			root.put("keywords", drugclass.getTitle());
 			root.put("description",drugclass.getTitle());
 		}
@@ -110,18 +113,7 @@ public class DrugAction extends BaseAction
 			Map<String, String[]> map = request.getParameterMap();
 			BeanUtils.populate(drug, map);
 			
-			//从词条中取得一张图片
-//			Document doc= Jsoup.parse(drug.getTerm());
-//			Elements imgs = doc.select("img");
-//			for(int i=0;i<imgs.size();i++){
-//				  Element img = imgs.get(i);
-//					String src = img.attr("src");
-//					
-//					//File file = new File(request.getSession().getServletContext().getRealPath("../"));
-//					drug.setImage(src);//
-//					break;
-//			}
-			
+		
 			Enumeration<String> names = request.getParameterNames();
 			while (names.hasMoreElements()) {
 			    String name= names.nextElement();
@@ -140,6 +132,7 @@ public class DrugAction extends BaseAction
 			 */
 			drugService.save(drug, druginfos);
 			root.put("message", "添加成功！等待审核！");
+			log.debug("添加药品");
 			printFreemarker("default/message.ftl", root);
 			return;
 			
@@ -165,125 +158,13 @@ public class DrugAction extends BaseAction
 	public void update() throws FileUploadException, IllegalAccessException, InvocationTargetException
 	{
 		
-			
-//			Drug drug = new Drug(); //药品
-//			List<Druginfo> druginfos = new ArrayList<Druginfo>();//药品信息
-//			//最大文件大小
-//			long maxSize = 1000000;
-//			//定义允许上传的文件扩展名
-//			HashMap<String, String> extMap = new HashMap<String, String>();
-//			extMap.put("image", "gif,jpg,jpeg,png,bmp");
-//			
-//			//String urlPath=request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/";
-//			String readlityPath=request.getSession().getServletContext().getRealPath("/");
-//			//String saveUrl=urlPath+"common/temp/";
-//			String savePath=readlityPath+"common/avatar/";
-//			FileItemFactory factory = new DiskFileItemFactory();
-//			ServletFileUpload upload = new ServletFileUpload(factory);
-//			upload.setHeaderEncoding("UTF-8");
-//			List items = upload.parseRequest(request);
-//			Iterator itr = items.iterator();
-//			while (itr.hasNext()) {
-//				FileItem item = (FileItem) itr.next();
-//				if (item.isFormField()) {
-//				    String name = item.getFieldName();
-//				    String value = null;
-//					try {
-//						value = item.getString("UTF-8");
-//					} catch (UnsupportedEncodingException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//					if(name.equals("id"))
-//					{
-//						   drug.setId(Long.parseLong(value));
-//					}else
-//				   if(name.equals("name"))
-//				   {
-//					   drug.setName(value);
-//				   }else if(name.equals("alias")){
-//					   drug.setAlias(value);
-//					
-//				   }else if(name.equals("term")){
-//					   drug.setTerm(value);
-//					
-//				   }else if(name.equals("prescription")){
-//					   drug.setPrescription(Integer.parseInt(value));
-//					
-//				   }else if(name.equals("ingredient")){
-//					   drug.setIngredient(Integer.parseInt(value));
-//					
-//				   
-//				  }else if(name.equals("factory")){
-//					   drug.setFactory(Long.parseLong(value));
-//					
-//				   }
-//				   else if(name.equals("price")){
-//					   drug.setPrice(Float.parseFloat(value));
-//					
-//				   } else if(name.equals("drugclass")){
-//					   drug.setDrugclass(Long.parseLong(value));
-//					
-//				   }else if(name.startsWith("editor"))
-//				   {
-//					   Druginfo druginfo = new Druginfo();
-//					   druginfo.setMessage(value);   
-//					   //druginfo.setDirectory(Long.parseLong(name.split("_")[1]));
-//					   druginfo.setId(Long.parseLong(name.split("_")[1]));
-//					   druginfos.add(druginfo);
-//					
-//				   }
-//				   
-//
-//				   
-//				}else{
-//					if(item.getSize() > maxSize){
-//						
-//						return;
-//					}
-//					String fileName = item.getName();	
-//					//检查扩展名
-//					String fileExt = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
-//					if(!Arrays.<String>asList(extMap.get("image").split(",")).contains(fileExt)){
-//						
-//						//return;
-//					}
-//
-//					String newFileName = DateFormatUtils.format(new Date(), "yyyyMMddHHmmss") + "_" + new Random().nextInt(1000) + "." + fileExt;
-//					drug.setImage(newFileName);
-//						File uploadedFile = new File(savePath, newFileName);
-//						try {
-//							item.write(uploadedFile);
-//						} catch (Exception e) {
-//							// TODO Auto-generated catch block
-//							e.printStackTrace();
-//						}
-////					
-//					
-//				}
-//				
-//				
-//			}
-			
-			
-		
+
 		Drug drug = new Drug(); //药品
 		List<Druginfo> druginfos = new ArrayList<Druginfo>();//药品信息
 		
 		Map<String, String[]> map = request.getParameterMap();
 		BeanUtils.populate(drug, map);
-		
-		//从词条中取得一张图片
-//		Document doc= Jsoup.parse(drug.getTerm());
-//		Elements imgs = doc.select("img");
-//		for(int i=0;i<imgs.size();i++){
-//			  Element img = imgs.get(i);
-//				String src = img.attr("src");
-//				
-//				//File file = new File(request.getSession().getServletContext().getRealPath("../"));
-//				drug.setImage(src);//
-//				break;
-//		}
+
 		drug.setImage(JsoupUtil.Image(drug.getTerm()));
 		
 		Enumeration<String> names = request.getParameterNames();
@@ -293,12 +174,9 @@ public class DrugAction extends BaseAction
 		    if(name.startsWith("editor"))//添加药品的内容
 			   {
 		    	 	Druginfo druginfo = new Druginfo();
-//				   druginfo.setMessage(request.getParameter(name));   
-//				   druginfo.setDirectory(Long.parseLong(name.split("_")[1]));
-//				   druginfos.add(druginfo);
-
+			 
 				   druginfo.setMessage(request.getParameter(name));   
-				   //druginfo.setDirectory(Long.parseLong(name.split("_")[1]));
+				  
 				   druginfo.setId(Long.parseLong(name.split("_")[1]));
 				   druginfos.add(druginfo);
 		    	
@@ -324,8 +202,14 @@ public class DrugAction extends BaseAction
 		if(params!=null)
 		{
 			Long id = Long.parseLong(params[0]);
-			Drug bean = new Drug();
-			Drug drug = bean.get(id);
+			Drug drug = new Drug();
+			drug = drug.get(id);
+			if(drug==null){
+				run_404();
+				return;
+			}//如果不存在就返回404页面
+			
+			
 //			Map<String, Object> map = new HashMap<String, Object>();
 //			map.put("count", drug.getCount()+1);
 //			bean.update(map , id);

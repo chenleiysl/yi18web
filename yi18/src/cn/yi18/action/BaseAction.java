@@ -1,7 +1,7 @@
 package cn.yi18.action;
 
 import java.io.IOException;
-import java.io.Serializable;
+
 import java.io.Writer;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -15,18 +15,14 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 
-import net.sf.ehcache.Ehcache;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-import cn.yi18.cache.EhCacheEngine;
 import cn.yi18.enums.CookieEnum;
 import cn.yi18.http.*;
-import cn.yi18.jdbc.DBManager;
+
 import cn.yi18.pojo.Links;
-import cn.yi18.pojo.User;
+
 import cn.yi18.service.LinksService;
 import cn.yi18.util.Base64Coder;
 
@@ -90,19 +86,20 @@ public  abstract class BaseAction
 				try {
 					this.getClass().getMethod(action, NO_ARGS_CLASS).invoke(this, NO_ARGS_OBJECT);
 				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IllegalArgumentException e) {
-					// TODO Auto-generated catch block
+					log.error("{} 类中 运行 {}方法 错\n" + e,this.getClass(),action);
+					run_500();
 					e.printStackTrace();
 				} catch (InvocationTargetException e) {
-					// TODO Auto-generated catch block
+					log.error("{} 类中 没有实现 {}方法 \n" + e,this.getClass(),action);
+					run_500();//返回500
 					e.printStackTrace();
 				} catch (NoSuchMethodException e) {
 					log.error("{} 类中 没有实现 {}方法 \n" + e,this.getClass(),action);
+					run_404();//返回404
 					e.printStackTrace();
 				} catch (SecurityException e) {
-					// TODO Auto-generated catch block
+					log.error("{} 类中 没有实现 {}方法 \n" + e,this.getClass(),action);
+					run_500();//返回500
 					e.printStackTrace();
 				}
 		
@@ -123,8 +120,7 @@ public  abstract class BaseAction
 	public void execute() throws ServletException, IOException 
 	{
 		log.error("{} 类中 没有继承 execute() 方法 \n" ,this.getClass());
-		response.sendError(HttpServletResponse.SC_NOT_FOUND);//返回404
-	
+
 	}
 	
 	/**
@@ -139,6 +135,7 @@ public  abstract class BaseAction
 			response.sendRedirect(url);
 		} catch (IOException e) {
 			log.error("访问的URL{}不存在！\n"+e,url);
+			run_404();
 			e.printStackTrace();
 		}
 		return;
@@ -154,18 +151,19 @@ public  abstract class BaseAction
 	 * @param uri 跳转的相对路径 如：input.jsp
 	 */
 	public void forward(String uri) {
-		try {
+		
+		
 			try {
 				request.getRequestDispatcher(uri).forward(request, response);
 			} catch (ServletException e) {
-				// TODO Auto-generated catch block
+				run_500();//返回500
+				e.printStackTrace();
+			} catch (IOException e) {
+				run_500();//返回500
 				e.printStackTrace();
 			}
-		} 
-		catch (IOException e){
 			
-			e.printStackTrace();
-		}
+		
 		return;
 	}
 	
@@ -181,6 +179,7 @@ public  abstract class BaseAction
 			response.getWriter().print(html);
 		} catch (IOException e) {
 			log.error("显示text/html{}报错\n"+e,html);
+			run_500();//返回500
 			e.printStackTrace();
 			
 		}
@@ -197,6 +196,7 @@ public  abstract class BaseAction
 			response.getWriter().print(json);
 		} catch (IOException e) {
 			log.error("返回application/json{}报错\n"+e,json);
+			run_500();//返回500
 			e.printStackTrace();
 		}
 		return;
@@ -220,23 +220,22 @@ public  abstract class BaseAction
 	
 	 //设置默认信息
 	 if(root.get("title")==null)  root.put("title", "医药吧");
-	 if(root.get("keywords")==null)  root.put("keywords", "药品 查询 检验 搜集");
-	 if(root.get("description")==null)  root.put("description", "一个药品查询系统，打造一流的药品网站和医学辅助网站。");
+	 if(root.get("keywords")==null)  root.put("keywords", "药品信息、病状查找、疾病诊断、健康知识、综合资讯的综合信息网站");
+	 if(root.get("description")==null)  root.put("description", "一个药品查询系统，打造一流的药品网站和医学辅助网站。我们传播医药技术，推广医药产品，为广大群众提供一个交流、展示、查询的医药性综合平台");
 	 if(root.get("author")==null)  root.put("author", "yi18.cn");
 	try {
 		Template  t = cfg.getTemplate(ftl);
 		t.setEncoding("UTF-8");
 		response.setContentType("text/html; charset=" + t.getEncoding());
 		Writer out = response.getWriter();
-		
-	   try {
 		t.process(root, out);
-	} catch (TemplateException e) {
-		
-		e.printStackTrace();
-	}
+	
 	} catch (IOException  e) {
 		log.error("通过Freemarker文件{}错误",ftl);
+		run_500();//返回500
+		e.printStackTrace();
+	} catch (TemplateException e) {
+		run_500();//返回500
 		e.printStackTrace();
 	}
       
@@ -270,5 +269,43 @@ public  abstract class BaseAction
 	 }
 	return null;
 }
+ 
+ 
+ /**
+  * 500页面
+  */
+	 public void run_500() {
+		 try {
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}//返回500
+	}
+ 
+	 /**
+	  * 404页面
+	  */
+	 public void run_404() {
+		 try {
+			response.sendError(HttpServletResponse.SC_NOT_FOUND);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	 
+	 /**
+	  * 403页面
+	  */
+	 public void run_403() {
+			
+		 try {
+			response.sendError(HttpServletResponse.SC_FORBIDDEN );
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	 }
 
 }

@@ -15,6 +15,7 @@ public class DirectoryService
 	 * 取得全部的目录
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public List<Directory> getDrug()
 	{
 		Directory bean = new Directory();

@@ -1,3 +1,4 @@
+<%@page import="cn.yi18.util.DigestMD"%>
 <%@page import="cn.yi18.jdbc.DBManager"%>
 <%@page import="cn.yi18.jdbc.QueryHelper"%>
 <%@page import="cn.yi18.jdbc.Install_Mysql"%>
@@ -38,7 +39,7 @@ if(update!=null)
 {
 	
 install.initTable( sqlfile);
-String initList = "INSERT INTO `yi18_user` (`id`, `account`, `password`, `name`) VALUES ('1', '"+userName+"', '"+password+"', 'yi18')";
+String initList = "INSERT INTO `yi18_user` (`id`, `account`, `password`, `name`) VALUES ('1', '"+userName+"', '"+DigestMD.MD5(password)+"', 'yi18')";
 install.initAdmin(initList);
 }
 DBManager.closeConnection();//释放数据库连接到连接池中

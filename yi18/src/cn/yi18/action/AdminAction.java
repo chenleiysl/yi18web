@@ -2,14 +2,17 @@ package cn.yi18.action;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
+
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 
@@ -18,7 +21,6 @@ import cn.yi18.entity.DiseaseInfo;
 import cn.yi18.entity.DrugInfo;
 import cn.yi18.entity.SymptomInfo;
 import cn.yi18.enums.DirectoryEnum;
-import cn.yi18.enums.NewsEnum;
 import cn.yi18.pojo.Departments;
 import cn.yi18.pojo.Directory;
 import cn.yi18.pojo.Disease;
@@ -30,7 +32,6 @@ import cn.yi18.pojo.Links;
 import cn.yi18.pojo.Lore;
 import cn.yi18.pojo.Loreclass;
 import cn.yi18.pojo.News;
-import cn.yi18.pojo.POJO;
 import cn.yi18.pojo.Partner;
 import cn.yi18.pojo.Place;
 import cn.yi18.pojo.Symptomclass;
@@ -49,11 +50,18 @@ import cn.yi18.service.PartnerService;
 import cn.yi18.service.SymptomInfoService;
 import cn.yi18.service.SymptomService;
 import cn.yi18.util.Base64Coder;
+import cn.yi18.util.DigestMD;
 import cn.yi18.util.DigestSHA;
 
+
+/**
+ * 管理员的操作，主要是后台的操作
+ * @author 陈磊
+ *
+ */
 public class AdminAction extends BaseAction {
 
-	
+	private static final Logger log= LoggerFactory.getLogger(AdminAction.class);
 	/**
 	 * 默认admin页面
 	 */
@@ -61,13 +69,12 @@ public class AdminAction extends BaseAction {
 	public void execute() throws ServletException, IOException
 	{
 		
-		
 		printFreemarker("admin/index.ftl", root);
 	}
 	
 	
 	/**
-	 * 药品目录信息
+	 * 目录信息 主要保存药品、疾病、病状的信息
 	 * @throws IllegalAccessException
 	 * @throws InvocationTargetException
 	 */
@@ -75,10 +82,10 @@ public class AdminAction extends BaseAction {
 		
 		if(request.isSubmit())
 		{
-			Map map = request.getParameterMap();
+			Map<?, ?> map = request.getParameterMap();
 			Directory directory = new Directory();
 			BeanUtils.populate(directory , map);
-			if(request.getParameter("sub").equals("save"))
+			if(request.getParameter("sub").equals("save"))//保存目录信息
 			{
 				
 				  directory.save();
@@ -86,7 +93,7 @@ public class AdminAction extends BaseAction {
 				  printHtml(json);
 				  return;
 				
-			}else if(request.getParameter("sub").equals("edit"))
+			}else if(request.getParameter("sub").equals("edit"))//编辑目录信息
 			{
 				
 				  Directory bean = new Directory();
@@ -106,15 +113,18 @@ public class AdminAction extends BaseAction {
 		}else 
 		{
 			String type = request.getParams()[0];
-			if(type.equals(DirectoryEnum.Type.Drug.getValue()+"")){
+			if(type.equals(DirectoryEnum.Type.Drug.getValue()))//显示药品的目录
+			{
 				List<Directory> list =directoryService.getDrug(); 
 				root.put("list", list);
 				printFreemarker("admin/directory_drug.ftl", root);
-			}else if(type.equals(DirectoryEnum.Type.Symptom.getValue()+"")){
+			}else if(type.equals(DirectoryEnum.Type.Symptom.getValue()))//显示病状目录
+			{
 				List<Directory> list =directoryService.getSymptom(); 
 				root.put("list", list);
 				printFreemarker("admin/directory_symptom.ftl", root);
-			}else if(type.equals(DirectoryEnum.Type.Disease.getValue()+"")){
+			}else if(type.equals(DirectoryEnum.Type.Disease.getValue()))//显示疾病目录
+			{
 				List<Directory> list =directoryService.getDisease(); 
 				root.put("list", list);
 				printFreemarker("admin/directory_disease.ftl", root);
@@ -124,30 +134,35 @@ public class AdminAction extends BaseAction {
 	}
 	
 	
+	/**
+	 * 人的身体部位
+	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException
+	 */
 	public void place() throws IllegalAccessException, InvocationTargetException {
 		
 	
 		if(request.isSubmit())
 		{
-			Map map = request.getParameterMap();
+			Map<?, ?> map = request.getParameterMap();
 			Place place = new Place();
 			BeanUtils.populate(place , map);
-			if(request.getParameter("sub").equals("save"))
+			if(request.getParameter("sub").equals("save"))//保存身体部位
 			{
 				
-				place.save();
+				  place.save();
 				  String json = "{\"success\": true,   \"message\": \"保存成功.\" } ";
 				  printHtml(json);
 				  return;
 				
-			}else if(request.getParameter("sub").equals("edit"))
+			}else if(request.getParameter("sub").equals("edit"))//编辑身体部位
 			{
 				
 				  
 				  Map<String, Object> dmap = new HashMap<String, Object>();
 				  dmap.put("name", place.getName());
 				  
-					Place bean = new Place();
+				  Place bean = new Place();
 				  bean.update(dmap , place.getId());
 				  String json = "{\"success\": true,   \"message\": \"修改成功.\" } ";
 				  printHtml(json);
@@ -157,9 +172,9 @@ public class AdminAction extends BaseAction {
 			
 		}else 
 		{
-
-
+			//显示身体部位
 			Place bean = new Place();
+			@SuppressWarnings("unchecked")
 			List<Place> list = (List<Place>) bean.list();
 			root.put("list", list);
 			printFreemarker("admin/place.ftl", root);
@@ -167,23 +182,30 @@ public class AdminAction extends BaseAction {
 		}
 		
 	}
+	
+	
+	/**
+	 * 就诊科室
+	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException
+	 */
 	public void department() throws IllegalAccessException, InvocationTargetException {
 		
 		
 		if(request.isSubmit())
 		{
-			Map map = request.getParameterMap();
+			Map<?, ?> map = request.getParameterMap();
 			Departments departments = new Departments();
 			BeanUtils.populate(departments , map);
-			if(request.getParameter("sub").equals("save"))
+			if(request.getParameter("sub").equals("save"))//保存
 			{
 				
-				departments.save();
+				 departments.save();
 				  String json = "{\"success\": true,   \"message\": \"保存成功.\" } ";
 				  printHtml(json);
 				  return;
 				
-			}else if(request.getParameter("sub").equals("edit"))
+			}else if(request.getParameter("sub").equals("edit"))//编辑
 			{
 				
 				  
@@ -202,7 +224,8 @@ public class AdminAction extends BaseAction {
 		{
 
 
-			 Departments bean = new Departments();
+			Departments bean = new Departments();
+			@SuppressWarnings("unchecked")
 			List<Place> list = (List<Place>) bean.list();
 			root.put("list", list);
 			printFreemarker("admin/departments.ftl", root);
@@ -212,42 +235,42 @@ public class AdminAction extends BaseAction {
 	}
 	
 	
+	/**
+	 * 健康知识分类
+	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException
+	 */
 	public void loreclass() throws IllegalAccessException, InvocationTargetException {
 		
 		
 		if(request.isSubmit())
 		{
-			Map map = request.getParameterMap();
+			Map<?, ?> map = request.getParameterMap();
 			Loreclass loreclass = new Loreclass();
 			BeanUtils.populate(loreclass , map);
 			if(request.getParameter("sub").equals("save"))
-			{
-				
-				loreclass.save();
+			{	
+				  loreclass.save();
 				  String json = "{\"success\": true,   \"message\": \"保存成功.\" } ";
 				  printHtml(json);
 				  return;
 				
 			}else if(request.getParameter("sub").equals("edit"))
 			{
-				
-				  
+  
 				  Map<String, Object> dmap = new HashMap<String, Object>();
-				  dmap.put("name", loreclass.getName());
-				  
+				  dmap.put("name", loreclass.getName());	  
 				  Loreclass bean = new Loreclass();
 				  bean.update(dmap , loreclass.getId());
 				  String json = "{\"success\": true,   \"message\": \"修改成功.\" } ";
 				  printHtml(json);
 				  return;
 			}
-			  
-			
+			  	
 		}else 
 		{
-
-
 			Loreclass bean = new Loreclass();
+			@SuppressWarnings("unchecked")
 			List<Loreclass> list = (List<Loreclass>) bean.list();
 			root.put("list", list);
 			printFreemarker("admin/loreclass.ftl", root);
@@ -267,7 +290,7 @@ public class AdminAction extends BaseAction {
 		if(request.isSubmit())
 		{
 			Drugclass drugclass= new Drugclass();
-			Map map = request.getParameterMap();
+			Map<?, ?> map = request.getParameterMap();
 			BeanUtils.populate(drugclass , map);
 			if(request.getParameter("sub").equals("save"))
 			{
@@ -304,21 +327,15 @@ public class AdminAction extends BaseAction {
 				  bean.update(dmap, drugclass.getId());
 				  String json = "{\"success\": true,   \"message\": \"修改成功.\" } ";
 				  printHtml(json);
-				  return;
-				
-			}
-				
-			  
-			
+				  return;				
+			} 		
 		}else 
 		{
-			//Directory bean = new Directory();
-			//List<Directory> list =(List<Directory>) bean.list(); 
-			//root.put("list", list);
-			
+		
 			Drugclass bean = new Drugclass();
-			 Map<String, Object> map = new HashMap<String, Object>();
-			 map.put("level", 1);
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("level", 1);
+			@SuppressWarnings("unchecked")
 			List<Drugclass> roots = (List<Drugclass>) bean.getlist(map );
 			root.put("roots", roots);
 			printFreemarker("admin/drugclass.ftl", root);
@@ -337,7 +354,7 @@ public class AdminAction extends BaseAction {
 		if(request.isSubmit())
 		{
 			Diseaseclass diseaseclass= new Diseaseclass();
-			Map map = request.getParameterMap();
+			Map<?, ?> map = request.getParameterMap();
 			BeanUtils.populate(diseaseclass , map);
 			if(request.getParameter("sub").equals("save"))
 			{
@@ -365,7 +382,7 @@ public class AdminAction extends BaseAction {
 					diseaseclass.setLevel(2);
 					diseaseclass.setState(null);
 				}
-					Diseaseclass bean = new Diseaseclass();
+				 Diseaseclass bean = new Diseaseclass();
 				  Map<String, Object> dmap = new HashMap<String, Object>();
 				  dmap.put("title", diseaseclass.getTitle());
 				  dmap.put("_parentId", diseaseclass.get_parentId());
@@ -382,13 +399,10 @@ public class AdminAction extends BaseAction {
 			
 		}else 
 		{
-			//Directory bean = new Directory();
-			//List<Directory> list =(List<Directory>) bean.list(); 
-			//root.put("list", list);
-			
 			Diseaseclass bean = new Diseaseclass();
 			 Map<String, Object> map = new HashMap<String, Object>();
 			 map.put("level", 1);
+			@SuppressWarnings("unchecked")
 			List<Diseaseclass> roots = (List<Diseaseclass>) bean.getlist(map );
 			root.put("roots", roots);
 			printFreemarker("admin/diseaseclass.ftl", root);
@@ -406,7 +420,7 @@ public class AdminAction extends BaseAction {
 		if(request.isSubmit())
 		{
 			Symptomclass symptomclass= new Symptomclass();
-			Map map = request.getParameterMap();
+			Map<?, ?> map = request.getParameterMap();
 			BeanUtils.populate(symptomclass , map);
 			if(request.getParameter("sub").equals("save"))
 			{
@@ -451,13 +465,11 @@ public class AdminAction extends BaseAction {
 			
 		}else 
 		{
-			//Directory bean = new Directory();
-			//List<Directory> list =(List<Directory>) bean.list(); 
-			//root.put("list", list);
 			
 			Symptomclass bean = new Symptomclass();
 			 Map<String, Object> map = new HashMap<String, Object>();
 			 map.put("level", 1);
+			@SuppressWarnings("unchecked")
 			List<Symptomclass> roots = (List<Symptomclass>) bean.getlist(map );
 			root.put("roots", roots);
 			printFreemarker("admin/symptomclass.ftl", root);
@@ -477,7 +489,7 @@ public class AdminAction extends BaseAction {
 	
 	
 	/*
-	 * 
+	 * 显示没有审核的疾病
 	 */
 	public void disease()
 	{
@@ -485,8 +497,13 @@ public class AdminAction extends BaseAction {
 		root.put("list", list);
 		printFreemarker("admin/disease_check_list.ftl", root);
 	}
+	
+	/**
+	 * 取得药品分类
+	 */
 	public void jsondrugclass(){
 		Drugclass bean = new Drugclass();
+		@SuppressWarnings("unchecked")
 		List<Drugclass> rows = (List<Drugclass>) bean.list();
 		Gson gson = new Gson();
 		String json = gson.toJson(rows);
@@ -494,8 +511,12 @@ public class AdminAction extends BaseAction {
 		printJson(json);
 		 
 	}
+	/**
+	 * 取得疾病分类
+	 */
 	public void jsondiseaseclass(){
 		Diseaseclass bean = new Diseaseclass();
+		@SuppressWarnings("unchecked")
 		List<Diseaseclass> rows = (List<Diseaseclass>) bean.list();
 		Gson gson = new Gson();
 		String json = gson.toJson(rows);
@@ -503,8 +524,12 @@ public class AdminAction extends BaseAction {
 		printJson(json);
 		 
 	}
+	/**
+	 * 取得病状分类
+	 */
 	public void jsonsymptomclass(){
 		Symptomclass bean = new Symptomclass();
+		@SuppressWarnings("unchecked")
 		List<Symptomclass> rows = (List<Symptomclass>) bean.list();
 		Gson gson = new Gson();
 		String json = gson.toJson(rows);
@@ -524,12 +549,12 @@ public class AdminAction extends BaseAction {
 		if(request.isSubmit())
 		{
 			Factory factory = new Factory();
-			Map map = request.getParameterMap();
+			Map<?, ?> map = request.getParameterMap();
 			BeanUtils.populate(factory, map);
 			if (request.getParameter("sub").equals("save")) 
 			{
 				
-					factory.save();
+				 factory.save();
 				  String json = "{\"success\": true,   \"message\": \"保存成功.\" } ";
 				  printHtml(json);
 				  return;
@@ -569,12 +594,11 @@ public class AdminAction extends BaseAction {
 		if(request.isSubmit())
 		{
 			Links links = new Links();
-			Map map = request.getParameterMap();
+			Map<?, ?> map = request.getParameterMap();
 			BeanUtils.populate(links, map);
 			if (request.getParameter("sub").equals("save")) 
-			{
-				
-					links.save();
+			{			
+				 links.save();
 				  String json = "{\"success\": true,   \"message\": \"保存成功.\" } ";
 				  printHtml(json);
 				  return;
@@ -612,7 +636,7 @@ public class AdminAction extends BaseAction {
 		if(request.isSubmit())
 		{
 			Partner partner  = new Partner();
-			Map map = request.getParameterMap();
+			Map<?, ?> map = request.getParameterMap();
 			BeanUtils.populate(partner, map);
 			if (request.getParameter("sub").equals("save")) 
 			{
@@ -677,6 +701,7 @@ public class AdminAction extends BaseAction {
 				Drugclass dbean = new Drugclass();
 				 Map<String, Object> map = new HashMap<String, Object>();
 				 map.put("level", 2);
+				@SuppressWarnings("unchecked")
 				List<Drugclass> drugclassess = (List<Drugclass>) dbean.getlist(map );
 				
 				root.put("drugclass", drugclassess);
@@ -709,6 +734,7 @@ public class AdminAction extends BaseAction {
 //				Drugclass dbean = new Drugclass();
 				 Map<String, Object> map = new HashMap<String, Object>();
 				 map.put("level", 2);
+				@SuppressWarnings("unchecked")
 				List<Symptomclass> symptomclass = (List<Symptomclass>) sbean.getlist(map );
 //				
 				root.put("symptomclass", symptomclass);
@@ -718,8 +744,11 @@ public class AdminAction extends BaseAction {
 		
 	}
 	
-	public void checkdisease()
-	{
+	/**
+	 * 审核疾病
+	 */
+		public void checkdisease()
+		{
 		
 			String[] params = request.getParams();
 			if(params!=null)
@@ -738,14 +767,17 @@ public class AdminAction extends BaseAction {
 //				Drugclass dbean = new Drugclass();
 				 Map<String, Object> map = new HashMap<String, Object>();
 				 map.put("level", 2);
+				@SuppressWarnings("unchecked")
 				List<Diseaseclass> diseaseclasses = (List<Diseaseclass>) sbean.getlist(map );
 //				
 				root.put("diseaseclass", diseaseclasses);
 				
 				Place place = new Place(); //身体部位
+				@SuppressWarnings("unchecked")
 				List<Place> places = (List<Place>) place.list();
 				
 				Departments department = new Departments();//科室
+				@SuppressWarnings("unchecked")
 				List<Departments> departments = (List<Departments>) department.list();
 				root.put("places", places);
 				root.put("departments", departments);
@@ -764,7 +796,9 @@ public class AdminAction extends BaseAction {
 		printFreemarker("admin/news_check_list.ftl", root);
 	}
 	
-	
+	/**
+	 * 显示没有审核的健康知识
+	 */
 	public void lore()
 	{
 		root.put("list", loreService.getNoCheck());
@@ -778,64 +812,41 @@ public class AdminAction extends BaseAction {
 	 */
 	public void checknews() 
 	{
-//		if (request.isSubmit())
-//		{
-//			News bean = new News();
-//			Map map = request.getParameterMap();
-//			BeanUtils.populate(bean, map);
-//			
-//			Map<String, Object> vmap = new HashMap<String, Object>();
-//			vmap.put("title", bean.getTitle());
-//			vmap.put("message", bean.getMessage());
-//			vmap.put("author", bean.getAuthor());
-//			vmap.put("allow", NewsEnum.Check_Status.IsCheck.getValue());
-//			bean.update(vmap , bean.getId());
-//			sendRedirect(request.basePath()+"admin/news");
-//			
-//		}else 
-//		{
-		
+
 			String sid= request.getParams()[0];
 			News news = new News();
 			news = news.get(Long.parseLong(sid));
 			root.put("news", news);
 			printFreemarker("admin/news_check.ftl", root);
-//		}
+
 	}
 	
-	
+	/**
+	 * 核对健康知识
+	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException
+	 */
 	public void checkrole() throws IllegalAccessException, InvocationTargetException 
 	{
-		if (request.isSubmit())
-		{
-//			Lore bean = new Lore();
-//			Map map = request.getParameterMap();
-//			BeanUtils.populate(bean, map);
-//			
-//			Map<String, Object> vmap = new HashMap<String, Object>();
-//			vmap.put("title", bean.getTitle());
-//			vmap.put("loreclass", bean.getLoreclass());
-//			vmap.put("message", bean.getMessage());
-//			vmap.put("author", bean.getAuthor());
-//			vmap.put("allow", NewsEnum.Check_Status.IsCheck.getValue());
-//			bean.update(vmap , bean.getId());
-//			sendRedirect(request.basePath()+"admin/lore");
-			
-		}else 
-		{
-		
+	
 			String sid= request.getParams()[0];
 			Lore lore = new Lore();
 			lore = lore.get(Long.parseLong(sid));
 			Loreclass bean = new Loreclass();
+			@SuppressWarnings("unchecked")
 			List<Loreclass> list = (List<Loreclass>) bean.list();
 			root.put("lore", lore);
 			root.put("list", list);
 			printFreemarker("admin/lore_check.ftl", root);
-		}
+		
 	}
 	
 	
+	/**
+	 * 登录
+	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException
+	 */
 	public void login() throws IllegalAccessException, InvocationTargetException
 	{
 		
@@ -843,37 +854,41 @@ public class AdminAction extends BaseAction {
 		if (request.isSubmit())
 		{
 			
-			Map map = request.getParameterMap();
+			Map<?, ?> map = request.getParameterMap();
 			  User vuser = new User();
 			  BeanUtils.populate(vuser , map);
 			  User bean = new User();
 			  Map<String, Object> vmap = new HashMap<String, Object>();
 			  vmap.put("account", vuser.getAccount());
-			  vmap.put("password", vuser.getPassword());
+			  vmap.put("password",DigestMD.MD5(vuser.getPassword()));//MD5加密
 			  User user = bean.get(vmap );
 			  if (user!=null)
 			  {
 				  String hkey=DigestSHA.SHA224(user.getAccount()+user.getPassword());
 				  response.addAutoLoginCookie(1800, hkey);//30
 				  session.setUser(user);
+				  log.debug("用户{}在{}登录后台系统",user.getAccount(),new Date());
 				  sendRedirect(returnUrl);
 				  return;
 			  }else {
 				
-				 // root.put("returnUrl", returnUrl);
+				
 				root.put("message", "你登录的账号或密码错误");
 				printFreemarker("default/login.ftl", root);
 				return;
 			  }
 			
 		}else {
-			//root.put("returnUrl", returnUrl);
+			
 			printFreemarker("default/login.ftl", root);
 		}
 		
 	}
 	
 
+	/**
+	 * 退出
+	 */
 	public void exit()
 	{
 		
@@ -884,6 +899,7 @@ public class AdminAction extends BaseAction {
 		if (request.getSession().getId().equals(session_id))
 		{
 			//退出的session_id做比较，目的是为了防止用退出连接做攻击，实现每个用户的退出连接不同
+			 log.debug("用户{}在{}退出后台系统",user.getAccount(),new Date());
 			session.deleteUser(yi18_id);
 			_removeAuto(user);
 		}
@@ -892,19 +908,19 @@ public class AdminAction extends BaseAction {
 			sendRedirect(returnUrl);
 		}
 		
-	//	userService.logout(user.getId());
-		
 		sendRedirect(request.basePath());
 		return;
 	
 	}
 	
+	/**
+	 * 移除cookie
+	 * @param user
+	 */
 	  public void _removeAuto(User user) 
 	  {
 		  response.removeAutoLoginCookie();
-		  
-		
-		
+	
 	  }
 	
 	private DirectoryService directoryService = new DirectoryService ();

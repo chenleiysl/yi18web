@@ -10,7 +10,7 @@ public class PartnerDao
 {
 	public List<Partner> getAll() 
 	{
-		String sql ="SELECT * FROM yi18.yi18_partner ORDER BY sequence ASC";
+		String sql ="SELECT * FROM yi18_partner ORDER BY sequence ASC";
 		return QueryHelper.query(Partner.class, sql);
 	}
 }
