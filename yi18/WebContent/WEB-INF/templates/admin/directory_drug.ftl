@@ -27,7 +27,7 @@
                 <th data-options="field:'title'" width="100px">目录标题</th>  
                 <th data-options="field:'description'" width="550px">描述</th>  
                 <th data-options="field:'issearch',align:'right'" width="50px">是否搜索</th>  
-                <th data-options="field:'time'" width="150px">创建时间</th>  
+                 
                  <th data-options="field:'attr1'" width="50px"> </th>  
             </tr>  
         </thead>  
@@ -36,7 +36,7 @@
             <tr>  
                <td>${item.sequence}</td> <td>${item.title}</td><td>${item.description}</td>
                <td><#if item.issearch==1>是<#else>否</#if></td>
-               <td>${item.time}</td>  
+               
                
                <td><a href="javascript:void(0)"  onclick="edit(${item.getId()},'${item.title}','${item.description}',${item.issearch},${item.sequence})">编辑</a></td>  
             </tr>  

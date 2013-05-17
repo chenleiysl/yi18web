@@ -29,8 +29,8 @@
     <form id="ff" method="post" action="${basePath}disease/update" > 
     <input type="hidden" name="id" value="0">  
      <input type="hidden" name="allow" value="1">
-   <div id="p" class="easyui-panel" title="审核疾病" style="width:880px;height:600px;padding:10px;" data-options=""> 
-  <div data-options="region:'west',split:true" title="展开/收缩" style="width:780px;height: 500px">  
+   <div id="p" class="easyui-panel" title="审核疾病" style="width:880px;height:700px;padding:10px;" data-options=""> 
+  <div data-options="region:'west',split:true" title="展开/收缩" style="width:780px;height: 550px">  
      
             <div class="easyui-accordion" data-options="fit:true,border:false">  
             

@@ -19,7 +19,7 @@ public class Directory extends POJO
 	protected String title;//标题
 	protected int issearch = DirectoryEnum.Search_Status.IsSearch.getValue();//是否允许搜索 ，默认允许
 	protected String description;//描述
-	protected Timestamp time = new Timestamp(new Date().getTime());//创建时间
+	
 	protected int sequence;//目录的线索顺序
 	protected int type;//类型
 	
@@ -53,11 +53,6 @@ public class Directory extends POJO
 	public void setType(int type) {
 		this.type = type;
 	}
-	public Timestamp getTime() {
-		return time;
-	}
-	public void setTime(Timestamp time) {
-		this.time = time;
-	}
+	
 	
 }

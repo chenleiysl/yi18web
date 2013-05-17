@@ -50,7 +50,7 @@
       <div style="float: right;">
      
      <div id="p1" class="easyui-panel" title="网站通告" style="width:280px;height:350px;padding:10px;"   >  
-       2013年5月20日，医药吧测试版正式推出！<br>
+       2013年5月20日，医药吧测试版（beta）正式推出！<br>
 	       网址http://yi18.cloudfoundry.com<br>
 	       是医药吧测试网址。<br>
        	预计2013年10月份成立独立的域名<strong>www.yi18.cn</strong>

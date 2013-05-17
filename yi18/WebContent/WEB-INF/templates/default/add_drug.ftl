@@ -19,7 +19,7 @@
     <form id="ff" method="post" action="${basePath}drug/add" > 
     
    <div id="p" class="easyui-panel" title="添加药品" style="width:880px;height:600px;padding:10px;" data-options=""> 
-  <div data-options="region:'west',split:true" title="展开/收缩" style="width:780px;height: 450px">  
+  <div data-options="region:'west',split:true" title="展开/收缩" style="width:780px;height: 650px">  
      
             <div class="easyui-accordion" data-options="fit:true,border:false">  
             
@@ -79,7 +79,7 @@
                     <td>
                     
                     <select id="cc" class="easyui-combobox" name="factory" style="width:200px;">  
-					    <option value="0">其它生产商</option>  
+					   
 					     <#list factorys as item>
 					     <option value="${item.getId()}">${item.name}</option> 
 					     </#list>

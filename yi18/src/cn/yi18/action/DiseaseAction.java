@@ -203,6 +203,7 @@ public class DiseaseAction extends BaseAction
 			root.put("page", hots);
 			//root.put("open", tree.get(0).getSymptomclass().getId());
 			root.put("title","常见疾病|疾病信息_医药吧");
+			root.put("name","常见疾病");
 			
 		}else if(params.length==1)
 		{
@@ -217,6 +218,7 @@ public class DiseaseAction extends BaseAction
 			root.put("news", news);
 			root.put("page", hots);
 			root.put("title",diseaseclass.getTitle()+"|疾病信息_医药吧");
+			root.put("name",diseaseclass.getTitle());
 			//root.put("open", symptomclass.get_parentId());//打开的栏目
 		}else if(params.length==2){
 			if(params[1].equals("place"))
@@ -227,6 +229,7 @@ public class DiseaseAction extends BaseAction
 				Place bean = new Place();
 				bean=bean.get(id);
 				root.put("title",bean.getName()+"|疾病信息_医药吧");
+				root.put("name",bean.getName());
 				root.put("news", news);
 				root.put("page", hots);
 			}else if(params[1].equals("departments"))
@@ -237,6 +240,7 @@ public class DiseaseAction extends BaseAction
 				Departments bean = new Departments();
 				bean=bean.get(id);
 				root.put("title",bean.getName()+"|疾病信息_医药吧");
+				root.put("name",bean.getName());
 				root.put("news", news);
 				root.put("page", hots);
 			}

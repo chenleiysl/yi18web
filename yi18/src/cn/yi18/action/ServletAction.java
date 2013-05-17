@@ -59,7 +59,7 @@ import cn.yi18.jdbc.DBManager;
  *
  */
 @WebServlet(urlPatterns= "/action/*",
-	initParams={@WebInitParam(name="package",value = "com.mysns.action")})
+	initParams={@WebInitParam(name="package",value = "cn.yi18.action")})
 public class ServletAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final static Logger log= LoggerFactory.getLogger(ServletAction.class);

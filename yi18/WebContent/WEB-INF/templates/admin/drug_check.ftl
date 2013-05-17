@@ -34,7 +34,7 @@
     <form id="ff" method="post" action="${basePath}drug/update" > 
     <input type="hidden" name="id" value="0">  
    <div id="p" class="easyui-panel" title="审核药品" style="width:880px;height:600px;padding:10px;" data-options=""> 
-  <div data-options="region:'west',split:true" title="展开/收缩" style="width:780px;height: 500px">  
+  <div data-options="region:'west',split:true" title="展开/收缩" style="width:780px;height: 650px">  
      
             <div class="easyui-accordion" data-options="fit:true,border:false">  
             

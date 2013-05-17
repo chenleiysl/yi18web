@@ -113,17 +113,17 @@ public class AdminAction extends BaseAction {
 		}else 
 		{
 			String type = request.getParams()[0];
-			if(type.equals(DirectoryEnum.Type.Drug.getValue()))//显示药品的目录
+			if(type.equals(DirectoryEnum.Type.Drug.getValue()+""))//显示药品的目录
 			{
 				List<Directory> list =directoryService.getDrug(); 
 				root.put("list", list);
 				printFreemarker("admin/directory_drug.ftl", root);
-			}else if(type.equals(DirectoryEnum.Type.Symptom.getValue()))//显示病状目录
+			}else if(type.equals(DirectoryEnum.Type.Symptom.getValue()+""))//显示病状目录
 			{
 				List<Directory> list =directoryService.getSymptom(); 
 				root.put("list", list);
 				printFreemarker("admin/directory_symptom.ftl", root);
-			}else if(type.equals(DirectoryEnum.Type.Disease.getValue()))//显示疾病目录
+			}else if(type.equals(DirectoryEnum.Type.Disease.getValue()+""))//显示疾病目录
 			{
 				List<Directory> list =directoryService.getDisease(); 
 				root.put("list", list);

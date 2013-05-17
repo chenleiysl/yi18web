@@ -17,8 +17,8 @@
     
     <form id="ff" method="post" action="${basePath}disease/add"> 
     
-   <div id="p" class="easyui-panel" title="添加疾病" style="width:880px;height:500px;padding:10px;" data-options=""> 
-  <div data-options="region:'west',split:true" title="展开/收缩" style="width:780px;height: 400px">  
+   <div id="p" class="easyui-panel" title="添加疾病" style="width:880px;height:600px;padding:10px;" data-options=""> 
+  <div data-options="region:'west',split:true" title="展开/收缩" style="width:780px;height: 500px">  
      
             <div class="easyui-accordion" data-options="fit:true,border:false">  
             

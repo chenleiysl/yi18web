@@ -53,8 +53,7 @@
                 <tr>  
                     <td>病状分类:</td>  
                     <td>
-					  <select id="cc" class="easyui-combobox" name="symptomsclass" style="width:200px;">  
-					    <option value="0">其它</option>  
+					  <select id="cc" class="easyui-combobox" name="symptomsclass" style="width:200px;">   
 					     <#list symptomclass as item>
 					     <option value="${item.getId()}">${item.title}</option> 
 					     </#list>

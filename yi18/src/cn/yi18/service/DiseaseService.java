@@ -1,6 +1,8 @@
 package cn.yi18.service;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,6 +60,7 @@ public class DiseaseService
 		map.put("name", Disease.getName());
 		map.put("description", Disease.getDescription());
 		map.put("diseaseclass", Disease.getDiseaseclass());
+		map.put("time", new Timestamp(new Date().getTime()));//同时也更新时间
 		Disease.update(map , Disease.getId());
 		content=content+Disease.getDescription();
 		for (Diseaseinfo diseaseinfo : list) {

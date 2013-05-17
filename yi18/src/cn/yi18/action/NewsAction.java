@@ -1,6 +1,8 @@
 package cn.yi18.action;
 
 import java.lang.reflect.InvocationTargetException;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -108,6 +110,7 @@ public class NewsAction extends BaseAction
 		vmap.put("message", bean.getMessage());
 		vmap.put("author", bean.getAuthor());
 		vmap.put("allow", NewsEnum.Check_Status.IsCheck.getValue());
+		vmap.put("time", new Timestamp(new Date().getTime()));//同时也更新时间
 		bean.update(vmap , bean.getId());
 		
 		IndexFiles indexFiles = new NewsLucene();

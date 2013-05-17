@@ -17,7 +17,7 @@ public class Diseaseclass extends POJO
 protected String title; //标题
   protected int level; //等级
   protected Long _parentId;//上级目录的id 默认是1
-  protected Timestamp time = new Timestamp(new Date().getTime()); //时间
+ 
   protected String state;
   
   
@@ -45,12 +45,7 @@ public void setState(String state) {
 	public void set_parentId(Long _parentId) {
 		this._parentId = _parentId;
 	}
-	public Timestamp getTime() {
-		return time;
-	}
-	public void setTime(Timestamp time) {
-		this.time = time;
-	}
+	
   
   
 	@Override

@@ -29,7 +29,7 @@ public class IndexAction extends BaseAction
 	public void execute() throws ServletException, IOException {
 
 		root.put("index", _getIndex());
-		root.put("title", "医药吧 中国医药信息库网站");
+		
 		printFreemarker("default/index.ftl", root);
 		
 		
@@ -39,7 +39,7 @@ public class IndexAction extends BaseAction
 	public void index()
 	{
 		root.put("index", _getIndex());
-		root.put("title", "医药吧 中国医药信息库网站");
+		
 		printFreemarker("default/index.ftl", root);
 	}
 	

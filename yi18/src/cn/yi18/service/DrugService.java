@@ -1,6 +1,8 @@
 package cn.yi18.service;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,6 +68,7 @@ public class DrugService
 		map.put("drugclass", drug.getDrugclass());
 		map.put("prescription", drug.getPrescription());
 		map.put("allow", DrugEnum.Check_Status.IsCheck.getValue());
+		map.put("time", new Timestamp(new Date().getTime()));//同时也更新时间
 		drug.update(map , drug.getId()); //更新药品基本信息
 		
 		content=content+JsoupUtil.Text(drug.getTerm());

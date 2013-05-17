@@ -219,9 +219,9 @@ public  abstract class BaseAction
 	 root.put("links", _getLinks());
 	
 	 //设置默认信息
-	 if(root.get("title")==null)  root.put("title", "医药吧");
-	 if(root.get("keywords")==null)  root.put("keywords", "药品信息、病状查找、疾病诊断、健康知识、综合资讯的综合信息网站");
-	 if(root.get("description")==null)  root.put("description", "一个药品查询系统，打造一流的药品网站和医学辅助网站。我们传播医药技术，推广医药产品，为广大群众提供一个交流、展示、查询的医药性综合平台");
+	 if(root.get("title")==null)  root.put("title", "医药吧  中国医药信息查询平台");
+	 if(root.get("keywords")==null)  root.put("keywords", "药品信息、病状查找、疾病诊断、健康知识、综合资讯的综合信息网站 医药吧中国医药信息网");
+	 if(root.get("description")==null)  root.put("description", " 医药吧 中国医药信息查询平台www.yi18.cn 成立于2013年3月，是一个个人工作室开发医药辅助网站。我们传播医药技术，推广医药产品，发现最新疾病，整理病状信息，提供健康知识，传递新闻信息。为广大群众提供一个交流、展示、查询的医药性综合平台,同时打造成中国最大的医药数据库中心。经过不断的改进，目前医药吧已经形成了由药品信息、病状信息、疾病信息、健康知识和综合咨询等几大频道内容。");
 	 if(root.get("author")==null)  root.put("author", "yi18.cn");
 	try {
 		Template  t = cfg.getTemplate(ftl);
