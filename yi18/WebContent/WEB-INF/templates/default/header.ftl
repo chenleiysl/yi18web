@@ -13,6 +13,9 @@
     <script type="text/javascript" src="${basePath}common/easyui/jquery-1.9.1.min.js"></script>  
     <script type="text/javascript" src="${basePath}common/easyui/jquery.easyui.min.js"></script> 
     <script type="text/javascript" src="${basePath}common/easyui/locale/easyui-lang-zh_CN.js"></script>  
+    
+    
+    
 </head>
 <body>
 <div id = "Screen">
