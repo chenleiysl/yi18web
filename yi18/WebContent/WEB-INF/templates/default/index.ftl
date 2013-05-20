@@ -96,7 +96,7 @@
      <div id="ll">  
         <a href="${basePath}lore/list" class="icon-redo" ></a> 
         </div>
-      <div id="p" class="easyui-panel" title="健康知识" style="width:998;height:300px;padding:10px;" data-options="tools:'#ll'">  
+      <div id="p" class="easyui-panel" title="健康知识" style="width:998;height:350px;padding:10px;" data-options="tools:'#ll'">  
       <div style="width: 490px;float: right;">
        <ul class='List'   >
 			<#list index.month as item>
