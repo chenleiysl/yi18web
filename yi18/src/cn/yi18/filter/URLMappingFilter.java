@@ -28,7 +28,7 @@ import cn.yi18.http.*;
  * 此过滤器负责对编码进行自动处理，以及执行URL映射规则
  */
 @WebFilter(urlPatterns="/*",
-initParams={@WebInitParam(name="ignore",value = "/action/,/common/"),
+initParams={@WebInitParam(name="ignore",value = "/action/,/common/,/app/"),
 		@WebInitParam(name="ignoreExts",value = "ico,css,js,jpg,gif,png,bmp,doc,xls,pdf,txt,html,htm,zip,rar,jsp,json,apk")})
 public class URLMappingFilter implements Filter {
 	private final static Logger log= LoggerFactory.getLogger(URLMappingFilter.class);
