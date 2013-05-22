@@ -40,10 +40,10 @@ public class POJO implements Serializable
 	private static final long serialVersionUID = 1L;
 	private static final String DABASE = "yi18";
 	private String __this_table_name;//对应的数据库表名
-	private long ___key_id;
+	private long id;
 	
-	public long getId() { return ___key_id; }
-	public void setId(long id) { this.___key_id = id; }
+	public long getId() { return id; }
+	public void setId(long id) { this.id = id; }
 	/**
 	 * 清空缓存
 	 * @param cache

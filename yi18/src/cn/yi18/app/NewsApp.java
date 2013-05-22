@@ -2,6 +2,7 @@ package cn.yi18.app;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import com.google.gson.Gson;
 
+import cn.yi18.app.entity.AskApp;
 import cn.yi18.pojo.News;
 import cn.yi18.pojo.POJO;
 import cn.yi18.service.NewsService;
@@ -35,17 +37,57 @@ public class NewsApp extends BaseApp
 		PageUtil page = newsService.getNews(bean.getPage(), bean.getLimit());
 		
 		int total=page.getTotal();
-		List<News> list = (List<News>) page.getList();
+		List<News> pagelist = (List<News>) page.getList();
+		
+		List<cn.yi18.app.entity.News> list = new ArrayList<cn.yi18.app.entity.News>();
+		
+		for (News pagenews : pagelist)
+		{
+			cn.yi18.app.entity.News news = new cn.yi18.app.entity.News();
+			news.setId(pagenews.getId()+"");
+			news.setTime(pagenews.getTime()+"");
+			news.setTitle(pagenews.getTitle());
+			news.setAuthor(pagenews.getAuthor());
+			list.add(news);
+		}
+		
+		
 		Gson gson = new Gson();
-		gson.toJson(list);
-		
-		printJson(gson.toString());
-		 
-		 
-		
-		
+		String json=gson.toJson(list);
+		json=bean.getCallback()+"({\"success\": true,  \"total\":"+total+",\"news\":"+json+"})";
+		printJson(json);
+
 		
 	}
+	
+	
+	public void show() throws IllegalAccessException, InvocationTargetException
+	{
+		Map<?, ?> map = request.getParameterMap();
+		AskApp bean = new AskApp();
+		BeanUtils.populate(bean, map);
+		
+		
+		News newsj= new News(); 
+		newsj=newsj.get(bean.getId());
+		cn.yi18.app.entity.News news = new cn.yi18.app.entity.News();
+		news.setId(newsj.getId()+"");
+		news.setTime(newsj.getTime()+"");
+		news.setTitle(newsj.getTitle());
+		news.setAuthor(newsj.getAuthor());
+		news.setMessage(newsj.getMessage());
+		
+		Gson gson = new Gson();
+		String json=gson.toJson(news);
+		json=bean.getCallback()+"({\"success\": true, \"news\":"+json+"})";
+		printJson(json);
+
+		
+	}
+	
+	
+	
+	
 	
 	private NewsService newsService = new NewsService();
 	

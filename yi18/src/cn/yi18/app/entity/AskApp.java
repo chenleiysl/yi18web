@@ -1,8 +1,8 @@
-package cn.yi18.app;
+package cn.yi18.app.entity;
 
-import java.io.Serializable;
 
-public class AskApp  implements Serializable
+
+public class AskApp 
 {
 	 private long id;
 	 private String callback;//Jsonp返回数据
