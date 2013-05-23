@@ -3,6 +3,7 @@ package cn.yi18.service;
 import java.io.Serializable;
 import java.util.List;
 
+import cn.yi18.app.entity.Medicine;
 import cn.yi18.cache.EhCacheEngine;
 import cn.yi18.dao.DrugClassDao;
 import cn.yi18.dao.SymptomClassDao;
@@ -27,4 +28,9 @@ public class SymptomClassService
 	
 	}
 	private SymptomClassDao symptomClassDao = new SymptomClassDao();
+	
+	
+	public List<Medicine> getMedicineClass() {
+		return symptomClassDao.getMedicineClass();
+	}
 }

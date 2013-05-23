@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.yi18.app.entity.Medicine;
 import cn.yi18.entity.SymptomClass;
 import cn.yi18.jdbc.QueryHelper;
 import cn.yi18.pojo.Drugclass;
@@ -49,5 +50,23 @@ public class SymptomClassDao
 		
 		return list;
 		
+	}
+	
+	
+	
+	public List<Medicine> getMedicineClass()
+	{
+		String sql ="select Symptomclass.id,Symptomclass.title,Symptomclass.parent,Symptom.count FROM  "+
+					" (SELECT D.id,D.title,D.level ,A.title parent FROM  yi18_symptomclass D  "+
+					" LEFT OUTER JOIN yi18_symptomclass A  "+
+					" ON D._parentId = A.id "+
+					" WHERE D.level=2) as Symptomclass , "+
+					" (SELECT symptoms.symptomsclass id,count(*) as count "+ 
+					" FROM yi18_symptoms symptoms "+ 
+					" WHERE symptoms.allow=1 "+ 
+					" GROUP BY symptoms.symptomsclass) as Symptom "+
+					" WHERE Symptomclass.id=Symptom.id";
+		
+		return QueryHelper.query(Medicine.class, sql);
 	}
 }

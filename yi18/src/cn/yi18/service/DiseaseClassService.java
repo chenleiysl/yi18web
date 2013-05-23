@@ -3,6 +3,7 @@ package cn.yi18.service;
 import java.io.Serializable;
 import java.util.List;
 
+import cn.yi18.app.entity.Medicine;
 import cn.yi18.cache.EhCacheEngine;
 import cn.yi18.dao.DrugClassDao;
 import cn.yi18.dao.DiseaseClassDao;
@@ -23,6 +24,11 @@ public class DiseaseClassService
 			EhCacheEngine.add(fullyQualifiedName, key, list);
 		}
 		return list; 
+	}
+	
+	public List<Medicine> getMedicineClass() {
+		DiseaseClassDao diseaseClassDao = new DiseaseClassDao();
+		return diseaseClassDao.getMedicineClass();
 	}
 
 }
