@@ -15,9 +15,11 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import cn.yi18.app.entity.AskApp;
 import cn.yi18.enums.CookieEnum;
 import cn.yi18.http.*;
 
@@ -151,7 +153,7 @@ public  abstract class BaseApp
 		return;
 	}
 	
-
+	
 
  
  
@@ -190,5 +192,23 @@ public  abstract class BaseApp
 			e.printStackTrace();
 		}
 	 }
+	 
+	 
+
+		protected AskApp getAskApp()
+		{
+			Map<?, ?> map = request.getParameterMap();
+			AskApp ask = new AskApp();
+			try {
+				BeanUtils.populate(ask, map);
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return ask;
+		}
 
 }

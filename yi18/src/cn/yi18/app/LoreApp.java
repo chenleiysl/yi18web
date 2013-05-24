@@ -26,32 +26,23 @@ public class LoreApp extends BaseApp
 {
 
 	
-	@Override
-	public void execute() throws ServletException, IOException {
-		
-		String json = "{\"id\":\"1\",\"title\":\"医药吧简介\"}";
-		printJson(json);
-	}
 	
-	public void classlist() throws IllegalAccessException, InvocationTargetException
+	
+	public void classlist() 
 	{
-		Map<?, ?> map = request.getParameterMap();
-		AskApp bean = new AskApp();
-		BeanUtils.populate(bean, map);
+		AskApp ask = getAskApp();
 		Loreclass loreclass = new Loreclass();
 		@SuppressWarnings("unchecked")
 		List< Loreclass> list = (List<Loreclass>) loreclass.list();
 		Gson gson = new Gson();
 		String json=gson.toJson(list);
-		json=bean.getCallback()+"({\"success\": true, \"lore\":"+json+"})";
+		json=ask.getCallback()+"({\"success\": true, \"yi18\":"+json+"})";
 		printJson(json);
 	}
 	
-	public void list() throws IllegalAccessException, InvocationTargetException
+	public void list() 
 	{
-		Map<?, ?> map = request.getParameterMap();
-		AskApp ask = new AskApp();
-		BeanUtils.populate(ask, map);
+		AskApp ask = getAskApp();
 		
 		int total = 0;
 		List<Lore> list = new ArrayList<Lore>();
@@ -97,7 +88,7 @@ public class LoreApp extends BaseApp
 		
 		String json=gson.toJson(list);
 		
-		json=ask.getCallback()+"({\"success\": true,  \"total\":"+total+",\"lore\":"+json+"})";
+		json=ask.getCallback()+"({\"success\": true,  \"total\":"+total+",\"yi18\":"+json+"})";
 		printJson(json);
 
 		
@@ -108,11 +99,9 @@ public class LoreApp extends BaseApp
 	
 	
 	
-	public void show() throws IllegalAccessException, InvocationTargetException
+	public void show() 
 	{
-		Map<?, ?> map = request.getParameterMap();
-		AskApp ask = new AskApp();
-		BeanUtils.populate(ask, map);
+		AskApp ask = getAskApp();
 		
 		
 		cn.yi18.pojo.Lore lorej = new cn.yi18.pojo.Lore();
@@ -127,7 +116,7 @@ public class LoreApp extends BaseApp
 		
 		Gson gson = new Gson();
 		String json=gson.toJson(lore);
-		json=ask.getCallback()+"({\"success\": true, \"lore\":"+json+"})";
+		json=ask.getCallback()+"({\"success\": true, \"yi18\":"+json+"})";
 		printJson(json);
 
 		

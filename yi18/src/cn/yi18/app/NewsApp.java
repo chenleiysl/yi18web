@@ -1,12 +1,12 @@
 package cn.yi18.app;
 
-import java.io.IOException;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.ServletException;
+
 
 import org.apache.commons.beanutils.BeanUtils;
 
@@ -14,7 +14,6 @@ import com.google.gson.Gson;
 
 import cn.yi18.app.entity.AskApp;
 import cn.yi18.pojo.News;
-import cn.yi18.pojo.POJO;
 import cn.yi18.service.NewsService;
 import cn.yi18.util.PageUtil;
 
@@ -22,21 +21,16 @@ public class NewsApp extends BaseApp
 {
 
 	
-	@Override
-	public void execute() throws ServletException, IOException {
-		
-		String json = "{\"id\":\"1\",\"title\":\"医药吧简介\"}";
-		printJson(json);
-	}
 	
-	public void list() throws IllegalAccessException, InvocationTargetException
+	
+	public void list() 
 	{
-		Map<?, ?> map = request.getParameterMap();
-		AskApp bean = new AskApp();
-		BeanUtils.populate(bean, map);
-		PageUtil page = newsService.getNews(bean.getPage(), bean.getLimit());
+		AskApp ask = getAskApp();
+		
+		PageUtil page = newsService.getNews(ask.getPage(), ask.getLimit());
 		
 		int total=page.getTotal();
+		@SuppressWarnings("unchecked")
 		List<News> pagelist = (List<News>) page.getList();
 		
 		List<cn.yi18.app.entity.News> list = new ArrayList<cn.yi18.app.entity.News>();
@@ -54,22 +48,20 @@ public class NewsApp extends BaseApp
 		
 		Gson gson = new Gson();
 		String json=gson.toJson(list);
-		json=bean.getCallback()+"({\"success\": true,  \"total\":"+total+",\"news\":"+json+"})";
+		json=ask.getCallback()+"({\"success\": true,  \"total\":"+total+",\"yi18\":"+json+"})";
 		printJson(json);
 
 		
 	}
 	
 	
-	public void show() throws IllegalAccessException, InvocationTargetException
+	public void show() 
 	{
-		Map<?, ?> map = request.getParameterMap();
-		AskApp bean = new AskApp();
-		BeanUtils.populate(bean, map);
+		AskApp ask = getAskApp();
 		
 		
 		News newsj= new News(); 
-		newsj=newsj.get(bean.getId());
+		newsj=newsj.get(ask.getId());
 		cn.yi18.app.entity.News news = new cn.yi18.app.entity.News();
 		news.setId(newsj.getId()+"");
 		news.setTime(newsj.getTime()+"");
@@ -79,7 +71,7 @@ public class NewsApp extends BaseApp
 		
 		Gson gson = new Gson();
 		String json=gson.toJson(news);
-		json=bean.getCallback()+"({\"success\": true, \"news\":"+json+"})";
+		json=ask.getCallback()+"({\"success\": true, \"yi18\":"+json+"})";
 		printJson(json);
 
 		

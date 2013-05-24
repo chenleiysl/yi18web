@@ -213,6 +213,11 @@ public class DrugService
 	}
 	
 	
+	public cn.yi18.app.entity.Drug getDrug(long id) 
+	{
+		return drugDao.getDrug(id);
+	}
+	
 	
 	
 	

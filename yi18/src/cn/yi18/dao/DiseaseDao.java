@@ -2,6 +2,8 @@ package cn.yi18.dao;
 
 import java.util.List;
 
+import cn.yi18.entity.DiseaseInfo;
+import cn.yi18.entity.DrugInfo;
 import cn.yi18.enums.DiseaseEnum;
 import cn.yi18.enums.DrugEnum;
 import cn.yi18.enums.SymptomEnum;
@@ -138,5 +140,30 @@ public class DiseaseDao
 	}
 	
 	
+	
+	public cn.yi18.app.entity.Disease getDisease(Long id)
+	{
+		cn.yi18.app.entity.Disease disease = new cn.yi18.app.entity.Disease();
+		String sql = "SELECT disease.id,disease.name,disease.count,disease.description message, "+
+					"	CASE disease.infectious WHEN 0 THEN '不传染' WHEN 1 THEN '传染'  ELSE '其他' END infectious , "+
+					"	diseaseclass.title diseaseclass "+
+					"	FROM yi18_disease disease,yi18_diseaseclass diseaseclass "+
+					"	WHERE disease.diseaseclass = diseaseclass.id  "+
+					"	AND disease.allow=1 "+
+					"	AND disease.id=?";
+		disease=QueryHelper.read(cn.yi18.app.entity.Disease.class, sql, id);
+		
+		DiseaseInfoDao diseaseInfoDao = new DiseaseInfoDao(); 
+		List<DiseaseInfo> list = diseaseInfoDao.getDiseaseinfo(id);
+		
+		String message="<h2>摘要信息</h2>"+disease.getMessage();
+		for (DiseaseInfo diseaseInfo : list)
+		{
+			message=message+"<h2>"+diseaseInfo.getTitle()+"</h2><div>"+diseaseInfo.getMessage()+"</div>";
+		}
+		disease.setMessage(message);
+		return disease;
+		
+	}
 
 }

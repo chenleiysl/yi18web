@@ -14,12 +14,14 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
 import cn.yi18.app.entity.AskApp;
+import cn.yi18.app.entity.Drug;
 import cn.yi18.app.entity.Lore;
 import cn.yi18.app.entity.Medicine;
 import cn.yi18.pojo.Loreclass;
 import cn.yi18.pojo.News;
 import cn.yi18.pojo.POJO;
 import cn.yi18.service.DrugClassService;
+import cn.yi18.service.DrugService;
 import cn.yi18.service.LoreService;
 import cn.yi18.service.NewsService;
 import cn.yi18.util.PageUtil;
@@ -28,71 +30,57 @@ public class DrugApp extends BaseApp
 {
 
 	
-	public void classlist() throws IllegalAccessException, InvocationTargetException
+	public void classlist() 
 	{
 	
-		Map<?, ?> map = request.getParameterMap();
-		AskApp ask = new AskApp();
-		BeanUtils.populate(ask, map);
+		AskApp ask = getAskApp();
 		DrugClassService drugClassService = new DrugClassService();
 		List<Medicine> list =  drugClassService.getMedicineClass();
 		Gson gson = new Gson();
 		String json=gson.toJson(list);
-		json=ask.getCallback()+"({\"success\": true, \"medicine\":"+json+"})";
+		json=ask.getCallback()+"({\"success\": true, \"yi18\":"+json+"})";
 		printJson(json);
 	}
 	
-	public void list() throws IllegalAccessException, InvocationTargetException
+	
+	
+	public void list() 
 	{
-		Map<?, ?> map = request.getParameterMap();
-		AskApp ask = new AskApp();
-		BeanUtils.populate(ask, map);
+		AskApp ask = getAskApp();
 		
 		int total = 0;
-		List<Lore> list = new ArrayList<Lore>();
+		List<Drug> list = new ArrayList<Drug>();
+		PageUtil page = null;
 		if(ask.getId()==0)//默认不分类
 		{
-			PageUtil page = loreService.getNews(ask.getPage(), ask.getLimit());
-			total=page.getTotal();
-			@SuppressWarnings("unchecked")
-			List<cn.yi18.pojo.Lore> pagelist = (List<cn.yi18.pojo.Lore>) page.getList();
-			for (cn.yi18.pojo.Lore pagelore : pagelist) 
-			{
-				Lore lore = new Lore();
-				lore.setAuthor(pagelore.getAuthor());
-				lore.setId(pagelore.getId()+"");
-				lore.setTime(pagelore.getTitle()+"");
-				lore.setCount(pagelore.getCount()+"");
-				lore.setTitle(pagelore.getTitle());
-				
-				list.add(lore);
-			}
+			page = drugService.getPageHot(ask.getPage(), ask.getLimit());	
 			
 		}else
 		{
-			PageUtil page = loreService.getNews(ask.getId(),ask.getPage(), ask.getLimit());
-			total=page.getTotal();
-			@SuppressWarnings("unchecked")
-			List<cn.yi18.pojo.Lore> pagelist = (List<cn.yi18.pojo.Lore>) page.getList();
-			for (cn.yi18.pojo.Lore pagelore : pagelist) 
-			{
-				Lore lore = new Lore();
-				lore.setAuthor(pagelore.getAuthor());
-				lore.setId(pagelore.getId()+"");
-				lore.setTime(pagelore.getTime()+"");
-				lore.setCount(pagelore.getCount()+"");
-				lore.setTitle(pagelore.getTitle());
-				
-				list.add(lore);
-			}
+			page =  drugService.getPageHot(ask.getPage(), ask.getLimit(),ask.getId());
 			
+			
+		}
+		
+		total=page.getTotal();
+		@SuppressWarnings("unchecked")
+		List<cn.yi18.pojo.Drug> pagelist = (List<cn.yi18.pojo.Drug>) page.getList();
+		for (cn.yi18.pojo.Drug pagedrug : pagelist) 
+		{
+			Drug drug = new Drug();
+			drug.setId(pagedrug.getId());
+			drug.setImage(pagedrug.getImage());
+			drug.setCount(pagedrug.getCount());
+			drug.setAlias(pagedrug.getAlias());
+			drug.setName(pagedrug.getName());
+			list.add(drug);
 		}
 
 		Gson gson = new Gson();
 		
 		String json=gson.toJson(list);
 		
-		json=ask.getCallback()+"({\"success\": true,  \"total\":"+total+",\"lore\":"+json+"})";
+		json=ask.getCallback()+"({\"success\": true,  \"total\":"+total+",\"yi18\":"+json+"})";
 		printJson(json);
 
 		
@@ -105,24 +93,13 @@ public class DrugApp extends BaseApp
 	
 	public void show() throws IllegalAccessException, InvocationTargetException
 	{
-		Map<?, ?> map = request.getParameterMap();
-		AskApp ask = new AskApp();
-		BeanUtils.populate(ask, map);
+		AskApp ask = getAskApp();
+		Drug drug = drugService.getDrug(ask.getId());
 		
-		
-		cn.yi18.pojo.Lore lorej = new cn.yi18.pojo.Lore();
-		lorej = lorej.get(ask.getId());
-		Lore lore = new Lore();
-		lore.setAuthor(lorej.getAuthor());
-		lore.setId(lorej.getId()+"");
-		lore.setTime(lorej.getTime()+"");
-		lore.setCount(lorej.getCount()+"");
-		lore.setTitle(lorej.getTitle());
-		lore.setMessage(lorej.getMessage());
-		
+	
 		Gson gson = new Gson();
-		String json=gson.toJson(lore);
-		json=ask.getCallback()+"({\"success\": true, \"lore\":"+json+"})";
+		String json=gson.toJson(drug);
+		json=ask.getCallback()+"({\"success\": true, \"yi18\":"+json+"})";
 		printJson(json);
 
 		
@@ -131,6 +108,8 @@ public class DrugApp extends BaseApp
 	
 
 	
-	private LoreService loreService = new LoreService();
+	
+	
+	private DrugService drugService = new DrugService();
 	
 }

@@ -14,34 +14,98 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
 import cn.yi18.app.entity.AskApp;
+import cn.yi18.app.entity.Disease;
+import cn.yi18.app.entity.Drug;
 import cn.yi18.app.entity.Lore;
 import cn.yi18.app.entity.Medicine;
+import cn.yi18.app.entity.Symptom;
 import cn.yi18.pojo.Loreclass;
 import cn.yi18.pojo.News;
 import cn.yi18.pojo.POJO;
+import cn.yi18.service.DiseaseService;
 import cn.yi18.service.DrugClassService;
 import cn.yi18.service.LoreService;
 import cn.yi18.service.NewsService;
 import cn.yi18.service.SymptomClassService;
+import cn.yi18.service.SymptomService;
 import cn.yi18.util.PageUtil;
 
 public class SymptomApp extends BaseApp
 {
 
 	
-	public void classlist() throws IllegalAccessException, InvocationTargetException
+	public void classlist() 
 	{
 	
-		Map<?, ?> map = request.getParameterMap();
-		AskApp ask = new AskApp();
-		BeanUtils.populate(ask, map);
+		
+		AskApp ask = getAskApp();
+		
 		SymptomClassService symptomClassService = new SymptomClassService();
 		List<Medicine> list =  symptomClassService.getMedicineClass();
 		Gson gson = new Gson();
 		String json=gson.toJson(list);
-		json=ask.getCallback()+"({\"success\": true, \"medicine\":"+json+"})";
+		json=ask.getCallback()+"({\"success\": true, \"yi18\":"+json+"})";
 		printJson(json);
 	}
+	
+	
+	public void list() 
+	{
+		AskApp ask = getAskApp();
+		
+		int total = 0;
+		List<Symptom> list = new ArrayList<Symptom>();
+		SymptomService symptomService = new SymptomService();
+		
+		PageUtil page = null;
+		if(ask.getId()==0)//默认不分类
+		{
+			page = symptomService.getPageHot(ask.getPage(), ask.getLimit());	
+			
+		}else
+		{
+			page =  symptomService.getPageHot(ask.getPage(), ask.getLimit(),ask.getId());
+			
+			
+		}
+		
+		total=page.getTotal();
+		@SuppressWarnings("unchecked")
+		List<cn.yi18.pojo.Symptoms> pagelist = (List<cn.yi18.pojo.Symptoms>) page.getList();
+		for (cn.yi18.pojo.Symptoms pagesymptom : pagelist) 
+		{
+			Symptom symptom = new Symptom();
+			symptom.setId(pagesymptom.getId());	
+			symptom.setCount(pagesymptom.getCount());
+			symptom.setName(pagesymptom.getName());
+			list.add(symptom);
+		}
+
+		Gson gson = new Gson();
+		
+		String json=gson.toJson(list);
+		
+		json=ask.getCallback()+"({\"success\": true,  \"total\":"+total+",\"yi18\":"+json+"})";
+		printJson(json);
+
+		
+	}
+	
+	public void show() throws IllegalAccessException, InvocationTargetException
+	{
+		AskApp ask = getAskApp();
+		SymptomService symptomService = new SymptomService();
+		Symptom symptom = symptomService.getSymptom(ask.getId());
+		
+	
+		Gson gson = new Gson();
+		String json=gson.toJson(symptom);
+		json=ask.getCallback()+"({\"success\": true, \"yi18\":"+json+"})";
+		printJson(json);
+
+		
+	}
+	
 	
 	
 }

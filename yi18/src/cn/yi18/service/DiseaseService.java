@@ -276,6 +276,12 @@ public class DiseaseService
 		return list;
 	}
 	
+	public cn.yi18.app.entity.Disease getDisease( long id) 
+	{
+		return diseaseDao .getDisease(id);
+	}
+	
+	
 	private DiseaseDao diseaseDao = new DiseaseDao();
 	
 

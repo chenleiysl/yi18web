@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.yi18.app.entity.Symptom;
 import cn.yi18.cache.EhCacheEngine;
 import cn.yi18.dao.DrugDao;
 import cn.yi18.dao.SymptomDao;
@@ -165,6 +166,12 @@ public class SymptomService
 		return pageUtil;
 	}
 	
+	
+	public Symptom getSymptom( long id) 
+	{
+		SymptomDao symptomDao = new SymptomDao();
+		return symptomDao.getSymptom(id);
+	}
 
 	
 }
