@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html manifest="" lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>医药吧-手机端</title>
+    <meta name="keywords" content="医药吧  手机端 平板电脑 药品信息、病状查找、疾病诊断、健康知识、综合资讯的综合信息网站 医药吧中国医药信息网">
+		<meta name="description" content="医药吧 中国医药信息查询平台www.yi18.cn 成立于2013年3月，是一个个人工作室开发医药辅助网站。我们传播医药技术，推广医药产品，发现最新疾病，整理病状信息，提供健康知识，传递新闻信息。为广大群众提供一个交流、展示、查询的医药性综合平台,同时打造成中国最大的医药数据库中心。经过不断的改进，目前医药吧已经形成了由药品信息、病状信息、疾病信息、健康知识和综合咨询等几大频道内容。">
+	<meta name="author" content="yi18"/>
+    <style type="text/css">
+         /**
+         * Example of an initial loading indicator.
+         * It is recommended to keep this as minimal as possible to provide instant feedback
+         * while other resources are still being loaded for the first time
+         */
+        html, body {
+            height: 100%;
+            background-color: #1985D0
+        }
+
+        #appLoadingIndicator {
+            position: absolute;
+            top: 50%;
+            margin-top: -15px;
+            text-align: center;
+            width: 100%;
+            height: 30px;
+            -webkit-animation-name: appLoadingIndicator;
+            -webkit-animation-duration: 0.5s;
+            -webkit-animation-iteration-count: infinite;
+            -webkit-animation-direction: linear;
+        }
+
+        #appLoadingIndicator > * {
+            background-color: #FFFFFF;
+            display: inline-block;
+            height: 30px;
+            -webkit-border-radius: 15px;
+            margin: 0 5px;
+            width: 30px;
+            opacity: 0.8;
+        }
+
+        @-webkit-keyframes appLoadingIndicator{
+            0% {
+                opacity: 0.8
+            }
+            50% {
+                opacity: 0
+            }
+            100% {
+                opacity: 0.8
+            }
+        }
+    </style>
+ 
+<link rel="stylesheet" type="text/css" href="resources/css/sencha-touch.css">
+  <script type="text/javascript" src="touch/sencha-touch-all.js"></script>
+
+   <script type="text/javascript" src="app.js"></script>
+   
+</head>
+<body>
+    <div id="appLoadingIndicator">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</body>
+</html>

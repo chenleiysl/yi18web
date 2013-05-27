@@ -9,6 +9,9 @@ public class AskApp
 	 private int limit;//显示大小
 	 private int page;//当前页
 	 private int start;//开始条数
+	 private String keyword; //关键字
+	 private String type;//请求类型
+	 
 	public long getId() {
 		return id;
 	}
@@ -38,6 +41,18 @@ public class AskApp
 	}
 	public void setStart(int start) {
 		this.start = start;
+	}
+	public String getKeyword() {
+		return keyword;
+	}
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 	 
 	 
