@@ -23,8 +23,8 @@
 //全局变量
 var Global = {
 	Author : '陈磊',
-//	Website : 'http://yi18.cloudfoundry.com/app/',
-		Website : 'http://localhost:8080/yi18/app/',
+	Website : 'http://yi18.cloudfoundry.com/app/',
+//		Website : 'http://localhost:8080/yi18/app/',
 	Title : '医药吧'
 };
 
