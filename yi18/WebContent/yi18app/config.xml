@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+    <widget xmlns = "http://www.w3.org/ns/widgets"
+        xmlns:gap = "http://phonegap.com/ns/1.0"
+        id        = "cn.yi18"
+        versionCode="10" 
+        version   = "1.0.0">
+
+	<name>医药吧</name>
+
+	<description>
+		指尖上的健康，医药吧打造医药综合信息查询的移动平台。
+	</description>
+
+	<author href="http://yi18.cloudfoundry.com/"
+		email="mail.yi18.cn@gmail.com">
+		陈磊
+	</author>
+
+	<preference name="phonegap-version" value="2.7.0" />
+	
+	<icon src="resources/icons/Icon.png"  />
+	<gap:splash src="resources/loading/Default.png" />
+	
+
+</widget>

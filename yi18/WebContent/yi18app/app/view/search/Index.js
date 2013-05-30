@@ -11,7 +11,8 @@ Ext.define('yi18app.view.search.Index',
         	
 //    	 store: 'NewsListStore',
 							
-			itemTpl: '<div  style="font-size:10pt;font-weight: bold;"> {title}</div> <div style="color:#666;font-size:8pt;">{author} 发布: {time} ({count}阅读)</div>',
+			itemTpl: '<div  style="font-size:10pt;font-weight: bold;"> {title}</div>' +
+					' <div style="color:#666;font-size:8pt;">{content}</div>',
 			emptyText: '没有找到数据,请检查条件！',
 			plugins: {
 				            xclass: 'Ext.plugin.ListPaging', // Reference plugin by class

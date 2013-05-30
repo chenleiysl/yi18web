@@ -13,7 +13,7 @@ Ext.define('yi18app.view.medicine.DiseaseList',
 		  
 		  // store: 'DrugListStore',
 							
-			itemTpl: '<div  style="font-size:10pt;font-weight: bold;"> {name}</div> <div style="color:#666;font-size:8pt;"> ({count}阅读)</div>',
+			itemTpl: '<div  style="font-size:10pt;font-weight: bold;"> {name}</div> ',
 			emptyText: '没有找到数据,请检查条件！',
 			plugins: {
 				            xclass: 'Ext.plugin.ListPaging', // Reference plugin by class
