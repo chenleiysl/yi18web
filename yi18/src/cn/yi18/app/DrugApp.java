@@ -1,35 +1,39 @@
 package cn.yi18.app;
 
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import javax.servlet.ServletException;
-
-import org.apache.commons.beanutils.BeanUtils;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
+
 
 import cn.yi18.app.entity.AskApp;
 import cn.yi18.app.entity.Drug;
-import cn.yi18.app.entity.Lore;
+
 import cn.yi18.app.entity.Medicine;
-import cn.yi18.pojo.Loreclass;
-import cn.yi18.pojo.News;
-import cn.yi18.pojo.POJO;
+import cn.yi18.cache.VisitLogEhCache;
+
 import cn.yi18.service.DrugClassService;
 import cn.yi18.service.DrugService;
-import cn.yi18.service.LoreService;
-import cn.yi18.service.NewsService;
+
 import cn.yi18.util.PageUtil;
 
+/**
+ * 药品信息的APP接口
+ * classlist 分类
+ * list 显示信息列表
+ * show 详细信息
+ * @author 陈磊
+ *
+ */
 public class DrugApp extends BaseApp
 {
 
 	
+	/**
+	 * 显示分类信息
+	 */
 	public void classlist() 
 	{
 	
@@ -38,16 +42,22 @@ public class DrugApp extends BaseApp
 		List<Medicine> list =  drugClassService.getMedicineClass();
 		Gson gson = new Gson();
 		String json=gson.toJson(list);
-		json=ask.getCallback()+"({\"success\": true, \"yi18\":"+json+"})";
-		printJson(json);
+		printJson(this.toJsonP(ask.getCallback(), json));
+		
 	}
 	
 	
-	
+	/**
+	 * 显示分类列表信息
+	 * 主要参数 分类id
+	 * page 当前页
+	 * limit 页显示条数
+	 * 
+	 */
 	public void list() 
 	{
 		AskApp ask = getAskApp();
-		
+		DrugService drugService = new DrugService();
 		int total = 0;
 		List<Drug> list = new ArrayList<Drug>();
 		PageUtil page = null;
@@ -79,37 +89,39 @@ public class DrugApp extends BaseApp
 		Gson gson = new Gson();
 		
 		String json=gson.toJson(list);
+		printJson(this.toJsonP(ask.getCallback(), json,total));
 		
-		json=ask.getCallback()+"({\"success\": true,  \"total\":"+total+",\"yi18\":"+json+"})";
-		printJson(json);
-
+	
 		
 	}
 	
 	
 	
 	
-	
-	
-	public void show() throws IllegalAccessException, InvocationTargetException
+	/**
+	 * 显示药品信息
+	 * 参数 id 
+	 */
+	public void show() 
 	{
 		AskApp ask = getAskApp();
+		DrugService drugService = new DrugService();
 		Drug drug = drugService.getDrug(ask.getId());
+		if(drug==null){
+			run_false();
+			return;
+		}//如果不存在就返回404页面
+
+		VisitLogEhCache.Add(drug.getId(), "yi18_drug");//更新阅读数
 		
-	
 		Gson gson = new Gson();
 		String json=gson.toJson(drug);
-		json=ask.getCallback()+"({\"success\": true, \"yi18\":"+json+"})";
-		printJson(json);
+		printJson(this.toJsonP(ask.getCallback(), json));
 
 		
 	}
 	
 	
 
-	
-	
-	
-	private DrugService drugService = new DrugService();
 	
 }

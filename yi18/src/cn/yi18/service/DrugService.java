@@ -215,7 +215,15 @@ public class DrugService
 	
 	public cn.yi18.app.entity.Drug getDrug(long id) 
 	{
-		return drugDao.getDrug(id);
+		String fullyQualifiedName = "Drug";
+		Serializable key="drug"+id;
+		cn.yi18.app.entity.Drug drug = (cn.yi18.app.entity.Drug) EhCacheEngine.get(fullyQualifiedName, key);
+		if (drug==null) {
+			drug =drugDao.getDrug(id);
+			EhCacheEngine.add(fullyQualifiedName, key, drug);
+		}
+		
+		return drug;
 	}
 	
 	

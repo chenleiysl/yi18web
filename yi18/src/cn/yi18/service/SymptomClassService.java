@@ -30,7 +30,19 @@ public class SymptomClassService
 	private SymptomClassDao symptomClassDao = new SymptomClassDao();
 	
 	
-	public List<Medicine> getMedicineClass() {
-		return symptomClassDao.getMedicineClass();
+	public List<Medicine> getMedicineClass() 
+	{
+		
+		String fullyQualifiedName = "Symptomses";
+		Serializable key="listall_";
+		@SuppressWarnings("unchecked")
+		List<Medicine> list=(List<Medicine>) EhCacheEngine.get(fullyQualifiedName, key);
+		if(list==null)
+		{
+			
+			list= symptomClassDao.getMedicineClass();
+			EhCacheEngine.add(fullyQualifiedName, key, list);
+		}
+		return list;
 	}
 }

@@ -6,8 +6,8 @@ public class AskApp
 {
 	 private long id;
 	 private String callback;//Jsonp返回数据
-	 private int limit;//显示大小
-	 private int page;//当前页
+	 private int limit = 25;//显示大小
+	 private int page =1;//当前页
 	 private int start;//开始条数
 	 private String keyword; //关键字
 	 private String type;//请求类型

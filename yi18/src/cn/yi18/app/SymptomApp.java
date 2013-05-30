@@ -1,39 +1,35 @@
 package cn.yi18.app;
 
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import javax.servlet.ServletException;
 
-import org.apache.commons.beanutils.BeanUtils;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
+
 
 import cn.yi18.app.entity.AskApp;
-import cn.yi18.app.entity.Disease;
-import cn.yi18.app.entity.Drug;
-import cn.yi18.app.entity.Lore;
+
 import cn.yi18.app.entity.Medicine;
 import cn.yi18.app.entity.Symptom;
-import cn.yi18.pojo.Loreclass;
-import cn.yi18.pojo.News;
-import cn.yi18.pojo.POJO;
-import cn.yi18.service.DiseaseService;
-import cn.yi18.service.DrugClassService;
-import cn.yi18.service.LoreService;
-import cn.yi18.service.NewsService;
+import cn.yi18.cache.VisitLogEhCache;
+
 import cn.yi18.service.SymptomClassService;
 import cn.yi18.service.SymptomService;
 import cn.yi18.util.PageUtil;
 
+/**
+ * 病状信息app
+ * @author 陈磊
+ *
+ */
 public class SymptomApp extends BaseApp
 {
 
-	
+	/**
+	 * 显示分类信息
+	 */
 	public void classlist() 
 	{
 	
@@ -44,11 +40,17 @@ public class SymptomApp extends BaseApp
 		List<Medicine> list =  symptomClassService.getMedicineClass();
 		Gson gson = new Gson();
 		String json=gson.toJson(list);
-		json=ask.getCallback()+"({\"success\": true, \"yi18\":"+json+"})";
-		printJson(json);
+		
+		printJson(this.toJsonP(ask.getCallback(), json));
 	}
 	
-	
+	/**
+	 * 显示分类列表信息
+	 * 主要参数 分类id
+	 * page 当前页
+	 * limit 页显示条数
+	 * 
+	 */
 	public void list() 
 	{
 		AskApp ask = getAskApp();
@@ -85,23 +87,30 @@ public class SymptomApp extends BaseApp
 		
 		String json=gson.toJson(list);
 		
-		json=ask.getCallback()+"({\"success\": true,  \"total\":"+total+",\"yi18\":"+json+"})";
-		printJson(json);
+		
+		printJson(this.toJsonP(ask.getCallback(), json, total));
 
 		
 	}
-	
-	public void show() throws IllegalAccessException, InvocationTargetException
+	/**
+	 * 显示病状信息
+	 * 参数 id 
+	 */
+	public void show() 
 	{
 		AskApp ask = getAskApp();
 		SymptomService symptomService = new SymptomService();
 		Symptom symptom = symptomService.getSymptom(ask.getId());
+		if(symptom==null){
+			run_false();//如果不存在就返回404页面
+			return;
+		}
 		
-	
+		VisitLogEhCache.Add(symptom.getId(), "yi18_symptoms");//更新阅读数
 		Gson gson = new Gson();
 		String json=gson.toJson(symptom);
-		json=ask.getCallback()+"({\"success\": true, \"yi18\":"+json+"})";
-		printJson(json);
+		
+		printJson(this.toJsonP(ask.getCallback(), json));
 
 		
 	}

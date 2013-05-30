@@ -1,38 +1,38 @@
 package cn.yi18.app;
 
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import javax.servlet.ServletException;
 
-import org.apache.commons.beanutils.BeanUtils;
+
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
+
 
 import cn.yi18.app.entity.AskApp;
 import cn.yi18.app.entity.Disease;
-import cn.yi18.app.entity.Drug;
-import cn.yi18.app.entity.Lore;
+
 import cn.yi18.app.entity.Medicine;
-import cn.yi18.pojo.Loreclass;
-import cn.yi18.pojo.News;
-import cn.yi18.pojo.POJO;
+import cn.yi18.cache.VisitLogEhCache;
+
 import cn.yi18.service.DiseaseClassService;
 import cn.yi18.service.DiseaseService;
-import cn.yi18.service.DrugClassService;
-import cn.yi18.service.LoreService;
-import cn.yi18.service.NewsService;
+
 import cn.yi18.util.PageUtil;
 
+/**
+ * 显示疾病信息
+ * @author 陈磊
+ *
+ */
 public class DiseaseApp extends BaseApp
 {
 
-	
-	public void classlist() throws IllegalAccessException, InvocationTargetException
+	/**
+	 * 显示分类信息
+	 */
+	public void classlist() 
 	{
 	
 		AskApp ask = getAskApp();
@@ -40,11 +40,18 @@ public class DiseaseApp extends BaseApp
 		List<Medicine> list =  diseaseClassService.getMedicineClass();
 		Gson gson = new Gson();
 		String json=gson.toJson(list);
-		json=ask.getCallback()+"({\"success\": true, \"yi18\":"+json+"})";
-		printJson(json);
+		
+		printJson(this.toJsonP(ask.getCallback(), json));
 	}
 	
 	
+	/**
+	 * 显示分类列表信息
+	 * 主要参数 分类id
+	 * page 当前页
+	 * limit 页显示条数
+	 * 
+	 */
 	public void list() 
 	{
 		AskApp ask = getAskApp();
@@ -81,23 +88,31 @@ public class DiseaseApp extends BaseApp
 		
 		String json=gson.toJson(list);
 		
-		json=ask.getCallback()+"({\"success\": true,  \"total\":"+total+",\"yi18\":"+json+"})";
-		printJson(json);
+	
+		printJson(this.toJsonP(ask.getCallback(), json, total));
 
 		
 	}
 	
-	
-	public void show() throws IllegalAccessException, InvocationTargetException
+	/**
+	 * 显示疾病信息
+	 * 参数 id 
+	 */
+	public void show()
 	{
 		AskApp ask = getAskApp();
 		DiseaseService diseaseService = new DiseaseService();
 		Disease disease= diseaseService.getDisease(ask.getId());
+		if(disease==null){
+			run_false();
+			return;
+		}//如果不存在就返回404页面
 		
+		VisitLogEhCache.Add(disease.getId(), "yi18_disease");//更新阅读数
 		Gson gson = new Gson();
 		String json=gson.toJson(disease);
-		json=ask.getCallback()+"({\"success\": true, \"yi18\":"+json+"})";
-		printJson(json);
+		
+		printJson(this.toJsonP(ask.getCallback(), json));
 
 		
 	}

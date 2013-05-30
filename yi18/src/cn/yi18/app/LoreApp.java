@@ -1,33 +1,38 @@
 package cn.yi18.app;
 
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import javax.servlet.ServletException;
-
-import org.apache.commons.beanutils.BeanUtils;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 
 import cn.yi18.app.entity.AskApp;
 import cn.yi18.app.entity.Lore;
+import cn.yi18.cache.VisitLogEhCache;
 import cn.yi18.pojo.Loreclass;
-import cn.yi18.pojo.News;
-import cn.yi18.pojo.POJO;
 import cn.yi18.service.LoreService;
-import cn.yi18.service.NewsService;
 import cn.yi18.util.PageUtil;
 
+/**
+ * 健康知识信息
+ * 主要接口
+ * 分类信息 classlist
+ * 信息列表 list
+ * 显示信息 show
+ * @author 陈磊
+ *
+ */
 public class LoreApp extends BaseApp
 {
 
 	
 	
 	
+	/**
+	 * 显示健康知识分类
+	 * 无参数
+	 */
 	public void classlist() 
 	{
 		AskApp ask = getAskApp();
@@ -36,14 +41,22 @@ public class LoreApp extends BaseApp
 		List< Loreclass> list = (List<Loreclass>) loreclass.list();
 		Gson gson = new Gson();
 		String json=gson.toJson(list);
-		json=ask.getCallback()+"({\"success\": true, \"yi18\":"+json+"})";
-		printJson(json);
+		
+		
+		printJson(this.toJsonP(ask.getCallback(), json));
 	}
 	
+	
+	/**
+	 * 按照分类显示健康知识
+	 * 主要参数 分类的 id ：默认为0 也就不分类 
+	 * 当前页数  page
+	 * 显示条数 limit 
+	 */
 	public void list() 
 	{
 		AskApp ask = getAskApp();
-		
+		LoreService loreService = new LoreService();
 		int total = 0;
 		List<Lore> list = new ArrayList<Lore>();
 		if(ask.getId()==0)//默认不分类
@@ -87,9 +100,7 @@ public class LoreApp extends BaseApp
 		Gson gson = new Gson();
 		
 		String json=gson.toJson(list);
-		
-		json=ask.getCallback()+"({\"success\": true,  \"total\":"+total+",\"yi18\":"+json+"})";
-		printJson(json);
+		printJson(this.toJsonP(ask.getCallback(), json,total));
 
 		
 	}
@@ -98,7 +109,10 @@ public class LoreApp extends BaseApp
 	
 	
 	
-	
+	/**
+	 * 显示健康知识
+	 * 参数 id 
+	 */
 	public void show() 
 	{
 		AskApp ask = getAskApp();
@@ -106,6 +120,12 @@ public class LoreApp extends BaseApp
 		
 		cn.yi18.pojo.Lore lorej = new cn.yi18.pojo.Lore();
 		lorej = lorej.get(ask.getId());
+		if(lorej==null){
+			run_false();
+			return;
+		}//如果不存在就返回404页面
+	
+		VisitLogEhCache.Add(lorej .getId(), "yi18_lore");//更新阅读数
 		Lore lore = new Lore();
 		lore.setAuthor(lorej.getAuthor());
 		lore.setId(lorej.getId()+"");
@@ -116,15 +136,12 @@ public class LoreApp extends BaseApp
 		
 		Gson gson = new Gson();
 		String json=gson.toJson(lore);
-		json=ask.getCallback()+"({\"success\": true, \"yi18\":"+json+"})";
-		printJson(json);
+		printJson(this.toJsonP(ask.getCallback(), json));
+		
 
 		
 	}
 	
-	
 
-	
-	private LoreService loreService = new LoreService();
 	
 }

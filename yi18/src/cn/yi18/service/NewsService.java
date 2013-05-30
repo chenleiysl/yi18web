@@ -69,6 +69,7 @@ public class NewsService
 		{
 			News bean = new News();
 			String filter=" allow = "+NewsEnum.Check_Status.IsCheck.getValue();
+			@SuppressWarnings("unchecked")
 			List<News> list =(List<News>) bean.filter(filter, page, size) ;
 			pageUtil = new PageUtil(list , page, size, _getTotalCount());
 			EhCacheEngine.add(fullyQualifiedName, key, pageUtil);

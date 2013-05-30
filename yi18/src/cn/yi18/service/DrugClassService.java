@@ -24,8 +24,18 @@ public class DrugClassService
 		return list ;
 	}
 	
-	public List<Medicine> getMedicineClass() {
-		return drugClassDao.getMedicineClass();
+	public List<Medicine> getMedicineClass() 
+	{
+		String fullyQualifiedName="Drugs";
+		Serializable key="listclass";
+		 @SuppressWarnings("unchecked")
+		List<Medicine> list = (List<Medicine>) EhCacheEngine.get(fullyQualifiedName, key);
+		 if (list==null)
+		{
+				 list= drugClassDao.getMedicineClass();
+				 EhCacheEngine.add(fullyQualifiedName, key, list);
+		}
+		return list;
 	}
 	private DrugClassDao drugClassDao = new DrugClassDao();
 }

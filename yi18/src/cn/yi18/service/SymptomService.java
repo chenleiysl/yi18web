@@ -169,8 +169,16 @@ public class SymptomService
 	
 	public Symptom getSymptom( long id) 
 	{
-		SymptomDao symptomDao = new SymptomDao();
-		return symptomDao.getSymptom(id);
+		String fullyQualifiedName = "Symptoms";
+		Serializable key="symptoms"+id;
+		Symptom symptom = (Symptom) EhCacheEngine.get(fullyQualifiedName, key);
+		if (symptom==null) {
+			SymptomDao symptomDao = new SymptomDao();
+			symptom=symptomDao.getSymptom(id);
+			EhCacheEngine.add(fullyQualifiedName, key, symptom);
+		}
+		
+		return symptom;
 	}
 
 	

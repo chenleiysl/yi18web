@@ -159,7 +159,7 @@ public class DiseaseDao
 		String message="<h2>摘要信息</h2>"+disease.getMessage();
 		for (DiseaseInfo diseaseInfo : list)
 		{
-			message=message+"<h2>"+diseaseInfo.getTitle()+"</h2><div>"+diseaseInfo.getMessage()+"</div>";
+			message=message+diseaseInfo.getMessage()+"</div>";
 		}
 		disease.setMessage(message);
 		return disease;

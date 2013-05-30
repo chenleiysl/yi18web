@@ -52,7 +52,7 @@ public class SymptomDao
 		for (SymptomInfo symptomInfo : list)
 		{
 			
-			message=message+"<h2>"+symptomInfo.getTitle()+"</h2><div>"+symptomInfo.getMessage()+"</div>";
+			message=message+"<div>"+symptomInfo.getMessage()+"</div>";
 			
 		}
 		symptom.setMessage(message);

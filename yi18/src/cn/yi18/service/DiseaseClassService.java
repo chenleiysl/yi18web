@@ -26,9 +26,19 @@ public class DiseaseClassService
 		return list; 
 	}
 	
-	public List<Medicine> getMedicineClass() {
-		DiseaseClassDao diseaseClassDao = new DiseaseClassDao();
-		return diseaseClassDao.getMedicineClass();
+	public List<Medicine> getMedicineClass()
+	{
+		String fullyQualifiedName = "Diseases";
+		Serializable key="listall";
+		@SuppressWarnings("unchecked")
+		List<Medicine> list = (List<Medicine>) EhCacheEngine.get(fullyQualifiedName, key);
+		if (list==null)
+		{
+			DiseaseClassDao diseaseClassDao = new DiseaseClassDao();
+			list = diseaseClassDao.getMedicineClass();
+			EhCacheEngine.add(fullyQualifiedName, key, list);
+		}
+		return list;
 	}
 
 }

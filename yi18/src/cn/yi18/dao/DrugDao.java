@@ -57,7 +57,7 @@ public class DrugDao
 		for (DrugInfo drugInfo : list)
 		{
 			
-			message=message+"<h2>"+drugInfo.getTitle()+"</h2><div>"+drugInfo.getMessage()+"</div>";
+			message=message+"<div>"+drugInfo.getMessage()+"</div>";
 			break;
 		}
 		drug.setMessage(message);

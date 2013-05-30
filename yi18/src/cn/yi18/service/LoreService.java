@@ -73,6 +73,7 @@ public class LoreService
 		{
 			Lore bean = new Lore();
 			String filter=" allow = "+LoreEnum.Check_Status.IsCheck.getValue();
+			@SuppressWarnings("unchecked")
 			List<Lore> list =(List<Lore>) bean.filter(filter, page, size) ;
 			 pageUtil = new PageUtil(list , page, size, _getTotalCount());
 			 EhCacheEngine.add(fullyQualifiedName, key, pageUtil);

@@ -201,6 +201,7 @@ public class DiseaseService
 		List<Departments> list = (List<Departments>) EhCacheEngine.get(fullyQualifiedName, key);
 		if (list==null)
 		{
+			DiseaseDao diseaseDao = new DiseaseDao();
 			list=diseaseDao.getDepartments(id);
 			EhCacheEngine.add(fullyQualifiedName, key, list);
 		}
@@ -212,6 +213,7 @@ public class DiseaseService
 		List<Place> list = (List<Place>) EhCacheEngine.get(fullyQualifiedName, key);
 		if(list==null)
 		{
+			DiseaseDao diseaseDao = new DiseaseDao();
 			list= diseaseDao.getPlace(id);
 			EhCacheEngine.add(fullyQualifiedName, key, list);
 		}
@@ -227,6 +229,7 @@ public class DiseaseService
 		PageUtil pageUtil = (PageUtil) EhCacheEngine.get(fullyQualifiedName, key);
 		if(pageUtil==null)
 		{
+			DiseaseDao diseaseDao = new DiseaseDao();
 			int total = (int) diseaseDao.getPlaceCount(id);
 			pageUtil= new PageUtil(diseaseDao.getHPlace(page, size,id), page, size, total );
 			EhCacheEngine.add(fullyQualifiedName, key, pageUtil);
@@ -242,6 +245,7 @@ public class DiseaseService
 		PageUtil pageUtil = (PageUtil) EhCacheEngine.get(fullyQualifiedName, key);
 		if(pageUtil==null)
 		{
+			DiseaseDao diseaseDao = new DiseaseDao();
 			int total = (int) diseaseDao.getDepartmentsCount(id);
 			pageUtil= new PageUtil(diseaseDao.getHDepartments(page, size,id), page, size, total );
 			EhCacheEngine.add(fullyQualifiedName, key, pageUtil);
@@ -257,6 +261,7 @@ public class DiseaseService
 		List<Disease> list = (List<Disease>) EhCacheEngine.get(fullyQualifiedName, key);
 		if(list==null)
 		{
+			DiseaseDao diseaseDao = new DiseaseDao();
 			list= diseaseDao.getNPlace( page, size, id);
 			EhCacheEngine.add(fullyQualifiedName, key, list);
 		}
@@ -270,6 +275,7 @@ public class DiseaseService
 		List<Disease> list = (List<Disease>) EhCacheEngine.get(fullyQualifiedName, key);
 		if(list==null)
 		{
+			DiseaseDao diseaseDao = new DiseaseDao();
 			list= diseaseDao.getNDepartments(page, size, id);
 			EhCacheEngine.add(fullyQualifiedName, key, list);
 		}
@@ -278,11 +284,20 @@ public class DiseaseService
 	
 	public cn.yi18.app.entity.Disease getDisease( long id) 
 	{
-		return diseaseDao .getDisease(id);
+		String fullyQualifiedName = "Disease";
+		Serializable key="dieases"+id;
+		cn.yi18.app.entity.Disease  disease = (cn.yi18.app.entity.Disease) EhCacheEngine.get(fullyQualifiedName, key);
+		if(disease==null)
+		{
+			DiseaseDao diseaseDao = new DiseaseDao();
+			disease= diseaseDao .getDisease(id);
+			EhCacheEngine.add(fullyQualifiedName, key, disease);
+		}
+		return disease;
 	}
 	
 	
-	private DiseaseDao diseaseDao = new DiseaseDao();
+	
 	
 
 	

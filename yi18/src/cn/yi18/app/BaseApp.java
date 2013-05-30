@@ -34,7 +34,7 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
 /**
- * 所有的action类的父类
+ * 所有的App类的父类
  * @author 陈磊
  *
  */
@@ -81,19 +81,19 @@ public  abstract class BaseApp
 					this.getClass().getMethod(action, NO_ARGS_CLASS).invoke(this, NO_ARGS_OBJECT);
 				} catch (IllegalAccessException e) {
 					log.error("{} 类中 运行 {}方法 错\n" + e,this.getClass(),action);
-					run_500();
+					run_false();
 					e.printStackTrace();
 				} catch (InvocationTargetException e) {
 					log.error("{} 类中 没有实现 {}方法 \n" + e,this.getClass(),action);
-					run_500();//返回500
+					run_false();//返回500
 					e.printStackTrace();
 				} catch (NoSuchMethodException e) {
 					log.error("{} 类中 没有实现 {}方法 \n" + e,this.getClass(),action);
-					run_404();//返回404
+					run_false();//返回404
 					e.printStackTrace();
 				} catch (SecurityException e) {
 					log.error("{} 类中 没有实现 {}方法 \n" + e,this.getClass(),action);
-					run_500();//返回500
+					run_false();//返回500
 					e.printStackTrace();
 				}
 		
@@ -119,23 +119,7 @@ public  abstract class BaseApp
 	
 	
 	
-	/**
-	 * text/html 格式的返回
-	 * @param html 显示的html
-	 */
-	protected void printHtml(String html) 
-	{
-		try {
-			response.setContentType("text/html; charset=UTF-8");
-			response.getWriter().print(html);
-		} catch (IOException e) {
-			log.error("显示text/html{}报错\n"+e,html);
-			run_500();//返回500
-			e.printStackTrace();
-			
-		}
-		return;
-	}
+
 	
 	/**
 	 * application/json 格式的返回json
@@ -147,7 +131,7 @@ public  abstract class BaseApp
 			response.getWriter().print(json);
 		} catch (IOException e) {
 			log.error("返回application/json{}报错\n"+e,json);
-			run_500();//返回500
+			run_false();//返回500
 			e.printStackTrace();
 		}
 		return;
@@ -157,44 +141,25 @@ public  abstract class BaseApp
 
  
  
- /**
-  * 500页面
-  */
-	 public void run_500() {
-		 try {
-			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
-		} catch (IOException e) {
-			
-			e.printStackTrace();
-		}//返回500
-	}
  
 	 /**
 	  * 404页面
 	  */
-	 public void run_404() {
-		 try {
-			response.sendError(HttpServletResponse.SC_NOT_FOUND);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	 public void run_false() {
+		
+		 String json="{\"success\": false}";
+		String callback = this.getAskApp().getCallback();
+		printJson(this.toJsonP(callback , json));
 	}
 	 
-	 /**
-	  * 403页面
-	  */
-	 public void run_403() {
-			
-		 try {
-			response.sendError(HttpServletResponse.SC_FORBIDDEN );
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	 }
-	 
+	
 	 
 
+	 /**
+	  * 主要处理每次APP接口传输的参数
+	  * 转成AskApp
+	  * @return 
+	  */
 		protected AskApp getAskApp()
 		{
 			Map<?, ?> map = request.getParameterMap();
@@ -209,6 +174,32 @@ public  abstract class BaseApp
 				e.printStackTrace();
 			}
 			return ask;
+		}
+		
+		/**
+		 * 这里返回的数据主要有JSonp了Json两种处理方式
+		 */
+		public String toJsonP(String callback,String json)
+		{
+			if(callback==null)
+			{
+				json="{\"success\": true, \"yi18\":"+json+"}";
+			}else
+			{
+				json=callback+"({\"success\": true, \"yi18\":"+json+"})";
+			}
+			return json;
+		}
+		public String toJsonP(String callback,String json,int total)
+		{
+			if(callback==null)
+			{
+				json="{\"success\": true,  \"total\":"+total+",\"yi18\":"+json+"}";
+			}else
+			{
+				json=callback+"({\"success\": true,  \"total\":"+total+", \"yi18\":"+json+"})";
+			}
+			return json;
 		}
 
 }
