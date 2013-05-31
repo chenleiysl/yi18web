@@ -16,7 +16,7 @@ Ext.define('yi18app.view.lore.LoreList',
 			emptyText: '没有找到数据,请检查条件！',
 			plugins: {
 				            xclass: 'Ext.plugin.ListPaging', // Reference plugin by class
-				           // autoPaging: true,
+				            autoPaging: true,
 				            loadMoreText:'更多……',
 				            noMoreRecordsText:'没有更多记录了'
 				        }

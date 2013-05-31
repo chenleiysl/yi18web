@@ -5,10 +5,10 @@ Ext.define('yi18app.store.NewsListStore',{
 		 model: 'yi18app.model.NewsModel',
 	
         //filter the data using the firstName field
-        sorters : [{
-						property : 'id',
-						direction : 'desc'
-					}],
+//        sorters : [{
+//						property : 'id',
+//						direction : 'desc'
+//					}],
 
             //autoload the data from the server
 			

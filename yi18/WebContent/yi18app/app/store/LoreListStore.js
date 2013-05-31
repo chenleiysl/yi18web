@@ -5,10 +5,10 @@ Ext.define('yi18app.store.LoreListStore',{
 		 model: 'yi18app.model.LoreModel',
 	
         //filter the data using the firstName field
-        sorters : [{
-						property : 'id',
-						direction : 'desc'
-					}],
+//        sorters : [{
+//						property : 'id',
+//						direction : 'desc'
+//					}],
 
             //autoload the data from the server
 			
