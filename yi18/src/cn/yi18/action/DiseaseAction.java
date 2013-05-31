@@ -16,6 +16,7 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import cn.yi18.cache.EhCacheEngine;
 import cn.yi18.cache.VisitLogEhCache;
 import cn.yi18.entity.DiseaseClass;
 import cn.yi18.entity.DiseaseInfo;
@@ -33,6 +34,7 @@ import cn.yi18.service.DiseaseClassService;
 import cn.yi18.service.DiseaseInfoService;
 import cn.yi18.service.DiseaseService;
 
+import cn.yi18.util.Base64Coder;
 import cn.yi18.util.PageUtil;
 
 /**
@@ -251,6 +253,24 @@ public class DiseaseAction extends BaseAction
 		printFreemarker("default/disease_list.ftl", root);
 	}
 	
+	
+ 	/**
+		 * 删除综疾病信息
+		 */
+		public void delete()
+		{
+			long id= Long.parseLong(request.getParams()[0]);
+			String url =Base64Coder.decodeBase64( request.getParameter("returnUrl")); //取得返回的URL
+			Disease disease = new Disease();
+			disease.delete(id);
+			Diseaseinfo diseaseinfo = new Diseaseinfo();
+			String filter = " disease="+id;
+			diseaseinfo.delete(filter );
+			
+			EhCacheEngine.remove("Diseases");
+			sendRedirect(url);
+			
+		}
 	
 	private DirectoryService directoryService = new DirectoryService();
 	private DiseaseService diseaseService = new DiseaseService();

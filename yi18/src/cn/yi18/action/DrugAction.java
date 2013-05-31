@@ -21,6 +21,7 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import cn.yi18.cache.EhCacheEngine;
 import cn.yi18.cache.VisitLogEhCache;
 import cn.yi18.entity.DrugClass;
 import cn.yi18.entity.DrugInfo;
@@ -35,6 +36,7 @@ import cn.yi18.service.DrugClassService;
 import cn.yi18.service.DrugInfoService;
 import cn.yi18.service.DrugService;
 import cn.yi18.service.FactoryService;
+import cn.yi18.util.Base64Coder;
 import cn.yi18.util.JsoupUtil;
 import cn.yi18.util.PageUtil;
 
@@ -248,6 +250,24 @@ public class DrugAction extends BaseAction
 		return bean.get(factory);
 		
 	}
+	
+	
+	 	/**
+		 * 删除综药品信息
+		 */
+		public void delete()
+		{
+			long id= Long.parseLong(request.getParams()[0]);
+			String url =Base64Coder.decodeBase64( request.getParameter("returnUrl")); //取得返回的URL
+			Drug drug = new Drug();
+			drug.delete(id);
+			Druginfo druginfo = new Druginfo();
+			String filter = " drug="+id;
+			druginfo.delete(filter );
+			
+			EhCacheEngine.remove("Drugs");
+			sendRedirect(url);
+		}
 	
 	private DirectoryService directoryService = new DirectoryService();
 	private DrugService drugService = new DrugService();

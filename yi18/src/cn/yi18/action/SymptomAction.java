@@ -21,6 +21,7 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import cn.yi18.cache.EhCacheEngine;
 import cn.yi18.cache.VisitLogEhCache;
 
 import cn.yi18.entity.SymptomClass;
@@ -35,6 +36,7 @@ import cn.yi18.service.DirectoryService;
 import cn.yi18.service.SymptomClassService;
 import cn.yi18.service.SymptomInfoService;
 import cn.yi18.service.SymptomService;
+import cn.yi18.util.Base64Coder;
 import cn.yi18.util.PageUtil;
 
 public class SymptomAction extends BaseAction
@@ -215,6 +217,23 @@ public class SymptomAction extends BaseAction
 		printFreemarker("default/symptom_list.ftl", root);
 	}
 	
+	
+	/**
+	 * 删除综病状信息
+	 */
+	public void delete()
+	{
+		long id= Long.parseLong(request.getParams()[0]);
+		String url =Base64Coder.decodeBase64( request.getParameter("returnUrl")); //取得返回的URL
+		Symptoms symptoms = new Symptoms();
+		symptoms.delete(id);
+		Symptominfo symptominfo = new Symptominfo();
+		String filter = " symptoms="+id;
+		symptominfo.delete(filter );
+		
+		EhCacheEngine.remove("Symptomses");
+		sendRedirect(url);
+	}
 	
 	private DirectoryService directoryService = new DirectoryService();
 	private SymptomInfoService symptomInfoService = new SymptomInfoService();

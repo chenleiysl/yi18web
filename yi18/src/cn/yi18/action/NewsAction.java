@@ -11,6 +11,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import cn.yi18.cache.EhCacheEngine;
 import cn.yi18.cache.VisitLogEhCache;
 import cn.yi18.enums.NewsEnum;
 import cn.yi18.lucene.IndexFiles;
@@ -18,6 +19,7 @@ import cn.yi18.lucene.NewsLucene;
 import cn.yi18.lucene.PageInfo;
 import cn.yi18.pojo.News;
 import cn.yi18.service.NewsService;
+import cn.yi18.util.Base64Coder;
 import cn.yi18.util.JsoupUtil;
 import cn.yi18.util.PageUtil;
 
@@ -124,6 +126,24 @@ public class NewsAction extends BaseAction
 		
 		sendRedirect(request.basePath()+"admin/news");
 	}
+	
+	
+	/**
+	 * 删除综合信息
+	 */
+	public void delete()
+	{
+		long id= Long.parseLong(request.getParams()[0]);
+		String url =Base64Coder.decodeBase64( request.getParameter("returnUrl")); //取得返回的URL
+		News news = new News();
+		news.delete(id);
+		EhCacheEngine.remove("Newses");//移除缓存
+		
+		sendRedirect(url);//
+		
+	}
+	
+	
 	private NewsService newsService = new NewsService();
 	
 	

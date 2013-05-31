@@ -11,6 +11,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import cn.yi18.cache.EhCacheEngine;
 import cn.yi18.cache.VisitLogEhCache;
 import cn.yi18.enums.NewsEnum;
 import cn.yi18.lucene.IndexFiles;
@@ -22,6 +23,7 @@ import cn.yi18.pojo.Loreclass;
 
 import cn.yi18.service.LoreService;
 
+import cn.yi18.util.Base64Coder;
 import cn.yi18.util.JsoupUtil;
 import cn.yi18.util.PageUtil;
 
@@ -167,6 +169,21 @@ public class LoreAction extends BaseAction
 		sendRedirect(request.basePath()+"admin/lore");
 		
 	}
+    
+    
+    /**
+	 * 删除综健康知识
+	 */
+	public void delete()
+	{
+		long id= Long.parseLong(request.getParams()[0]);
+		String url =Base64Coder.decodeBase64( request.getParameter("returnUrl")); //取得返回的URL
+		Lore lore = new Lore();
+		lore.delete(id);
+		EhCacheEngine.remove("Lores");
+		sendRedirect(url);
+	}
+    
 	private LoreService loreService = new LoreService();
 	
 	

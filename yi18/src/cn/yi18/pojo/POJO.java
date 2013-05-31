@@ -128,6 +128,13 @@ public class POJO implements Serializable
 			EhCacheEngine.remove(cacheRegion());	
 		return dr;
 	}
+	
+	public boolean delete(String filter ) {
+		boolean dr = evict(QueryHelper.update("DELETE FROM " + tableName() + " WHERE "+filter) == 1);
+		if(dr)
+			EhCacheEngine.remove(cacheRegion());	
+		return dr;
+	}
 	/**
 	 * 分页列出所有对象
 	 * @param page
