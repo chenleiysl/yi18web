@@ -1,5 +1,7 @@
 package cn.yi18.lucene;
 
+import java.util.List;
+
 import org.apache.commons.lang3.SystemUtils;
 
 public class NewsLucene extends LuceneManage implements IndexFiles,SearchFiles
@@ -9,6 +11,7 @@ public class NewsLucene extends LuceneManage implements IndexFiles,SearchFiles
 	public NewsLucene() {
 		super(path);
 	}
+	
 	
 	
 }

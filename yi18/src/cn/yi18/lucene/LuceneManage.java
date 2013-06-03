@@ -35,8 +35,11 @@ import org.apache.lucene.search.highlight.TokenSources;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
+import org.bouncycastle.math.ec.ECAlgorithms;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import cn.yi18.cache.EhCacheEngine;
 
 public class LuceneManage {
 
@@ -198,6 +201,73 @@ public class LuceneManage {
 	public void update(PageInfo pageInfo) {
 		// TODO Auto-generated method stub
 
+	}
+	
+	
+
+	/**
+	 * 取得相关信息
+	 * @param fullyQualifiedName
+	 * @param keyword
+	 * @param page
+	 * @param size
+	 * @return
+	 */
+	public List<PageInfo> querycache(String fullyQualifiedName,String keyword, int page, int size) {
+		
+		@SuppressWarnings("unchecked")
+		List<PageInfo> list= (List<PageInfo>) EhCacheEngine.get(fullyQualifiedName , keyword);
+		if(list==null)
+		{
+			list = new ArrayList<PageInfo>();
+			
+			try {
+				ireader = DirectoryReader.open(directory);
+				
+				 IndexSearcher isearcher = new IndexSearcher(ireader);
+				    // Parse a simple query that searches for "text":
+				   // QueryParser parser = new QueryParser(Version.LUCENE_42, "fieldname", analyzer);
+				   // Query query = parser.parse("text");
+				    
+				 String[] fields = {"title","content"};//
+				 MultiFieldQueryParser parser = new MultiFieldQueryParser(Version.LUCENE_42, fields , analyzer);
+				 Query query=parser.parse(keyword);  
+			 
+			        TopDocs topdocs=isearcher.search(query,null, SIZE); //总的搜索条数
+			       
+			        ScoreDoc[] scoreDocs=topdocs.scoreDocs; 
+			     
+			      
+			       
+				    //ScoreDoc[] hits = isearcher.search(query, null, 1000).scoreDocs;
+				   // assertEquals(1, hits.length);
+				    // Iterate through the results:
+			        int startn = (page-1)*size;
+			        int endn = page*size;
+			      
+				    for (int i = startn; i < scoreDocs.length&&i<endn; i++) {
+				      Document hitDoc = isearcher.doc(scoreDocs[i].doc);
+
+				      PageInfo info = new PageInfo();
+				      info.setId(Long.parseLong(hitDoc.get("id"))) ;
+				      info.setTitle( hitDoc.get("title"));
+				      info.setUrl(hitDoc.get("url"));
+				      list.add(info);
+				    }
+				   
+					ireader.close();
+					directory.close();
+			} catch (IOException e) {
+				
+				e.printStackTrace();
+			} catch (ParseException e) {
+				
+				e.printStackTrace();
+			} 
+			EhCacheEngine.add(fullyQualifiedName, keyword, list);
+			
+		}
+		return list;
 	}
 	
 

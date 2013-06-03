@@ -17,6 +17,7 @@ import cn.yi18.enums.NewsEnum;
 import cn.yi18.lucene.IndexFiles;
 import cn.yi18.lucene.NewsLucene;
 import cn.yi18.lucene.PageInfo;
+import cn.yi18.lucene.SearchFiles;
 import cn.yi18.pojo.News;
 import cn.yi18.service.NewsService;
 import cn.yi18.util.Base64Coder;
@@ -85,11 +86,17 @@ public class NewsAction extends BaseAction
 			run_404();
 			return;
 		}//如果不存在就返回404页面
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		map.put("count", news.getCount()+1);
-//		news.update(map , news.getId()); //更新阅读次数
+		News last =news.last(Long.parseLong(sid),null);//最新
+		News next =news.next(Long.parseLong(sid),null);//旧的
 		VisitLogEhCache.Add(news.getId(), "yi18_news");//更新阅读数
+		
+		
+		SearchFiles search = new NewsLucene();
+		List<PageInfo> searchlist = search.querycache("News", news.getTitle(), 1, 10);
+		root.put("searchlist", searchlist);
 		root.put("news", news);
+		root.put("last", last);
+		root.put("next", next);
 		root.put("title", news.getTitle()+"|综合信息_医药吧");
 		root.put("keywords", news.getTitle());
 		root.put("description",news.subMessage(80));

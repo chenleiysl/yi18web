@@ -14,6 +14,9 @@
 .tool_title {float:left;text-align:center;vertical-align:middle;margin:0 0 0 5px;line-height:33px;}
 .options .tool_title{line-height:30px;}
 
+.Menu{
+font-size:14pt;
+}
 </style>
     
  <div id="Message">
@@ -69,6 +72,24 @@ ${lore.message}
 		</div>
 		</div>
 		 
+		 
+		 <br>
+<br>
+<#if last??>
+<div class='Menu'>新一篇:<a href="${basePath}lore/show/${last.id}"> ${last.title}</a></div> 
+</#if>
+<#if next??>
+<div class='Menu'>旧一篇:<a href="${basePath}lore/show/${next.id}"> ${next.title}<a></div>
+</#if>
+<br>
+<br>
+<div class='Menu'>相关健康知识</div>
+<ul  class='List'>
+<#list searchlist as item >
+  <li> <a href="${basePath}${item.url}" >${item.title}</a> </li>
+
+</#list>
+</ul>
     </div>  
  
  

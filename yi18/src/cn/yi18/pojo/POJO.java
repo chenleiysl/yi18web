@@ -201,10 +201,51 @@ public class POJO implements Serializable
 	@SuppressWarnings("unchecked")
 	public <T extends POJO> T get(long id) {
 		if(id <= 0) return null;
-		String sql = "SELECT * FROM " + tableName() + " WHERE id=?";
+		String sql = "SELECT * FROM " + tableName() + " WHERE id = ? ";
 		boolean cached = isObjectCachedByID();
 		return (T)QueryHelper.read_cache(cached?cacheRegion():null, id+"",getClass(), sql, id);
 	}
+	
+	/**
+	 * 新的 上一
+	 * @param id
+	 *  @param filter
+	 * @return
+	 */
+	public <T extends POJO> T last(long id,String filter) {
+		if(id <= 0) return null;
+		if(filter!=null) 
+		{
+			filter=filter +" AND ";
+		}else
+		{
+			filter="";
+		}
+		String sql = "SELECT * FROM " + tableName() + " WHERE "+filter+" id > ? ORDER BY id ASC LIMIT 1";
+		boolean cached = isObjectCachedByID();
+		return (T)QueryHelper.read_cache(cached?cacheRegion():null, id+"last",getClass(), sql, id);
+	}
+	
+	/**
+	 * 旧，下一
+	 * @param id
+	 * @param filter
+	 * @return
+	 */
+	public <T extends POJO> T next(long id,String filter) {
+		if(id <= 0) return null;
+		if(filter!=null) 
+		{
+			filter=filter +" AND ";
+		}else
+		{
+			filter="";
+		}
+		String sql = "SELECT * FROM " + tableName() + " WHERE  "+filter+" id < ? ORDER BY id DESC LIMIT 1";
+		boolean cached = isObjectCachedByID();
+		return (T)QueryHelper.read_cache(cached?cacheRegion():null, id+"next",getClass(), sql, id);
+	}
+	
 	public List<? extends POJO> batchGet(List<Long> ids) {
 		if(ids==null || ids.size()==0)
 			return null;

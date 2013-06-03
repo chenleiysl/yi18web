@@ -13,6 +13,13 @@
 .options{float:right;margin:3px 5px 0 5px;padding:0;height:30px;line-height:25px;}
 .tool_title {float:left;text-align:center;vertical-align:middle;margin:0 0 0 5px;line-height:33px;}
 .options .tool_title{line-height:30px;}
+.Menu{
+font-size:14pt;
+}
+
+
+.List{font-size: 10pt}
+ .List li {background:url(${basePath}common/image/a2.gif') no-repeat left center;padding-left:16px;overflow:hidden;height: 28px;list-style-type:none}
 
 </style>
     
@@ -25,6 +32,14 @@
  <div style="margin:10px 0;"></div>  
 
   <div style="margin:10px 0;"></div>
+  
+   <div style="float: right;width: 190" >
+     推荐区
+
+</ul>
+     
+     </div>
+  
   <div id="p" class="easyui-panel" title="综合信息" style="width:800px;padding:10px;"> 
   
   <div class='NewsBody'>
@@ -72,11 +87,28 @@ ${news.message}
 		</div>
 		</div>
 		</div>
-		 
+<br>
+<br>
+<#if last??>
+<div class='Menu'>新一篇: <a href="${basePath}news/show/${last.id}">${last.title}</a></div> 
+</#if>
+<#if next??>
+<div class='Menu'>旧一篇: <a href="${basePath}news/show/${next.id}">${next.title}<a></div>
+</#if>
+<br>
+<br>
+<div class='Menu'>相关新闻</div>
+<ul  class='List'>
+<#list searchlist as item >
+  <li> <a href="${basePath}${item.url}" >${item.title}</a> </li>
+
+</#list>
+</ul>
+
     </div>  
  
- 
- 
+
+
 
 <#include "footer.ftl">
 

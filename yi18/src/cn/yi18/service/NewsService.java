@@ -1,16 +1,16 @@
 package cn.yi18.service;
 
 import java.io.Serializable;
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
+
 
 import cn.yi18.cache.EhCacheEngine;
 import cn.yi18.dao.NewsDao;
 import cn.yi18.enums.NewsEnum;
-import cn.yi18.jdbc.QueryHelper;
+
 import cn.yi18.pojo.News;
-import cn.yi18.pojo.POJO;
+
 import cn.yi18.util.PageUtil;
 
 public class NewsService
@@ -25,6 +25,7 @@ public class NewsService
 	{
 		String fullyQualifiedName = "Newses";
 		Serializable key="hot_"+page+"and"+size;
+		@SuppressWarnings("unchecked")
 		List<News> list = (List<News>) EhCacheEngine.get(fullyQualifiedName, key);
 		if (list==null) {
 			list=newsDao.getHot(page, size);
@@ -44,6 +45,7 @@ public class NewsService
 	{
 		String fullyQualifiedName = "Newses";
 		Serializable key="hot_"+page+"and"+size+"and"+datecount;
+		@SuppressWarnings("unchecked")
 		List<News> list = (List<News>) EhCacheEngine.get(fullyQualifiedName, key);
 		if(list ==null)
 		{
@@ -85,10 +87,12 @@ public class NewsService
 	 * @param size
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public List<News> getNews(int size) 
 	{
 		String fullyQualifiedName = "Newses";
 		Serializable key="new_"+size;
+		@SuppressWarnings("unchecked")
 		List<News> list = (List<News>) EhCacheEngine.get(fullyQualifiedName, key);
 		{
 			News bean = new News();
@@ -113,16 +117,21 @@ public class NewsService
 		return bean.totalCount(filter);
 	}
 	
+	
 	/**
 	 * 取得默认新闻投递，默认是20条数据
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public List<News> getNoCheck() 
 	{
 		News bean = new News();
 		String filter = " allow = "+NewsEnum.Check_Status.NoCheck.getValue();
 		return (List<News>) bean.filter(filter , 1, 20);
 	}
+	
+	
+
 	
 	private NewsDao newsDao = new NewsDao();
 }

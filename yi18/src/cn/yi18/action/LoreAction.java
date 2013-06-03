@@ -16,6 +16,7 @@ import cn.yi18.cache.VisitLogEhCache;
 import cn.yi18.enums.NewsEnum;
 import cn.yi18.lucene.IndexFiles;
 import cn.yi18.lucene.LoreLucene;
+import cn.yi18.lucene.SearchFiles;
 
 import cn.yi18.lucene.PageInfo;
 import cn.yi18.pojo.Lore;
@@ -124,9 +125,19 @@ public class LoreAction extends BaseAction
 		VisitLogEhCache.Add(lore .getId(), "yi18_lore");//更新阅读数
 		Loreclass loreclass= new Loreclass();
 		loreclass=loreclass.get(lore.getLoreclass());
+		String filter = " loreclass = "+lore.getLoreclass();
+		Lore last=lore.last(Long.parseLong(sid), filter );
+		Lore next=lore.next(Long.parseLong(sid), filter);
+		
+		
+		SearchFiles search = new LoreLucene();
+		List<PageInfo> searchlist = search.querycache("Lore", lore.getTitle(), 1, 10);
+		root.put("searchlist", searchlist);
+		
 		root.put("lore", lore);
 		root.put("loreclass", loreclass);
-		
+		root.put("last", last);
+		root.put("next", next);
 		root.put("title", lore.getTitle()+"|健康知识_医药吧");
 		root.put("keywords", lore.getTitle());
 		root.put("description",lore.subMessage(80));
