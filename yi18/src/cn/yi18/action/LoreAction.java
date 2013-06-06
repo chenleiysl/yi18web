@@ -122,7 +122,7 @@ public class LoreAction extends BaseAction
 			return;
 		}//如果不存在就返回404页面
 	
-		VisitLogEhCache.Add(lore .getId(), "yi18_lore");//更新阅读数
+		VisitLogEhCache.Add(lore.getId(), "yi18_lore");//更新阅读数
 		Loreclass loreclass= new Loreclass();
 		loreclass=loreclass.get(lore.getLoreclass());
 		String filter = " loreclass = "+lore.getLoreclass();
@@ -132,8 +132,13 @@ public class LoreAction extends BaseAction
 		
 		SearchFiles search = new LoreLucene();
 		List<PageInfo> searchlist = search.querycache("Lore", lore.getTitle(), 1, 10);
-		root.put("searchlist", searchlist);
 		
+		List<Lore> week = loreService.getHot(1, 10, 7);//最近7天
+		
+		 PageUtil page = loreService.getNews(1, 10);
+		root.put("searchlist", searchlist);
+		root.put("week", week);
+		root.put("page", page);
 		root.put("lore", lore);
 		root.put("loreclass", loreclass);
 		root.put("last", last);

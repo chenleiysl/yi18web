@@ -89,12 +89,14 @@ public class NewsAction extends BaseAction
 		News last =news.last(Long.parseLong(sid),null);//最新
 		News next =news.next(Long.parseLong(sid),null);//旧的
 		VisitLogEhCache.Add(news.getId(), "yi18_news");//更新阅读数
-		
-		
+		List<News> week = newsService.getHot(1, 10, 7);//最近7天
+		PageUtil page = newsService.getNews(1, 10);
 		SearchFiles search = new NewsLucene();
 		List<PageInfo> searchlist = search.querycache("News", news.getTitle(), 1, 10);
 		root.put("searchlist", searchlist);
 		root.put("news", news);
+		root.put("week", week);
+		root.put("page", page);
 		root.put("last", last);
 		root.put("next", next);
 		root.put("title", news.getTitle()+"|综合信息_医药吧");

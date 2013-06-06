@@ -33,14 +33,28 @@ font-size:14pt;
 
   <div style="margin:10px 0;"></div>
   
-   <div style="float: right;width: 190" >
-     推荐区
+   <div style="float: right;width: 200;font-size:9pt;" >
+  <div >本周最热新闻</div>
+<ul  >
+<#list week as item >
+  <li> <a href="${basePath}news/show/${item.id}" >${item.subTitle(14)}</a> </li>
 
+</#list>
 </ul>
+ 
+   
      
-     </div>
+ <div >最新新闻</div>
+<ul  >
+<#list page.list as item >
+  <li> <a href="${basePath}news/show/${item.id}" >${item.subTitle(14)}</a> </li>
+
+</#list>
+</ul>
+ 
+ </div>
   
-  <div id="p" class="easyui-panel" title="综合信息" style="width:800px;padding:10px;"> 
+  <div id="p" class="easyui-panel" title="综合信息" style="width:750px;padding:10px;"> 
   
   <div class='NewsBody'>
 	<div class='News'>

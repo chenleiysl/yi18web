@@ -26,10 +26,33 @@ font-size:14pt;
 -->
 </div>
  
- <div style="margin:10px 0;"></div>  
+
+  
+   <div style="margin:10px 0;"></div>  
 
   <div style="margin:10px 0;"></div>
-  <div id="p" class="easyui-panel" title="健康知识" style="width:800px;padding:10px;"> 
+  
+   <div style="float: right;width: 200;font-size:9pt;" >
+  <div >本周最热健康知识</div>
+<ul  >
+<#list week as item >
+  <li> <a href="${basePath}news/show/${item.id}" >${item.subTitle(14)}</a> </li>
+
+</#list>
+</ul>
+ 
+   
+     
+ <div >最新健康知识</div>
+<ul  >
+<#list page.list as item >
+  <li> <a href="${basePath}news/show/${item.id}" >${item.subTitle(14)}</a> </li>
+
+</#list>
+</ul>
+ 
+ </div>
+  <div id="p" class="easyui-panel" title="健康知识" style="width:750px;padding:10px;"> 
   
   <div class='NewsBody'>
 	<div class='News'>

@@ -60,6 +60,18 @@ public class News extends POJO
 		this.time = time;
 	}
 	
+	
+	public String subTitle(int size)
+	{
+//		String  content = JsoupUtil.Text(message);
+		String r=StringUtils.substring(title, 0, size);
+		if (title.length()>size) 
+		{
+			r=r+"…";
+		}
+		return r;
+	}
+	
 	public String subMessage(int size)
 	{
 		String  content = JsoupUtil.Text(message);
@@ -70,6 +82,7 @@ public class News extends POJO
 		}
 		return r;
 	}
+	
 	
 	public String prettyTime() {
 		PrettyTime p = new PrettyTime(new Locale("ZH_CN"));
