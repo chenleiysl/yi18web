@@ -1,7 +1,7 @@
 <%@page import="cn.yi18.util.DigestMD"%>
-<%@page import="cn.yi18.jdbc.DBManager"%>
-<%@page import="cn.yi18.jdbc.QueryHelper"%>
-<%@page import="cn.yi18.jdbc.Install_Mysql"%>
+<%@page import="cn.yi18.secdr.jdbc.DBManager"%>
+<%@page import="cn.yi18.secdr.jdbc.QueryHelper"%>
+<%@page import="cn.yi18.secdr.jdbc.Install_Mysql"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">

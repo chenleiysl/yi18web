@@ -1,4 +1,4 @@
-<%@page import="cn.yi18.jdbc.MysqlInfo"%>
+<%@page import="cn.yi18.secdr.jdbc.MysqlInfo"%>
 <%@ page contentType="text/html; charset=UTF-8" language="java"%>
 
 <%
